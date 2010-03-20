@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" 
+	android:paddingLeft="2dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:orientation="vertical">   
+	<TextView 
+	android:id="@+id/ABOUT_VERSION" 
+	android:text="@string/aboutversion" 
+	android:layout_width="wrap_content" 
+	android:layout_height="wrap_content"
+	android:layout_gravity="center"  />   
+	<TextView 
+	android:id="@+id/ABOUT_HOMEPAGE"  
+	android:text="@string/abouthomepage" 
+	android:linksClickable="true" 
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:layout_gravity="center"
+	android:autoLink="web"/>   
+	<TextView 
+	android:id="@+id/ABOUT_COPYRIGHT"  
+	android:text="@string/aboutcopyright"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content" 
+	android:layout_gravity="center"/>   
+   
+ </LinearLayout>  
