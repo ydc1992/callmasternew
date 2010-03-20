@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    >
+  <LinearLayout 
+		android:id="@+id/LinearLayout01" 
+		android:layout_height="wrap_content" 
+		android:orientation="vertical" 
+		android:layout_width="fill_parent">
+	<RelativeLayout 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent">
+		<RadioGroup android:id="@+id/radioGroup"
+	    android:layout_width="wrap_content"
+	    android:layout_height="wrap_content">
+	    <RadioButton 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/onesound"
+	        android:text="@string/onesound" />
+	    <RadioButton 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/harassnumber"
+	        android:text="@string/harassnumber" />
+	    <RadioButton 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/safenumber"
+	        android:text="@string/safenumber" />
+	    <RadioButton 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/safenumber"
+	        android:text="@string/othernumber" />
+	</RadioGroup>
+	</RelativeLayout>
+	
+  <RelativeLayout 
+	android:layout_height="wrap_content" 
+	android:layout_width="fill_parent">
+	<TextView
+	android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:id="@+id/numberlable"
+	  android:text="@string/number"
+	  />
+	  <EditText
+	  android:layout_width="160px"
+	  android:layout_height="wrap_content"
+	  android:layout_toRightOf="@id/numberlable"
+	  android:id="@+id/editnumber"
+	  />
+  </RelativeLayout>
+  <RelativeLayout 
+	android:layout_height="wrap_content" 
+	android:layout_width="fill_parent">
+	<TextView
+	android:layout_width="wrap_content"
+	  android:layout_height="wrap_content"
+	  android:id="@+id/remarklable"
+	  android:text="@string/remark"
+	  />
+  <EditText
+  android:layout_width="160px"
+  android:layout_height="wrap_content"
+	  android:layout_toRightOf="@id/remarklable"
+  android:id="@+id/editremark"
+  />
+  </RelativeLayout>
+  </LinearLayout>
+</RelativeLayout>

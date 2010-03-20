@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="hello">Hello World, CallActivity!</string>
+    <string name="app_name">来电通</string>
+<string name="viewbutton">查找</string>
+<string name="lablelocation">来电归属 ：</string>
+<string name="lablearea">区号 ：</string>
+<string name="str_msg">静音模式</string>
+<string name="findarea">归属地查询</string>
+<string name="addblack">加到黑名单</string>
+<string name="addsuccess">添加成功</string>
+<string name="black">黑名单</string>
+<string name="white">白名单</string>
+<string name="addresslist">通讯录</string>
+<string name="notfind">未知未知 </string>
+<string name="addsuspicious">添加为一声响电话</string>
+<string name="handle">操作</string>
+<string name="call">打电话</string>
+<string name="sms">发短信</string>
+<string name="cancel">取消</string>
+<string name="addwhite">加为白名单</string>
+<string name="add">添加</string>
+<string name="blacklist">黑名单</string>
+<string name="callhostory">通话记录</string>
+<string name="contact">通讯录</string>
+<string name="back">后退</string>
+<string name="about">关于</string>
+<string name="abouthomepage">\n俺拽网  http://a.opda.cn\n</string>
+<string name="aboutcopyright">版权所有© 2007-2010 OPDA Team,\n All rights reserved.</string>
+<string name="aboutbutton">确定</string>
+<string name="aboutversion">版本 1.0.0</string>
+<string name="backtomain">返回</string> 
+<string name="loading">载入中,请稍后...</string> 
+<string name="number">号码:</string>
+<string name="type">类型:</string>
+<string name="remark">备注:</string>
+<string name="safenumber">推销</string>
+<string name="harassnumber">高额收费</string>
+<string name="onesound">一声响</string>
+<string name="othernumber">其他</string>
+<string name="editcontact">编辑联系人 </string>
+<string name="deletefromblack">从黑名单中删除</string>
+<string name="tip">您拨打的电话是黑名单电话,请慎重！</string>
+<string name="phone">电话</string>
+<string name="help">帮助</string>
+<string name="helptext">扣费克星来电助手帮助说明：\n
+1：查找指定电话的归属地\n
+2:黑名单功能：黑名单类别分为一声响电话，高额收费，推销，和其他。一声响和高额收费电话打出时有提示，推销和其他电分类话
+打进来时自动的拦截。当不是联系人拨打电话过短就系统自动就把这个号码加进黑名单，其他的用户可以自己操作。
+黑名单又分本地黑名单以及云端的黑名单。用户可以手动的操作把某某人存进黑名单，也能从网络中获取到大量用户反映的黑名单，
+而且能把本地的黑名单上传到云端分享。\n
+3：通话记录：如果是联系中的号码就可以有打电话，发短信，编辑联系人的操作。如果是陌生的号码除了可以打电话发短信外还可
+以加入黑名单中，加入是有分类，备注，以及是否同步到云端。\n
+4：通讯录，可以对通讯录中的联系人进行打电话，发短信和编辑联系人的操作。\n
+5：设置：设置同步黑名单的联网频率\n
+6：后台自动功能：当有电话打进打出时，显示电话的归属地。当有wifi网络时，黑名单数据库版本有改变时自动更新云端的数据库</string>
+<string name="nullever">从不更新</string>
+<string name="onece">一次</string>
+<string name="second">两次</string>
+<string name="always">一直更新</string>
+<string name="set">设置</string>
+<string name="blackhandle">黑名单操作</string>
+<string name="delete">删除</string>
+<string name="addtoweb">上传到云端</string>
+<string name="addtoservice">是否添加到云端</string>
+</resources>
