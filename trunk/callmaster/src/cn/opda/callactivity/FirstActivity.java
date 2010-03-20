@@ -78,6 +78,9 @@ public class FirstActivity extends Activity {
         //------------------------------------
         Intent serviceIntent = new Intent(this, CallService.class);
 		Intent serIntent = new Intent(this, BlackListService.class);
+		Intent intenetIntent = new Intent(this, IntenetService.class);
+		
+		startService(intenetIntent);
 		startService(serIntent);
 		startService(serviceIntent);
         gridview = (GridView) findViewById(R.id.gridview);
