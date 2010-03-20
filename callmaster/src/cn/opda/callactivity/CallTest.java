@@ -30,9 +30,11 @@ public class CallTest extends AndroidTestCase {
         }
 	}
 	public void testT() throws Exception{
-		Blacklist blacks = new Blacklist();
-		String sss= this.addToWeb(blacks);
-		Log.i(TAG, sss);
+		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
+		List<Blacklist> blacklists  =  blackListSqliteService.findAll();
+		for(Blacklist blacklist : blacklists){
+			Log.i(TAG, blacklist.getBlackid()+"___-----"+blacklist.getUptype()+"++++++");
+		}
 	}
 	public void testDelete(){
 		PhoneSqliteService phoneService = new PhoneSqliteService(getContext());

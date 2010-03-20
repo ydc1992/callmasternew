@@ -9,7 +9,6 @@ import java.util.Map;
 import cn.opda.R;
 import cn.opda.net.upload.HttpRequester;
 import cn.opda.phone.Blacklist;
-import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -182,8 +181,8 @@ public class BaseBlackList extends Activity {
 					public void onClick(DialogInterface dialog, int which) {
 						new Thread(new Runnable() {
 							public void run() {
-								String tt = BaseBlackList.this.addToWeb(new Blacklist(nn, type, remark, Blacklist.HAVE_NO));
-								Log.i(TAG, tt+"++++++-------000---++++");
+								//String tt = BaseBlackList.this.addToWeb(new Blacklist(nn, type, remark, Blacklist.HAVE_NO));
+								//Log.i(TAG, tt+"++++++-------000---++++");
 							}
 						}).start();
 					}
@@ -200,21 +199,5 @@ public class BaseBlackList extends Activity {
 			
 		});
     }
-    private String addToWeb(Blacklist blacks){
-    	String url = "http://guanjia.koufeikexing.com/koufeikexing/defener/phone.php?";
-    	TelephonyManager tm = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);  
-    	String imei = tm.getDeviceId();  
-    	String tel = tm.getLine1Number(); 
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("imei", imei+"");
-		params.put("number",blacks.getNumber()+"");
-		params.put("type", blacks.getType()+"");
-		params.put("timelength", blacks.getTimelength()+"");
-		params.put("timehappen", blacks.getTimehappen()+"");
-		params.put("remark", blacks.getRemark()+"");
-		params.put("version", "1.5");
-		params.put("platform", "2");
-		String s = HttpRequester.post(url, params);
-		return s;
-    }
+   
 }
