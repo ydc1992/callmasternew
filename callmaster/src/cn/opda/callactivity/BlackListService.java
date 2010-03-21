@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cn.opda.R;
+import cn.opda.contact.BaseBlackList;
+import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
 import android.app.Service;
@@ -11,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.media.AudioManager;
+import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.provider.Contacts;
 import android.telephony.PhoneStateListener;
@@ -50,7 +53,17 @@ public class BlackListService extends Service {
 					        				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 					        				String tt = format.format(new Date());
 					        				Integer i = Integer.parseInt(time/1000+1+"");
-					        				blackService.saveall(new Blacklist(num,"Ò»ÉùÏì","",tt,i,Blacklist.HAVE_NO));
+					        				Blacklist blacklist = new Blacklist(num,"Ò»ÉùÏì","",tt,i,Blacklist.HAVE_NO);
+					        				blackService.saveall(blacklist);
+											ConnectivityManager connectivity = (ConnectivityManager)BlackListService.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+											if (connectivity != null) {
+													Log.i(TAG, "+++++++++++");
+													Blacklist black = blackService.findByNumber(num);
+													SendUp.addToWeb(black, BlackListService.this);
+													Log.i(TAG, "------------------");
+													black.setUptype(Blacklist.HAVED);
+													blackService.update(black);
+											}
 						        			Toast.makeText(getApplicationContext(), R.string.addsuspicious, Toast.LENGTH_SHORT).show();
 					        			}
 					        		}

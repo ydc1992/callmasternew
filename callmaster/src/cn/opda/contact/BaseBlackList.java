@@ -8,14 +8,17 @@ import java.util.Map;
 
 import cn.opda.R;
 import cn.opda.callactivity.IntenetService;
+import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -109,7 +112,6 @@ public class BaseBlackList extends Activity {
 			        int checkedId) {
 			        RadioButton radioButton = (RadioButton) editview.findViewById(checkedId);
 			        typename = String.valueOf(radioButton.getText());
-			        Log.i(TAG, String.valueOf(radioButton.getText()));
 			    }
 			});
 			
@@ -128,9 +130,17 @@ public class BaseBlackList extends Activity {
 							if (number.equals("")) {
 								return;
 							}
-							blackService.savepart(new Blacklist(number,type,remark,Blacklist.HAVE_NO));
-							Intent intenetIntent = new Intent(BaseBlackList.this, IntenetService.class);
-							startService(intenetIntent);
+							Blacklist blacklist = new Blacklist(number,type,remark,Blacklist.HAVE_NO);
+							blackService.savepart(blacklist);
+							ConnectivityManager connectivity = (ConnectivityManager)BaseBlackList.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+							if (connectivity != null) {
+									Log.i(TAG, "+++++++++++");
+									Blacklist black = blackService.findByNumber(number);
+									SendUp.addToWeb(black, BaseBlackList.this);
+									Log.i(TAG, "------------------");
+									black.setUptype(Blacklist.HAVED);
+									blackService.update(black);
+							}
 							show();
 						}
 					});

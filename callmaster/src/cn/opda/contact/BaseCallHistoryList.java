@@ -3,13 +3,17 @@ package cn.opda.contact;
 
 import cn.opda.R;
 import cn.opda.adapter.CallCursorAdapter;
+import cn.opda.net.upload.SendUp;
+import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.app.AlertDialog.Builder;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.Contacts;
@@ -170,8 +174,17 @@ public class BaseCallHistoryList extends ListActivity {
 	    							}
 	    										
 	    							String remark = editRemarkText.getText().toString();
-	    						//	blackService.savepart(new Blacklist(num,type,remark));
-	    							
+	    							Blacklist blacklist = new Blacklist(num,type,remark,Blacklist.HAVE_NO);
+	    							blackService.savepart(blacklist);
+	    							ConnectivityManager connectivity = (ConnectivityManager)BaseCallHistoryList.this.getSystemService(Context.CONNECTIVITY_SERVICE);
+	    							if (connectivity != null) {
+	    									Log.i(TAG, "+++++++++++");
+	    									Blacklist black = blackService.findByNumber(num);
+	    									SendUp.addToWeb(black, BaseCallHistoryList.this);
+	    									Log.i(TAG, "------------------");
+	    									black.setUptype(Blacklist.HAVED);
+	    									blackService.update(black);
+	    							}
 	    			    			Toast.makeText(BaseCallHistoryList.this, R.string.addsuccess, Toast.LENGTH_SHORT).show();
 	    						}
 	    					});
