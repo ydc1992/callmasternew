@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import cn.opda.net.upload.HttpRequester;
+import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.phone.Phone;
 import cn.opda.service.BlackListSqliteService;
@@ -36,9 +37,16 @@ public class CallTest extends AndroidTestCase {
 			Log.i(TAG, blacklist.getBlackid()+"___-----"+blacklist.getUptype()+"++++++");
 		}
 	}
-	public void testDelete(){
-		PhoneSqliteService phoneService = new PhoneSqliteService(getContext());
-		phoneService.delete(1);
+	public void testContect(){
+		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
+		List<Blacklist> blacklists  =  blackListSqliteService.findAll();
+		for(Blacklist blacklist : blacklists){
+			String s = SendUp.addToWeb(blacklist, getContext());
+			blacklist.setUptype(Blacklist.HAVED);
+			blackListSqliteService.update(blacklist);
+			Log.i(TAG, blacklist.getBlackid()+"-----"+s+"++++++");
+		}
+		
 	}
 	public void getnetTest(){
 		//GetNet.hasInternet(activity)

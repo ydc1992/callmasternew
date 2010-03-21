@@ -117,9 +117,11 @@ public class HttpRequester {
 			httpPost.setEntity(new UrlEncodedFormEntity(list, HTTP.UTF_8));
 			HttpResponse httpResponse = new DefaultHttpClient().execute(httpPost);
 			if(httpResponse.getStatusLine().getStatusCode() == 200){
+				Log.i("oo", "))))))))");
 				return EntityUtils.toString(httpResponse.getEntity());
 		    }
 		} catch (Exception e) {
+			Log.i("oo", "================");
 			throw new RuntimeException(e);
 		}
 		return null;  

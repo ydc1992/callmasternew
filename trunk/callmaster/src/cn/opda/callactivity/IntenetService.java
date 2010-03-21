@@ -9,6 +9,7 @@ import cn.opda.service.BlackListSqliteService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -24,7 +25,7 @@ public class IntenetService extends Service {
 	@Override
 	public void onCreate() {
 		List<Blacklist> blacklists  =  blackListSqliteService.findUnSend();
-        wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
+       /* wifiManager = (WifiManager) this.getSystemService(Context.WIFI_SERVICE);
         if (wifiManager.isWifiEnabled()) {
         	for(Blacklist blacklist : blacklists){
 				Log.i(TAG, "+++++++++++");
@@ -32,13 +33,15 @@ public class IntenetService extends Service {
 				blackListSqliteService.update(blacklist);
 				SendUp.addToWeb(blacklist, this);
 			}
-		}
-		/*ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+		}*/
+		ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 		if (connectivity != null) {
 			for(Blacklist blacklist : blacklists){
 				Log.i(TAG, "+++++++++++");
+				blacklist.setUptype(Blacklist.HAVED);
+				blackListSqliteService.update(blacklist);
 				SendUp.addToWeb(blacklist, this);
 			}
-		} */
+		} 
 	}
 }

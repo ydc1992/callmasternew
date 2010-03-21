@@ -7,18 +7,16 @@ import java.util.Map;
 
 
 import cn.opda.R;
-import cn.opda.net.upload.HttpRequester;
+import cn.opda.callactivity.IntenetService;
 import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -30,7 +28,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class BaseBlackList extends Activity {
@@ -132,6 +129,8 @@ public class BaseBlackList extends Activity {
 								return;
 							}
 							blackService.savepart(new Blacklist(number,type,remark,Blacklist.HAVE_NO));
+							Intent intenetIntent = new Intent(BaseBlackList.this, IntenetService.class);
+							startService(intenetIntent);
 							show();
 						}
 					});
