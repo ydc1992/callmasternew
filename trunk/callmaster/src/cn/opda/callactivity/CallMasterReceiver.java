@@ -16,6 +16,9 @@ public class CallMasterReceiver extends BroadcastReceiver {
 			Intent intenetIntent = new Intent(context, IntenetService.class);
 			context.startService(intenetIntent);
 		}
+		if(intent.getAction().equals(Intent.ACTION_GTALK_SERVICE_DISCONNECTED)){ 
+			Log.i(TAG, "++++++++++");
+		}
 		if(intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){ 
 			String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);        
 	        Intent callintent = new Intent(context, CallOutService.class);

@@ -12,7 +12,6 @@ public class SendUp {
 	    	String url = "http://guanjia.koufeikexing.com/koufeikexing/defener/phone.php?";
 	    	TelephonyManager tm = (TelephonyManager)context.getSystemService(Context.TELEPHONY_SERVICE);  
 	    	String imei = tm.getDeviceId();  
-	    	String tel = tm.getLine1Number(); 
 			Map<String, String> params = new HashMap<String, String>();
 			params.put("imei",imei + "");
 			params.put("number",blacks.getNumber()+"");
