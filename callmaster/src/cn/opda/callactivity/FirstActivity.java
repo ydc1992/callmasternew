@@ -12,9 +12,11 @@ import cn.opda.net.upload.GetNet;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -42,11 +44,6 @@ public class FirstActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.first);
-        if(GetNet.hasInternet(this)){
-        	Log.i(TAG, "+++++++++++++");
-        }else{
-        	Log.i(TAG, "-------------");
-        }
         /*
          * 从工程中直接读取数据库
          */

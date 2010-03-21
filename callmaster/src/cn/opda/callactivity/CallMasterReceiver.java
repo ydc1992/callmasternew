@@ -12,12 +12,12 @@ public class CallMasterReceiver extends BroadcastReceiver {
 	public void onReceive(Context context, Intent intent) {
 		
 		if(intent.getAction().equals(Intent.ACTION_GTALK_SERVICE_CONNECTED)){ 
+			Log.i(TAG, "++++++++++");
 			Intent intenetIntent = new Intent(context, IntenetService.class);
 			context.startService(intenetIntent);
 		}
 		if(intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){ 
 			String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);        
-	        Log.i(TAG, "call OUT:"+number); 
 	        Intent callintent = new Intent(context, CallOutService.class);
 	        callintent.putExtra("num", number);
 	        context.startService(callintent);

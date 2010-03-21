@@ -84,10 +84,11 @@
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <!-- 获取网络 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<instrumentation android:name="android.test.InstrumentationTestRunner"
-  		android:targetPackage="cn.opda" android:label="Tests for My App" />
-  	<!-- 联网的权限 -->
+    <!-- 联网的权限 -->
   	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
 	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+	<instrumentation android:name="android.test.InstrumentationTestRunner"
+  		android:targetPackage="cn.opda" android:label="Tests for My App" />
+  	
 </manifest> 
