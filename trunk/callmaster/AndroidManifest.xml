@@ -7,6 +7,7 @@
     <uses-library android:name="android.test.runner" />
     <receiver android:name=".callactivity.CallMasterReceiver">
 	    <intent-filter>
+  			<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>  
 	    	<action android:name="android.intent.action.PHONE_STATE"/>           
             <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
 	        <action android:name="android.intent.action.BOOT_COMPLETED"/>
@@ -90,5 +91,4 @@
 	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"
   		android:targetPackage="cn.opda" android:label="Tests for My App" />
-  	
 </manifest> 
