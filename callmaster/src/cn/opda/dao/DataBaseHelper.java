@@ -140,9 +140,9 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 		db.execSQL("CREATE TABLE phone (phoneid integer primary key autoincrement," +
 		" province varchar(8), city varchar(8), areaCode varchar(4))");
 		db.execSQL("CREATE TABLE blacklist (blackid integer primary key autoincrement, " +
-				"number varchar(11), type varchar(16), remark varchar(16), timelength integer, timehappen varchar(14), uptype integer)");
+				"number varchar(11), type varchar(8), remark varchar(16), timelength integer, timehappen varchar(14), uptype integer)");
 		db.execSQL("CREATE TABLE webblack (blackid integer primary key autoincrement, " +
-				"number varchar(11), type varchar(16), remark varchar(16), timelength integer, timehappen varchar(14))");
+				"number varchar(11), type varchar(8), remark varchar(16), timelength integer, timehappen varchar(14))");
 	}
 
 	@Override

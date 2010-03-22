@@ -50,7 +50,7 @@ public class BlackListSqliteService {
 		Cursor cursor = db.rawQuery("select * from blacklist where blackid = ?", new String[]{blackid.toString()});
 		Blacklist phone = null;
 		if(cursor.moveToFirst()){
-			phone = new Blacklist(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
+			phone = new Blacklist(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
 					  cursor.getString(4), cursor.getInt(5), cursor.getInt(6));
 		}
 		cursor.close();
@@ -62,7 +62,7 @@ public class BlackListSqliteService {
 	    Cursor cursor = db.rawQuery("select * from blacklist where number = ?", new String[]{number});
 	    Blacklist phone = null;
 	    if(cursor.moveToFirst()){
-	      phone = new Blacklist(cursor.getInt(0), cursor.getString(1),cursor.getInt(2), cursor.getString(3),
+	      phone = new Blacklist(cursor.getInt(0), cursor.getString(1),cursor.getString(2), cursor.getString(3),
 				  cursor.getString(4), cursor.getInt(5), cursor.getInt(6));
 	    }
 	    cursor.close();
@@ -85,7 +85,7 @@ public class BlackListSqliteService {
 		List<Blacklist> blacks = new ArrayList<Blacklist>(); 
 		Cursor cursor = db.rawQuery("select * from blacklist ", null);
 		while(cursor.moveToNext()){
-		  Blacklist phone = new Blacklist(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
+		  Blacklist phone = new Blacklist(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
 				  cursor.getString(4), cursor.getInt(5), cursor.getInt(6));
 		  blacks.add(phone);
 		}
@@ -98,7 +98,7 @@ public class BlackListSqliteService {
 		List<Blacklist> blacks = new ArrayList<Blacklist>(); 
 		Cursor cursor = db.rawQuery("select * from blacklist where uptype = ?", new String[]{String.valueOf(Blacklist.HAVE_NO)});
 		while(cursor.moveToNext()){
-			Blacklist phone = new Blacklist(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3),
+			Blacklist phone = new Blacklist(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3),
 					cursor.getString(4), cursor.getInt(5), cursor.getInt(6));
 			blacks.add(phone);
 		}
