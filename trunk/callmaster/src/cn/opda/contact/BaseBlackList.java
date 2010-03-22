@@ -7,7 +7,6 @@ import java.util.Map;
 
 
 import cn.opda.R;
-import cn.opda.callactivity.IntenetService;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
@@ -188,16 +187,7 @@ public class BaseBlackList extends Activity {
 				    	show();
 				    }
 				});
-				alertDialogBuilder.setNegativeButton(R.string.addtoweb, new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int which) {
-						new Thread(new Runnable() {
-							public void run() {
-								//String tt = BaseBlackList.this.addToWeb(new Blacklist(nn, type, remark, Blacklist.HAVE_NO));
-								//Log.i(TAG, tt+"++++++-------000---++++");
-							}
-						}).start();
-					}
-				});
+				
 				alertDialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog, int which) {
 				    	

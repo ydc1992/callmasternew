@@ -106,7 +106,7 @@ public class CallTest extends AndroidTestCase {
 		params.put("remark", blacks.getRemark()+"");
 		params.put("version", "1.5");
 		params.put("platform", "2");
-		String s = HttpRequester.post(url, params);
+		String s = HttpRequester.httpPost(url, params);
 		return s;
     }
 }
