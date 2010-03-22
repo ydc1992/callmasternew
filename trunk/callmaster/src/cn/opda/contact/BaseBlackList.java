@@ -122,16 +122,24 @@ public class BaseBlackList extends Activity {
 							
 							String number = editText.getText().toString();
 							String type = typename;
+							int tt = 6;
 							if(type==null){
-								type = "一声响";
+								tt = Blacklist.TYPE_ONESOUND;
+							}else if(type.equals("一声响")){
+								tt = Blacklist.TYPE_ONESOUND;
+							}else if(type.equals("高额收费")){
+								tt= Blacklist.TYPE_OVERCHARGE;
+							}else if(type.equals("推销")){
+								tt = Blacklist.TYPE_PROMOTION;
+							}else if(type.equals("其他")){
+								tt = Blacklist.TYPE_OTHER;
 							}
 							
-							Log.i(TAG, type);
 							String remark = editRemarkText.getText().toString();
 							if (number.equals("")) {
 								return;
 							}
-							Blacklist blacklist = new Blacklist(number,type,remark,Blacklist.HAVE_NO);
+							Blacklist blacklist = new Blacklist(number,tt,remark,Blacklist.HAVE_NO);
 							blackService.savepart(blacklist);
 							ConnectivityManager connectivity = (ConnectivityManager)BaseBlackList.this.getSystemService(Context.CONNECTIVITY_SERVICE);
 							NetworkInfo info = connectivity.getActiveNetworkInfo();
