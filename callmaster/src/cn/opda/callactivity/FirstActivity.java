@@ -39,11 +39,11 @@ public class FirstActivity extends Activity {
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = {
 			R.drawable.search, R.drawable.blanklist, R.drawable.hostory, R.drawable.contact
-			,R.drawable.ic_menu_call,R.drawable.call
+			,R.drawable.ic_menu_call
 	};
 	private Integer[] mNameIds = {
 			R.string.findarea, R.string.blacklist, R.string.callhostory, R.string.contact,
-			R.string.help,R.string.set
+			R.string.help
 	}; 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -87,7 +87,7 @@ public class FirstActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
 		// 生成动态数组，并且转入数据
 		List<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 5; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", mImageIds[i]);// 添加图像资源的ID
 			map.put("ItemNameText", FirstActivity.this.getString(mNameIds[i]));
@@ -168,9 +168,7 @@ public class FirstActivity extends Activity {
 			else if(arg2==4){
 				intent.setClass(FirstActivity.this, HelpActivity.class);
 			}
-			else if(arg2==5){
-				intent.setClass(FirstActivity.this, SetActivity.class);
-			}
+			
 			/* new 一个 Bundle 对象，并将要传递的数据传入 */
 			Bundle bundle = new Bundle();
 			bundle.putInt("constellation_id", arg2);
