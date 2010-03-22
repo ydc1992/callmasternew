@@ -1,6 +1,10 @@
 package cn.opda.callactivity;
 
 
+import java.util.List;
+
+import cn.opda.net.upload.SendUp;
+import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -14,12 +18,20 @@ public class CallMasterReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(Context context, Intent intent) {
 		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(context);
+		List<Blacklist> list = blackListSqliteService.findUnSend();
 		
 		ConnectivityManager connectivity = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = connectivity.getActiveNetworkInfo();
 		if (info != null) {
+			for(Blacklist blacklist : list){
+				blacklist.setUptype(Blacklist.HAVED);
+				SendUp.addToWeb(blacklist, context);
+				blackListSqliteService.update(blacklist);
+			}
 			Log.i(TAG, "+++++++++++");
-		} 
+		}else{
+			Log.i(TAG, "--------------");
+		}
 		if(intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){ 
 			String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);        
 	        Intent callintent = new Intent(context, CallOutService.class);

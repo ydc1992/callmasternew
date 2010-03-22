@@ -168,14 +168,21 @@ public class BaseCallHistoryList extends ListActivity {
 	    			my.setPositiveButton(R.string.add,
 	    					new DialogInterface.OnClickListener(){
 	    						public void onClick(DialogInterface dialog, int which) {
-	    							
-	    							String type = typename;
-	    							if(type==null){
-	    								type = "一声响";
+	    							int tt = 6;
+	    							if(typename==null){
+	    								tt = Blacklist.TYPE_ONESOUND;
+	    							}else if(typename.equals("一声响")){
+	    								tt = Blacklist.TYPE_ONESOUND;
+	    							}else if(typename.equals("高额收费")){
+	    								tt= Blacklist.TYPE_OVERCHARGE;
+	    							}else if(typename.equals("推销")){
+	    								tt = Blacklist.TYPE_PROMOTION;
+	    							}else if(typename.equals("其他")){
+	    								tt = Blacklist.TYPE_OTHER;
 	    							}
 	    										
 	    							String remark = editRemarkText.getText().toString();
-	    							Blacklist blacklist = new Blacklist(num,type,remark,Blacklist.HAVE_NO);
+	    							Blacklist blacklist = new Blacklist(num,tt,remark,Blacklist.HAVE_NO);
 	    							blackService.savepart(blacklist);
 	    							ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 	    							NetworkInfo info = connectivity.getActiveNetworkInfo();

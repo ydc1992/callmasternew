@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import cn.opda.R;
-import cn.opda.contact.BaseBlackList;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
@@ -53,7 +52,7 @@ public class BlackListService extends Service {
 					        				SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmmss");
 					        				String tt = format.format(new Date());
 					        				Integer i = Integer.parseInt(time/1000+1+"");
-					        				Blacklist blacklist = new Blacklist(num,"Ò»ÉùÏì","",tt,i,Blacklist.HAVE_NO);
+					        				Blacklist blacklist = new Blacklist(num,Blacklist.TYPE_ONESOUND,"",tt,i,Blacklist.HAVE_NO);
 					        				blackService.saveall(blacklist);
 											ConnectivityManager connectivity = (ConnectivityManager)BlackListService.this.getSystemService(Context.CONNECTIVITY_SERVICE);
 											if (connectivity != null) {

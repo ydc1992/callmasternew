@@ -48,13 +48,6 @@ public class FirstActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.first);
-        ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo info = connectivity.getActiveNetworkInfo();
-		if (info != null) {
-			Log.i(TAG, "++++++");
-		}else{
-			Log.i(TAG, "------");
-		}
         /*
          * 从工程中直接读取数据库
          */
