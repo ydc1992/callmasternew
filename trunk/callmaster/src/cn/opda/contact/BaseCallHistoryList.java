@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.Contacts;
@@ -176,8 +177,9 @@ public class BaseCallHistoryList extends ListActivity {
 	    							String remark = editRemarkText.getText().toString();
 	    							Blacklist blacklist = new Blacklist(num,type,remark,Blacklist.HAVE_NO);
 	    							blackService.savepart(blacklist);
-	    							ConnectivityManager connectivity = (ConnectivityManager)BaseCallHistoryList.this.getSystemService(Context.CONNECTIVITY_SERVICE);
-	    							if (connectivity != null) {
+	    							ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+	    							NetworkInfo info = connectivity.getActiveNetworkInfo();
+	    							if (info != null) {
 	    									Log.i(TAG, "+++++++++++");
 	    									Blacklist black = blackService.findByNumber(num);
 	    									SendUp.addToWeb(black, BaseCallHistoryList.this);

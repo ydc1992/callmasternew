@@ -10,6 +10,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.wifi.WifiManager;
 import android.os.IBinder;
 import android.util.Log;
@@ -35,12 +36,13 @@ public class IntenetService extends Service {
 			}
 		}*/
 		ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-		if (connectivity != null) {
+		NetworkInfo info = connectivity.getActiveNetworkInfo();
+		if (info != null) {
 			for(Blacklist blacklist : blacklists){
 				Log.i(TAG, "+++++++++++");
 				blacklist.setUptype(Blacklist.HAVED);
-				blackListSqliteService.update(blacklist);
 				SendUp.addToWeb(blacklist, this);
+				blackListSqliteService.update(blacklist);
 			}
 		} 
 	}
