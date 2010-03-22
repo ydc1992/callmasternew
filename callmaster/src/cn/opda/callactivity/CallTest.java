@@ -35,6 +35,8 @@ public class CallTest extends AndroidTestCase {
 		List<Blacklist> blacklists  =  blackListSqliteService.findAll();
 		for(Blacklist blacklist : blacklists){
 			Log.i(TAG, blacklist.getBlackid()+"___-----"+blacklist.getUptype()+"++++++");
+			String result = SendUp.addToWeb(blacklist, getContext());
+			Log.i(TAG, result+"++++++++++++++++++");
 		}
 	}
 	public void testContect(){

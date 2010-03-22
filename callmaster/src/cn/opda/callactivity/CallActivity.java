@@ -64,9 +64,6 @@ public class CallActivity extends Activity {
 					areacodeView.setText(phone.getAreaCode());
 					locationView.setText(phone.getProvince()+phone.getCity());
 				}
-				/*Phone phone = phoneService.findByAreaNum(code);
-				areacodeView.setText(phone.getAreaCode());
-				locationView.setText(phone.getProvince()+phone.getCity());*/
 			}
 		});
     }

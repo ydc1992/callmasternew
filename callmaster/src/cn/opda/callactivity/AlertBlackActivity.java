@@ -15,7 +15,7 @@ public class AlertBlackActivity extends Activity {
 	private BlackListSqliteService blackService = new BlackListSqliteService(this);
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.i(TAG, "come on");
+		Log.i(TAG, "come on"); 
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		String number = getIntent().getStringExtra("number");
 		Blacklist blacklist = blackService.findByNumber(number);

@@ -19,6 +19,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -133,7 +134,8 @@ public class BaseBlackList extends Activity {
 							Blacklist blacklist = new Blacklist(number,type,remark,Blacklist.HAVE_NO);
 							blackService.savepart(blacklist);
 							ConnectivityManager connectivity = (ConnectivityManager)BaseBlackList.this.getSystemService(Context.CONNECTIVITY_SERVICE);
-							if (connectivity != null) {
+							NetworkInfo info = connectivity.getActiveNetworkInfo();
+							if (info != null) {
 									Log.i(TAG, "+++++++++++");
 									Blacklist black = blackService.findByNumber(number);
 									SendUp.addToWeb(black, BaseBlackList.this);
