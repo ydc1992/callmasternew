@@ -23,9 +23,30 @@ public class WebBlackService {
 		super();
 		this.context = context;
 	}
+	public int getVersion() throws Exception{
+		String urlPath = "???????????????";
+		URL url = new URL(urlPath);
+		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+		conn.connect();
+		InputStream inStream = conn.getInputStream();
+		if(conn.getResponseCode()==200){
+			SAXParserFactory spf = SAXParserFactory.newInstance();
+			SAXParser saxParser = spf.newSAXParser(); // 创建解析器
+			// 设置解析器的相关特性，http://xml.org/sax/features/namespaces = true
+			// 表示开启命名空间特性
+		//	saxParser.setProperty("http://xml.org/sax/features/namespaces", true);
+			WebBlackHandler handler = new WebBlackHandler();
+			saxParser.parse(inStream, handler);
+			inStream.close();
+			conn.disconnect();
+			return handler.getBlacks();
+		}else{
+			throw new Exception("url connection fail:"+ urlPath);
+		}
+	}
 
 	public List<WebBlack> query() throws Exception{
-		String urlPath = "http://guanjia.koufeikexing.com/koufeikexing/defener/phone.php?";
+		String urlPath = "???????????????";
 		URL url = new URL(urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.connect();
