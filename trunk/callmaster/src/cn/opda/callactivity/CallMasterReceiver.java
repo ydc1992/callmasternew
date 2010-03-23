@@ -6,14 +6,11 @@ import java.util.List;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.service.BlackListSqliteService;
-import cn.opda.net.upload.SendUp;
-import cn.opda.phone.Blacklist;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 public class CallMasterReceiver extends BroadcastReceiver {
 	private static final String TAG = "CallMasterReceiver";
@@ -30,17 +27,6 @@ public class CallMasterReceiver extends BroadcastReceiver {
 				SendUp.addToWeb(blacklist, context);
 				blackListSqliteService.update(blacklist);
 			}
-			Log.i(TAG, "+++++++++++");
-		}else{
-			Log.i(TAG, "--------------");
-		}
-		if(intent.getAction().equals(Intent.ACTION_GTALK_SERVICE_CONNECTED)){ 
-			Log.i(TAG, "++++++qqqqqqqqq++++");
-			Intent intenetIntent = new Intent(context, IntenetService.class);
-			context.startService(intenetIntent);
-		}
-		if(intent.getAction().equals(Intent.ACTION_GTALK_SERVICE_DISCONNECTED)){ 
-			Log.i(TAG, "----------");
 		}
 		if(intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){ 
 			String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);        
