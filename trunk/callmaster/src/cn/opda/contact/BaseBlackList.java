@@ -103,8 +103,6 @@ public class BaseBlackList extends Activity {
 			radioGroup.check(R.id.onesound);
 			RadioButton radioButton = (RadioButton) findViewById(
 			    radioGroup.getCheckedRadioButtonId());
-
-
 			radioGroup.setOnCheckedChangeListener(
 			    new RadioGroup.OnCheckedChangeListener() {
 			    public void onCheckedChanged(
@@ -171,7 +169,6 @@ public class BaseBlackList extends Activity {
 				new int[]{R.id.blacknumberview,R.id.blackNumberType,R.id.blackNumberRemark});
 		listView.setAdapter(adapter);
 		listView.setOnItemClickListener(new OnItemClickListener() {
-
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
 				Map<String, Object> map =  (Map<String, Object>) parent.getItemAtPosition(position);
@@ -187,17 +184,13 @@ public class BaseBlackList extends Activity {
 				    	show();
 				    }
 				});
-				
 				alertDialogBuilder.setNeutralButton(R.string.cancel, new DialogInterface.OnClickListener() {
 				    public void onClick(DialogInterface dialog, int which) {
-				    	
 				    }
 				});
 				alertDialogBuilder.setCancelable(true);
 				alertDialogBuilder.show();
-				
 			}
-			
 		});
     }
 }

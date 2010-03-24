@@ -1,7 +1,6 @@
 package cn.opda.service;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -11,7 +10,6 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import android.content.Context;
-import android.util.Log;
 
 import cn.opda.phone.WebBlack;
 
@@ -39,7 +37,7 @@ public class WebBlackService {
 			saxParser.parse(inStream, handler);
 			inStream.close();
 			conn.disconnect();
-			return handler.getBlacks();
+			return handler.getVersion();
 		}else{
 			throw new Exception("url connection fail:"+ urlPath);
 		}
