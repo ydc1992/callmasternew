@@ -10,12 +10,15 @@ import java.util.List;
 import java.util.Map;
 
 import cn.opda.net.upload.HttpRequester;
-import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.phone.Phone;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.PhoneSqliteService;
 import android.content.Context;
+import android.database.Cursor;
+import android.provider.Contacts;
+import android.provider.Contacts.People;
+import android.provider.Contacts.Phones;
 import android.telephony.TelephonyManager;
 import android.test.AndroidTestCase;
 import android.util.Log;
@@ -39,16 +42,31 @@ public class CallTest extends AndroidTestCase {
 			Log.i(TAG, result+"++++++++++++++++++");*/
 		}
 	}
-	public void testContect(){
-		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
-		List<Blacklist> blacklists  =  blackListSqliteService.findAll();
-		for(Blacklist blacklist : blacklists){
-			String s = SendUp.addToWeb(blacklist, getContext());
-			blacklist.setUptype(Blacklist.HAVED);
-			blackListSqliteService.update(blacklist);
-			Log.i(TAG, blacklist.getBlackid()+"-----"+s+"++++++");
-		}
+	public void testContect() throws Exception{
+	/*	Cursor cursor = getContext().getContentResolver().query(Contacts.People.CONTENT_URI,  
+		        null,  
+		        null,  
+		        null, null);*/
 		
+		//Object ob = Class.forName("android.provider.ContactsContract").newInstance();
+		Class.forName("android.provider.ContactsContract");
+		/*StringBuilder content = new StringBuilder();
+    	while(cursor.moveToNext()){    		 
+    		String contactId = cursor.getString(cursor.getColumnIndex(People._ID));  
+    		 String name = cursor.getString(cursor.getColumnIndex(People.NAME));  
+    		 content.append("姓名："+ name);
+    		 Cursor phones = getContext().getContentResolver().query(Phones.CONTENT_URI,  
+    			        null,  
+    			        Phones.PERSON_ID +" = "+ contactId,  
+    			        null, null);
+    		 content.append("的电话有：");
+    		while (phones.moveToNext()) {
+    			String phoneNumber = phones.getString(phones.getColumnIndex(Phones.NUMBER));
+    			content.append(phoneNumber).append(",");
+    		}  
+    		phones.close();
+        }*/
+		//Log.i(TAG, content.toString());
 	}
 	public void getnetTest(){
 		//GetNet.hasInternet(activity)

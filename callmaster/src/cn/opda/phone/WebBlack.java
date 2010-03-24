@@ -7,16 +7,20 @@ public class WebBlack {
 	private String remark;
 	private String timehappen;
 	private Integer timelength;
+	private Integer version;
+	
 	public WebBlack(){}
 	
+
 	public WebBlack(Integer blackid, String number, String type, String remark,
-			String timehappen, Integer timelength) {
+			String timehappen, Integer timelength, Integer version) {
 		this.blackid = blackid;
 		this.number = number;
 		this.type = type;
 		this.remark = remark;
 		this.timehappen = timehappen;
 		this.timelength = timelength;
+		this.version = version;
 	}
 
 	public WebBlack(String number, String type, String remark,
@@ -70,4 +74,12 @@ public class WebBlack {
 	public void setType(String type) {
 		this.type = type;
 	}
+	public Integer getVersion() {
+		return version;
+	}
+
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
 }

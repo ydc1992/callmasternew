@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
   android:layout_width="wrap_content"
   android:layout_height="wrap_content">
   <RadioGroup android:id="@+id/websetGroup"
@@ -27,4 +28,10 @@
 	        android:id="@+id/safenumber"
 	        android:text="@string/nullever" />
 	</RadioGroup>
+	<ImageButton
+		android:src="@drawable/add"
+		android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/manualCopy"
+        android:text="@string/manualCopy"/>
 </LinearLayout>
