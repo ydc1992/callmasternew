@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<main>
+	<version>11</version>
+	<t number="13123456789" type="F0" remark="12345678"></t>
+	<t number="13123456789" type="0F000" remark="12345678"></t>
+	<t number="13123456789" type="00F00" remark="12345678"></t>
+	<t number="13123456789" type="0F0" remark="12345678"></t>
+	<t number="13123456789" type="00F" remark="12345678"></t>
+</main>
