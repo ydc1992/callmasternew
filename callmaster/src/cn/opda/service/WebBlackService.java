@@ -1,6 +1,7 @@
 package cn.opda.service;
 
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -10,6 +11,7 @@ import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 
 import cn.opda.phone.WebBlack;
 
@@ -18,16 +20,16 @@ public class WebBlackService {
 	private Context context;
 	
 	public WebBlackService(Context context) {
-		super();
 		this.context = context;
 	}
 	public int getVersion() throws Exception{
-		String urlPath = "???????????????";
+		String urlPath = "file:////sdcard/test.xml";
 		URL url = new URL(urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.connect();
 		InputStream inStream = conn.getInputStream();
-		if(conn.getResponseCode()==200){
+		if(conn.getResponseCode()==200)
+		{
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser saxParser = spf.newSAXParser(); // 创建解析器
 			// 设置解析器的相关特性，http://xml.org/sax/features/namespaces = true
@@ -42,7 +44,27 @@ public class WebBlackService {
 			throw new Exception("url connection fail:"+ urlPath);
 		}
 	}
-
+	public int getTestVersion() throws Exception{
+		AssetManager am = context.getAssets();  
+		InputStream inStream = am.open("test.xml");
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		SAXParser saxParser = spf.newSAXParser(); // 创建解析器
+		WebBlackHandler handler = new WebBlackHandler();
+		saxParser.parse(inStream, handler);
+		inStream.close();
+		return handler.getVersion();
+	}
+	public List<WebBlack> testquery() throws Exception{
+		AssetManager am = context.getAssets();  
+		InputStream inStream = am.open("test.xml");
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		SAXParser saxParser = spf.newSAXParser(); // 创建解析器
+		WebBlackHandler handler = new WebBlackHandler();
+		saxParser.parse(inStream, handler);
+		inStream.close();
+		return handler.getBlacks();
+	}
+	
 	public List<WebBlack> query() throws Exception{
 		String urlPath = "???????????????";
 		URL url = new URL(urlPath);

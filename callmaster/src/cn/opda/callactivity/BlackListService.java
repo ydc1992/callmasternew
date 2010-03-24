@@ -6,6 +6,7 @@ import java.util.Date;
 import cn.opda.R;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
+import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.WebBlackSqliteService;
 import android.app.Service;
@@ -97,8 +98,10 @@ public class BlackListService extends Service {
 			        	Log.i(TAG, "2222222222222222()"+ringingtime);
 			        	if (blackService.findByNumber(incomingNumber)!= null){
 			        		Blacklist blacklist = blackService.findByNumber(incomingNumber);
+			        		WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
 			        		//WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
-			        		if(blacklist.getType().equals("其他")||blacklist.getType().equals("推销")){
+			        		if(blacklist.getType() == Blacklist.TYPE_OTHER||blacklist.getType() == Blacklist.TYPE_PROMOTION
+			        				||webBlack.getType() == WebBlack.TYPE_OTHER||webBlack.getType() == WebBlack.TYPE_PROMOTION){
 			        			 try
 					              {
 					                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);

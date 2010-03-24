@@ -3,6 +3,7 @@ package cn.opda.callactivity;
 import cn.opda.R;
 import cn.opda.phone.Blacklist;
 import cn.opda.phone.Phone;
+import cn.opda.phone.WebBlack;
 import cn.opda.service.BelongingService;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.PhoneSqliteService;
@@ -36,8 +37,9 @@ public class CallOutService extends Service {
 		int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));
 		if(blackService.findByNumber(number)!=null){
 			Blacklist blacklist = blackService.findByNumber(number);
-    		//WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
-			if(blacklist.getType().equals("一声响")||blacklist.getType().equals("高额收费")){
+    		WebBlack webBlack = webBlackService.findByNumber(number);
+			if(blacklist.getType() == WebBlack.TYPE_ONESOUND||blacklist.getType() == WebBlack.TYPE_OVERCHARGE
+					||webBlack.getType() == Blacklist.TYPE_ONESOUND||webBlack.getType() == Blacklist.TYPE_OVERCHARGE){
 				Toast.makeText(CallOutService.this, R.string.tip, Toast.LENGTH_LONG).show();
 			}
 		}

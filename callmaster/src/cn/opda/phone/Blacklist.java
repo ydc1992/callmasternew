@@ -3,20 +3,20 @@ package cn.opda.phone;
 public class Blacklist {
 	public static int HAVED = 1;
 	public static int HAVE_NO = 0;
-	public static String TYPE_ONESOUND = "一声响";
-	public static String TYPE_OVERCHARGE = "高额收费";
-	public static String TYPE_PROMOTION = "推销";
-	public static String TYPE_OTHER = "其他";
-	public static String TYPE_MESSAGE ="电话骚扰";
+	public static int TYPE_ONESOUND = 0;
+	public static int TYPE_OVERCHARGE = 1;
+	public static int TYPE_PROMOTION = 2;
+	public static int TYPE_OTHER = 3;
+	public static int TYPE_MESSAGE =4;
 	private Integer blackid;
 	private String number;
-	private String type;
+	private int type;
 	private String remark;
 	private String timehappen;
 	private Integer timelength;
 	private int uptype;
 	public Blacklist(){}
-	public Blacklist(Integer blackid, String number, String type,
+	public Blacklist(Integer blackid, String number, int type,
 			String remark, String timehappen, Integer timelength, int uptype) {
 		this.blackid = blackid;
 		this.number = number;
@@ -26,7 +26,7 @@ public class Blacklist {
 		this.timelength = timelength;
 		this.uptype = uptype;
 	}
-	public Blacklist(String number, String type, String remark,
+	public Blacklist(String number, int type, String remark,
 			String timehappen, Integer timelength, int uptype) {
 		this.number = number;
 		this.type = type;
@@ -35,7 +35,7 @@ public class Blacklist {
 		this.timelength = timelength;
 		this.uptype = uptype;
 	}
-	public Blacklist(String number, String type, String remark, int uptype) {
+	public Blacklist(String number, int type, String remark, int uptype) {
 		this.number = number;
 		this.type = type;
 		this.remark = remark;
@@ -71,10 +71,10 @@ public class Blacklist {
 	public void setNumber(String number) {
 		this.number = number;
 	}
-	public String getType() {
+	public int getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(int type) {
 		this.type = type;
 	}
 	public String getRemark() {

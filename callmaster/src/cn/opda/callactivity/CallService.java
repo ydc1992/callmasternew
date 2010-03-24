@@ -4,7 +4,6 @@ package cn.opda.callactivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import cn.opda.R;
 import cn.opda.phone.Phone;
 import cn.opda.service.BelongingService;
 import cn.opda.service.PhoneSqliteService;
