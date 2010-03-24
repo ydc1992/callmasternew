@@ -118,10 +118,15 @@ public class BaseBlackList extends Activity {
 						public void onClick(DialogInterface dialog, int which) {
 							
 							String number = editText.getText().toString();
-							String type = typename;
-							int tt = 6;
-							if(type==null){
-								type = "一声响";
+							int type = 0;
+							if("一声响".equals(typename)){
+								type = Blacklist.TYPE_ONESOUND;
+							}else if("高额收费".equals(typename)){
+								type = Blacklist.TYPE_OVERCHARGE;
+							}else if("推销".equals(typename)){
+								type = Blacklist.TYPE_PROMOTION;
+							}else if("其他".equals(typename)){
+								type = Blacklist.TYPE_OTHER;
 							}
 							
 							String remark = editRemarkText.getText().toString();
@@ -160,7 +165,23 @@ public class BaseBlackList extends Activity {
 		for(Blacklist black : blacks){
 			Map map = new HashMap<String, Object>();
 			map.put("number", black.getNumber());
-			map.put("type", black.getType());
+			int type = black.getType();
+			String temp = "";
+			switch (type) {
+			case 0:
+				temp = "一声响";
+				break;
+			case 1:
+				temp = "高额收费";
+				break;
+			case 2:
+				temp = "推销";
+				break;
+			case 3:
+				temp = "其他";
+				break;
+			}
+			map.put("type", temp);
 			map.put("remark", black.getRemark());
 			list.add(map);
 		}

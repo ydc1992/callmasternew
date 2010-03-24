@@ -28,21 +28,24 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		ConnectivityManager connectivity = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = connectivity.getActiveNetworkInfo();
 		if (info != null) {
+			Log.i(TAG, "%%%%%%%%");
 			for(Blacklist blacklist : list){
 				blacklist.setUptype(Blacklist.HAVED);
 				SendUp.addToWeb(blacklist, context);
 				blackListSqliteService.update(blacklist);
 			}
-			/*try {
+			try {
 				int version = webBlackService.getVersion();
 				int oldVersion = blackSqliteService.findVersion();
-				if(version == oldVersion){
+				Log.i(TAG, "++++++++"+oldVersion+"------"+version);
+				if(version != oldVersion || oldVersion == 0){
 					List<WebBlack> weblist = webBlackService.query();
 					blackSqliteService.updateWebBlack(weblist);
 				}
+				Log.i(TAG, "-----------");
 			} catch (Exception e) {
 				Log.e(TAG, e.getMessage());
-			}*/
+			}
 		}
 		if(intent.getAction().equals(Intent.ACTION_NEW_OUTGOING_CALL)){ 
 			String number = intent.getStringExtra(Intent.EXTRA_PHONE_NUMBER);        

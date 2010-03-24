@@ -17,6 +17,10 @@ public class WebBlackHandler extends DefaultHandler {
 		return version;
 	}
 
+	public void setVersion(int version) {
+		this.version = version;
+	}
+
 	private WebBlack webBlack;
 
 	public List<WebBlack> getBlacks() {
@@ -31,6 +35,9 @@ public class WebBlackHandler extends DefaultHandler {
 	@Override
 	public void characters(char[] ch, int start, int length)
 			throws SAXException {
+		if("version".equals(preTag)){
+			version = Integer.parseInt(new String(ch, start, length));
+		}
 	}
 
 
@@ -39,10 +46,21 @@ public class WebBlackHandler extends DefaultHandler {
 		if("t".equals(localName)){
 			webBlack = new WebBlack();
 			webBlack.setNumber(attributes.getValue(0));
-			webBlack.setType(attributes.getValue(1));
+			String temp = "0x"+attributes.getValue(1);
+			int type = Integer.decode(temp).intValue();
+			
+			if(TagUtils.CheackTags(type, TagUtils.yishengxiang)){
+				webBlack.setType(WebBlack.TYPE_ONESOUND);
+			}else if(TagUtils.CheackTags(type, TagUtils.gaoe)){
+				webBlack.setType(WebBlack.TYPE_OVERCHARGE);
+			}else if(TagUtils.CheackTags(type, TagUtils.tuixiao)){
+				webBlack.setType(WebBlack.TYPE_PROMOTION);
+			}else if(TagUtils.CheackTags(type, TagUtils.saorao)){
+				webBlack.setType(WebBlack.TYPE_OTHER);
+			}else if(TagUtils.CheackTags(type, TagUtils.message)){
+				webBlack.setType(WebBlack.TYPE_MESSAGE);
+			}
 			webBlack.setRemark(attributes.getValue(2));
-		}else if("main".equals(localName)){
-			version = new Integer(attributes.getValue(0));
 		}
 		preTag = localName;
 	}
@@ -53,8 +71,8 @@ public class WebBlackHandler extends DefaultHandler {
 		if("t".equals(localName)){
 			blacks.add(webBlack);
 			webBlack = null;
-		}else if("main".equals(localName)){
-			version = 0;
+		}else if("version".equals(localName)){
+			
 		}
 		preTag = null;
 	}

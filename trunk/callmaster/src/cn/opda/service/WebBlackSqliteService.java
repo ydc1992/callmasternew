@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.opda.dao.DataBaseHelper;
+import cn.opda.net.upload.SendUp;
+import cn.opda.phone.Blacklist;
+import cn.opda.phone.Phone;
 import cn.opda.phone.WebBlack;
 import android.content.Context;
 import android.database.Cursor;
@@ -17,6 +20,13 @@ public class WebBlackSqliteService {
 	public WebBlackSqliteService(Context context) {
 		this.context = context;
 		dbOpenHelper = new DataBaseHelper(context);
+	}
+	
+	public void saveByNumber(String number){
+		Blacklist blacklist = new Blacklist();
+		blacklist.setNumber(number);
+		blacklist.setType(Blacklist.TYPE_MESSAGE);
+		SendUp.addToWeb(blacklist, context);
 	}
 	public void save (WebBlack webBlack ){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
@@ -51,7 +61,7 @@ public class WebBlackSqliteService {
 		Cursor cursor = db.rawQuery("select * from webblack where blackid = ?", new String[]{webBlackid.toString()});
 		WebBlack phone = null;
 		if(cursor.moveToFirst()){
-			phone = new WebBlack(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),cursor.getInt(6));
+			phone = new WebBlack(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),cursor.getInt(6));
 		}
 		cursor.close();
 		db.close();
@@ -62,7 +72,7 @@ public class WebBlackSqliteService {
 	    Cursor cursor = db.rawQuery("select * from webblack where number = ?", new String[]{number});
 	    WebBlack phone = null;
 	    if(cursor.moveToFirst()){
-	      phone = new WebBlack(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),cursor.getInt(6));
+	      phone = new WebBlack(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),cursor.getInt(6));
 	    }
 	    cursor.close();
 	    db.close();
@@ -95,7 +105,7 @@ public class WebBlackSqliteService {
 		List<WebBlack> blacks = new ArrayList<WebBlack>();
 		Cursor cursor = db.rawQuery("select * from webblack ", null);
 		while(cursor.moveToNext()){
-			WebBlack phone = new WebBlack(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),cursor.getInt(6));
+			WebBlack phone = new WebBlack(cursor.getInt(0), cursor.getString(1), cursor.getInt(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),cursor.getInt(6));
 		  blacks.add(phone);
 		}
 		cursor.close();
@@ -120,4 +130,48 @@ public class WebBlackSqliteService {
 		db.close();
 		return false;
 	}
+	public boolean checkNumber(String number){
+		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
+		boolean bbb = false;
+		Cursor cursor = db.rawQuery("select * from webblack where number = ?",  new String[]{number});
+		if(cursor.getCount()>0){
+			bbb = true;
+		}
+		cursor.close();
+		db.close();
+		return bbb;
+	}
+	public String findArea(String number) throws Exception{
+		PhoneSqliteService phoneSqliteService = new PhoneSqliteService(context);
+		BelongingService belongingService = new BelongingService(context);
+		String area = "";
+		int firstNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 0, 1));
+		int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));;
+		if(firstNum==0){
+			Log.i(TAG, "2222222222222");
+			if(secondNum == 1||secondNum == 2){
+				Phone phonetemp = phoneSqliteService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 3));
+				if(phonetemp!=null){
+					area = phonetemp.getProvince()+" "+phonetemp.getCity();
+				}
+			}else {
+				Phone phonetemp = phoneSqliteService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 4));
+				if(phonetemp!=null){
+					area = phonetemp.getProvince()+" "+phonetemp.getCity();
+				}
+			}
+		}else if(firstNum==1){
+			Log.i(TAG, "33333333333333333");
+				Log.i(TAG, "111111111111111"+number);
+				String pre = "0"+belongingService.read(number);
+				Log.i(TAG, pre);
+				Phone phonetemp = phoneSqliteService.findByAreaNum(pre);
+				Log.i(TAG, phonetemp+"+");
+				if(phonetemp!=null){
+					area = phonetemp.getProvince()+" "+phonetemp.getCity();
+				}
+		}
+		return area;
+	}
+	
 }

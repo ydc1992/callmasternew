@@ -18,7 +18,6 @@ import android.net.NetworkInfo;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.Contacts;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -163,17 +162,22 @@ public class BaseCallHistoryList extends ListActivity {
 	    			        typename = String.valueOf(radioButton.getText());
 	    			    }
 	    			});
-	    			//-------------------------
 	    			my.setPositiveButton(R.string.add,
 	    					new DialogInterface.OnClickListener(){
 	    						public void onClick(DialogInterface dialog, int which) {
-	    							String type = typename;
-	    							if(typename==null){
-	    								type = "一声响";
+	    							int type1 = 0;
+	    							if("一声响".equals(typename)){
+	    								type1 = Blacklist.TYPE_ONESOUND;
+	    							}else if("高额收费".equals(typename)){
+	    								type1 = Blacklist.TYPE_OVERCHARGE;
+	    							}else if("推销".equals(typename)){
+	    								type1 = Blacklist.TYPE_PROMOTION;
+	    							}else if("其他".equals(typename)){
+	    								type1 = Blacklist.TYPE_OTHER;
 	    							}
 	    										
 	    							String remark = editRemarkText.getText().toString();
-	    							Blacklist blacklist = new Blacklist(num,type,remark,Blacklist.HAVE_NO);
+	    							Blacklist blacklist = new Blacklist(num,type1,remark,Blacklist.HAVE_NO);
 	    							blackService.savepart(blacklist);
 	    							ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 	    							NetworkInfo info = connectivity.getActiveNetworkInfo();
@@ -188,8 +192,6 @@ public class BaseCallHistoryList extends ListActivity {
 	    					});
 	    			my.setNegativeButton(R.string.cancel, null);
 	    			my.show();
-	        		//--------------------------------------------------------------------
-	        		//blackService.save(new Blacklist(num));
 	        		
 	        	}
 	        });

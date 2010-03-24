@@ -5,8 +5,6 @@ import java.io.InputStream;
 
 import android.content.Context;
 import android.content.res.AssetManager;
-import android.util.Log;
-import android.widget.Toast;
 
 public class BelongingService {
 	private static final String TAG = "BelongingService";
@@ -114,13 +112,5 @@ public class BelongingService {
 		AssetManager am = context.getAssets();  
 			InputStream is = am.open(name);
 			return is;
-		/*if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
-			File file = new File("");
-			File savefile = new File(file, name);
-			FileInputStream fileInputStream = new FileInputStream(savefile);
-			return fileInputStream;
-		}else{
-			throw new Exception("SDcard not exsit");
-		}*/
 	}
 }

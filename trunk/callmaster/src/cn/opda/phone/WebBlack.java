@@ -1,9 +1,14 @@
 package cn.opda.phone;
 
 public class WebBlack {
+	public static int TYPE_ONESOUND = 0;
+	public static int TYPE_OVERCHARGE = 1;
+	public static int TYPE_PROMOTION = 2;
+	public static int TYPE_OTHER = 3;
+	public static int TYPE_MESSAGE =4;
 	private Integer blackid;
 	private String number;
-	private String type;
+	private Integer type;
 	private String remark;
 	private String timehappen;
 	private Integer timelength;
@@ -12,7 +17,7 @@ public class WebBlack {
 	public WebBlack(){}
 	
 
-	public WebBlack(Integer blackid, String number, String type, String remark,
+	public WebBlack(Integer blackid, String number, Integer type, String remark,
 			String timehappen, Integer timelength, Integer version) {
 		this.blackid = blackid;
 		this.number = number;
@@ -23,7 +28,7 @@ public class WebBlack {
 		this.version = version;
 	}
 
-	public WebBlack(String number, String type, String remark,
+	public WebBlack(String number, Integer type, String remark,
 			String timehappen, Integer timelength) {
 		this.number = number;
 		this.type = type;
@@ -68,10 +73,10 @@ public class WebBlack {
 	public void setNumber(String number) {
 		this.number = number;
 	}
-	public String getType() {
+	public Integer getType() {
 		return type;
 	}
-	public void setType(String type) {
+	public void setType(Integer type) {
 		this.type = type;
 	}
 	public Integer getVersion() {

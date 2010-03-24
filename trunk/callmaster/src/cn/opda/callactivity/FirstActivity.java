@@ -8,19 +8,14 @@ import cn.opda.R;
 import cn.opda.contact.BaseBlackList;
 import cn.opda.contact.CallHistoryList;
 import cn.opda.contact.ContactList;
-import cn.opda.net.upload.GetNet;
-import cn.opda.net.upload.SendUp;
-import cn.opda.phone.Blacklist;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,6 +28,7 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class FirstActivity extends Activity {
 	protected int my_requestCode = 2550;
+	private WifiManager wifiManager;
 	static final int DATE_DIALOG_ID = 0;
 	GridView gridview;
 	ProgressDialog pbarDialog;
@@ -48,6 +44,7 @@ public class FirstActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.first);
+                        
         /*
          * 从工程中直接读取数据库
          */

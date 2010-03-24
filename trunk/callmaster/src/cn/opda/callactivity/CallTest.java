@@ -5,21 +5,14 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import cn.opda.net.upload.HttpRequester;
-import cn.opda.phone.Blacklist;
 import cn.opda.phone.Phone;
+import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.PhoneSqliteService;
-import android.content.Context;
-import android.database.Cursor;
-import android.provider.Contacts;
-import android.provider.Contacts.People;
-import android.provider.Contacts.Phones;
-import android.telephony.TelephonyManager;
+import cn.opda.service.WebBlackService;
+import cn.opda.service.WebBlackSqliteService;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
@@ -33,60 +26,32 @@ public class CallTest extends AndroidTestCase {
         	phoneSqliteService.save(phone);
         }
 	}
-	public void testT() throws Exception{
-		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
-		List<Blacklist> blacklists  =  blackListSqliteService.findAll();
-		for(Blacklist blacklist : blacklists){
-			Log.i(TAG, blacklist.getBlackid()+"___-----"+blacklist.getUptype()+"%%%"+blacklist.getType()+"++++++");
-			/*String result = SendUp.addToWeb(blacklist, getContext());
-			Log.i(TAG, result+"++++++++++++++++++");*/
+	public void testFile() throws Exception{
+		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(getContext());
+		int i = 0xF0;
+		WebBlackService webBlackService = new WebBlackService(getContext());
+		int version = webBlackService.getTestVersion();
+		List<WebBlack> list = webBlackService.testquery();
+		for(WebBlack webBlack : list){
+			blackSqliteService.save(webBlack);
+			Log.i(TAG, webBlack.getNumber()+"+++++++++++"+webBlack.getType());
 		}
 	}
-	public void testContect() throws Exception{
-	/*	Cursor cursor = getContext().getContentResolver().query(Contacts.People.CONTENT_URI,  
-		        null,  
-		        null,  
-		        null, null);*/
-		
-		//Object ob = Class.forName("android.provider.ContactsContract").newInstance();
-		Class.forName("android.provider.ContactsContract");
-		/*StringBuilder content = new StringBuilder();
-    	while(cursor.moveToNext()){    		 
-    		String contactId = cursor.getString(cursor.getColumnIndex(People._ID));  
-    		 String name = cursor.getString(cursor.getColumnIndex(People.NAME));  
-    		 content.append("姓名："+ name);
-    		 Cursor phones = getContext().getContentResolver().query(Phones.CONTENT_URI,  
-    			        null,  
-    			        Phones.PERSON_ID +" = "+ contactId,  
-    			        null, null);
-    		 content.append("的电话有：");
-    		while (phones.moveToNext()) {
-    			String phoneNumber = phones.getString(phones.getColumnIndex(Phones.NUMBER));
-    			content.append(phoneNumber).append(",");
-    		}  
-    		phones.close();
-        }*/
-		//Log.i(TAG, content.toString());
+	public void testGaoXinBao() throws Exception{
+		WebBlackSqliteService webBlackService = new WebBlackSqliteService(getContext());
+		String area = webBlackService.findArea("15210439426");
+		Log.i(TAG, area+"++++++++");
 	}
-	public void getnetTest(){
-		//GetNet.hasInternet(activity)
-	}
-	public void testfindByNumber(){
-		BlackListSqliteService service = new BlackListSqliteService(getContext());
-		Blacklist blacklist = service.findByNumber("15811363682");
-		Log.i(TAG, blacklist.getBlackid()+"tttt"+blacklist.getNumber());
-	}
-	
-	public void testFind(){
-		PhoneSqliteService phoneService = new PhoneSqliteService(getContext());
-		Phone phone = phoneService.find(1);
-		phoneService.update(phone);
-			Log.i(TAG, phone.toString());
-	}
-	public void testFindAll(){
-		PhoneSqliteService phoneService = new PhoneSqliteService(getContext());
-		List<Phone> phones = phoneService.findAll();
-		for(Phone phone : phones){
+	public void testT() throws Exception{
+		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
+		WebBlackSqliteService webBlackSqliteService = new WebBlackSqliteService(getContext());
+		List<WebBlack> blacklists  =  webBlackSqliteService.findAll();
+		int count = webBlackSqliteService.getCount();
+		Log.i(TAG, count+"++++++");
+		for(WebBlack blacklist : blacklists){
+			Log.i(TAG, blacklist.getBlackid()+"___"+blacklist.getType()+"++++++");
+			/*String result = SendUp.addToWeb(blacklist, getContext());
+			Log.i(TAG, result+"++++++++++++++++++");*/
 		}
 	}
 	private  List<Phone> readTxt(String filename){
@@ -110,21 +75,4 @@ public class CallTest extends AndroidTestCase {
 		}
 		return phones;
 	}
-	private String addToWeb(Blacklist blacks){
-    	String url = "http://guanjia.koufeikexing.com/koufeikexing/defener/phone.php?";
-    	TelephonyManager tm = (TelephonyManager)getContext().getSystemService(Context.TELEPHONY_SERVICE);  
-    	String imei = tm.getDeviceId();  
-    	String tel = tm.getLine1Number(); 
-		Map<String, String> params = new HashMap<String, String>();
-		params.put("imei", imei+"");
-		params.put("number",blacks.getNumber()+"");
-		params.put("type", blacks.getType()+"");
-		params.put("timelength", blacks.getTimelength()+"");
-		params.put("timehappen", blacks.getTimehappen()+"");
-		params.put("remark", blacks.getRemark()+"");
-		params.put("version", "1.5");
-		params.put("platform", "2");
-		String s = HttpRequester.httpPost(url, params);
-		return s;
-    }
 }
