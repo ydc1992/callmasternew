@@ -31,8 +31,8 @@ public class CallTest extends AndroidTestCase {
 		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(getContext());
 		int i = 0xF0;
 		WebBlackService webBlackService = new WebBlackService(getContext());
-		int version = webBlackService.getTestVersion();
-		List<WebBlack> list = webBlackService.testquery();
+		int version = webBlackService.getVersion();
+		List<WebBlack> list = webBlackService.query();
 		for(WebBlack webBlack : list){
 			blackSqliteService.save(webBlack);
 			Log.i(TAG, webBlack.getNumber()+"+++++++++++"+webBlack.getType());
@@ -46,15 +46,15 @@ public class CallTest extends AndroidTestCase {
 		//Log.i(TAG, area+"++++++++");
 	}
 	public void testT() throws Exception{
-		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
 		WebBlackSqliteService webBlackSqliteService = new WebBlackSqliteService(getContext());
+		//webBlackSqliteService.deleteAll();
 		List<WebBlack> blacklists  =  webBlackSqliteService.findAll();
 		int count = webBlackSqliteService.getCount();
 		Log.i(TAG, count+"++++++");
 		for(WebBlack blacklist : blacklists){
-			Log.i(TAG, blacklist.getBlackid()+"___"+blacklist.getType()+"++++++");
-			/*String result = SendUp.addToWeb(blacklist, getContext());
-			Log.i(TAG, result+"++++++++++++++++++");*/
+			Log.i(TAG, blacklist.getBlackid()+"___"+blacklist.getType()+"++++++"+blacklist.getNumber());
+			//String result = SendUp.addToWeb(blacklist, getContext());
+			//Log.i(TAG, result+"++++++++++++++++++");
 		}
 	}
 	private  List<Phone> readTxt(String filename){

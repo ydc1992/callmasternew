@@ -7,6 +7,7 @@ import cn.opda.phone.Phone;
 import cn.opda.service.BelongingService;
 import cn.opda.service.PhoneSqliteService;
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,15 @@ public class CallActivity extends Activity {
 	private TextView areacodeView;
 	private static final String TAG = "CallActivity";
     /** Called when the activity is first created. */
+	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+            super.onConfigurationChanged(newConfig);
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // land do nothing is ok
+            } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    // port do nothing is ok
+            }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	
