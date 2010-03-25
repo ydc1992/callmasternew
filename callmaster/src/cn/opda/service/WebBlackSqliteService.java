@@ -22,12 +22,7 @@ public class WebBlackSqliteService {
 		dbOpenHelper = new DataBaseHelper(context);
 	}
 	
-	public void saveByNumber(String number){
-		Blacklist blacklist = new Blacklist();
-		blacklist.setNumber(number);
-		blacklist.setType(Blacklist.TYPE_MESSAGE);
-		SendUp.addToWeb(blacklist, context);
-	}
+	
 	public void save (WebBlack webBlack ){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		db.execSQL("insert into webblack (number,type,remark,timehappen,timelength,version) values (?,?,?,?,?,?)" , 
@@ -48,7 +43,7 @@ public class WebBlackSqliteService {
     SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
     db.execSQL("delete from webblack where number = ?" , new Object[]{number});
     db.close();
-  }
+    }
 	public void update (WebBlack webblack){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		db.execSQL("update webblack set number = ?, type = ? ,remark = ? ,timehappen = ?, timelength = ?, version = ?where blackid = ?" ,
@@ -173,5 +168,4 @@ public class WebBlackSqliteService {
 		}
 		return area;
 	}
-	
 }

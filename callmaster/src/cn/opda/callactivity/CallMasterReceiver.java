@@ -28,7 +28,6 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		ConnectivityManager connectivity = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
 		NetworkInfo info = connectivity.getActiveNetworkInfo();
 		if (info != null) {
-			Log.i(TAG, "%%%%%%%%");
 			for(Blacklist blacklist : list){
 				blacklist.setUptype(Blacklist.HAVED);
 				SendUp.addToWeb(blacklist, context);

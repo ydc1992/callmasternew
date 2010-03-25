@@ -18,7 +18,7 @@
 		<Button
 			android:layout_width="wrap_content" 
 		    android:layout_height="wrap_content" 
-	    android:textSize="20px" 
+	    	android:textSize="20px" 
 		    android:layout_toRightOf="@id/phonecode"
 		    android:layout_alignTop="@id/phonecode"
 		    android:layout_marginLeft="10px"

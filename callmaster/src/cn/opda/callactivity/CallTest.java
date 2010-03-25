@@ -10,6 +10,7 @@ import java.util.List;
 import cn.opda.phone.Phone;
 import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
+import cn.opda.service.MessageService;
 import cn.opda.service.PhoneSqliteService;
 import cn.opda.service.WebBlackService;
 import cn.opda.service.WebBlackSqliteService;
@@ -39,8 +40,10 @@ public class CallTest extends AndroidTestCase {
 	}
 	public void testGaoXinBao() throws Exception{
 		WebBlackSqliteService webBlackService = new WebBlackSqliteService(getContext());
-		String area = webBlackService.findArea("15210439426");
-		Log.i(TAG, area+"++++++++");
+		MessageService messageService = new MessageService(getContext());
+		//String area = webBlackService.findArea("15210439426");
+		messageService.saveByNumber("15210439426");
+		//Log.i(TAG, area+"++++++++");
 	}
 	public void testT() throws Exception{
 		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(getContext());
