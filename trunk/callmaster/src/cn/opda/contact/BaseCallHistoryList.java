@@ -174,6 +174,8 @@ public class BaseCallHistoryList extends ListActivity {
 	    								type1 = Blacklist.TYPE_PROMOTION;
 	    							}else if("ÆäËû".equals(typename)){
 	    								type1 = Blacklist.TYPE_OTHER;
+	    							}else if("¶ÌÐÅ".equals(typename)){
+	    								type1 = Blacklist.TYPE_MESSAGE;
 	    							}
 	    										
 	    							String remark = editRemarkText.getText().toString();

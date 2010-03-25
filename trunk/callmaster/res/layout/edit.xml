@@ -35,6 +35,11 @@
 	        android:layout_height="wrap_content"
 	        android:id="@+id/safenumber"
 	        android:text="@string/othernumber" />
+	    <RadioButton 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/messageblack"
+	        android:text="@string/message" />
 	</RadioGroup>
 	</RelativeLayout>
 	

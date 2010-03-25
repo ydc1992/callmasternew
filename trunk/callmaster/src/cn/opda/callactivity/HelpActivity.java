@@ -3,6 +3,7 @@ package cn.opda.callactivity;
 import cn.opda.R;
 import android.app.Activity;
 import android.os.Bundle;
+import android.widget.TextView;
 
 public class HelpActivity extends Activity {
 	@Override

@@ -9,14 +9,16 @@ import java.util.Map;
 import cn.opda.R;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
+import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
+import cn.opda.service.WebBlackService;
+import cn.opda.service.WebBlackSqliteService;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.app.AlertDialog.Builder;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -31,13 +33,17 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class BaseBlackList extends Activity {
 	private static final String TAG = "BaseBlackList";
+	private WebBlackService webBlackService = new WebBlackService(this);
+	private WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(this);
 	private BlackListSqliteService blackService = new BlackListSqliteService(this);
-	private static final int AddContact= 1;
-	private static final int EXITContact= 2;
+	private static final int AddContact = 1;
+	private static final int EXITContact = 2;
+	private static final int UPDATEBLACK = 3;
 	String typename;
 	private ListView listView ;
 	private SimpleAdapter adapter;
@@ -52,17 +58,14 @@ public class BaseBlackList extends Activity {
     {
         super.onCreateOptionsMenu(menu);
         menu.add(0, AddContact, 0, R.string.add)
-        	.setShortcut('3', 'a')
-        	.setIcon(R.drawable.add);
+        	.setIcon(android.R.drawable.ic_menu_zoom);
         
-        Intent intent = new Intent(null, getIntent().getData());
-        intent.addCategory(Intent.CATEGORY_ALTERNATIVE);
-        menu.addIntentOptions(Menu.CATEGORY_ALTERNATIVE, 0, 0,
-                new ComponentName(this, BaseCallHistoryList.class), null, intent, 0, null);
-
+        menu.add(0, UPDATEBLACK, 0, R.string.updateBlack)
+		.setIcon(android.R.drawable.ic_menu_upload);
+        
         menu.add(0, EXITContact, 0, R.string.back)
-    		.setShortcut('4', 'd')
-    		.setIcon(R.drawable.exit);
+        .setIcon(android.R.drawable.ic_menu_revert);
+        
         return true;
         
     }
@@ -73,26 +76,6 @@ public class BaseBlackList extends Activity {
         switch (item.getItemId()) 
         {
         case AddContact:
-        	
-        	/*RadioGroup radioGroup = (RadioGroup) findViewById(R.id.radioGroup); 
-			Log.i(TAG,radioGroup+"+++++++++++==");
-			radioGroup.check(R.id.onesound);
-			RadioButton radioButton = (RadioButton) findViewById(
-			    radioGroup.getCheckedRadioButtonId());
-
-			//Log.i(TAG, String.valueOf(radioButton.getText()));
-
-			radioGroup.setOnCheckedChangeListener(
-			    new RadioGroup.OnCheckedChangeListener() {
-			    public void onCheckedChanged(
-			        RadioGroup group,
-			        int checkedId) {
-			        RadioButton radioButton = (RadioButton) findViewById(checkedId);
-			        typename = String.valueOf(radioButton.getText());
-			        Log.i(TAG, String.valueOf(radioButton.getText()));
-			    }
-			});*/
-        	
         	LayoutInflater factory = LayoutInflater.from(this);
 			final View editview = factory.inflate(R.layout.edit, null);
         	Builder my = new AlertDialog.Builder(this);
@@ -127,6 +110,8 @@ public class BaseBlackList extends Activity {
 								type = Blacklist.TYPE_PROMOTION;
 							}else if("其他".equals(typename)){
 								type = Blacklist.TYPE_OTHER;
+							}else if("短信".equals(typename)){
+								type = Blacklist.TYPE_MESSAGE;
 							}
 							
 							String remark = editRemarkText.getText().toString();
@@ -151,6 +136,41 @@ public class BaseBlackList extends Activity {
 			my.setNegativeButton(R.string.cancel, null);
 			my.show();
 			break;
+        case UPDATEBLACK:
+        	final ProgressDialog progressDialog = new ProgressDialog(this);
+    		progressDialog.setTitle("This is Title");
+    		progressDialog.setMessage("This is Message");
+    		progressDialog.setCancelable(true);
+    		
+			ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+			NetworkInfo info = connectivity.getActiveNetworkInfo();
+			if (info != null) {
+				progressDialog.show();
+				try {
+					int version = webBlackService.getVersion();
+					int oldVersion = blackSqliteService.findVersion();
+					if(version != oldVersion){
+						List<WebBlack> weblist = webBlackService.query();
+						boolean boo = blackSqliteService.updateWebBlack(weblist);
+						if(boo==true){
+				    		break;
+						}else{
+							progressDialog.cancel();
+							Toast.makeText(BaseBlackList.this, R.string.updatefalse, Toast.LENGTH_LONG).show();
+						}
+					}else{
+						progressDialog.cancel();
+						Toast.makeText(BaseBlackList.this, R.string.versionSame, Toast.LENGTH_LONG).show();
+					}
+				} catch (Exception e) {
+					progressDialog.cancel();
+					Log.e(TAG, e.getMessage());
+				}
+			}else{
+				progressDialog.cancel();
+				Toast.makeText(BaseBlackList.this, R.string.nonetwork, Toast.LENGTH_SHORT).show();
+			}
+        	break;
         case EXITContact:
         	this.finish();
             //return true;
@@ -179,6 +199,9 @@ public class BaseBlackList extends Activity {
 				break;
 			case 3:
 				temp = "其他";
+				break;
+			case 4:
+				temp = "短信";
 				break;
 			}
 			map.put("type", temp);
