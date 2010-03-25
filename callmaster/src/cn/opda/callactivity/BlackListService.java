@@ -2,6 +2,8 @@ package cn.opda.callactivity;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import cn.opda.R;
 import cn.opda.net.upload.SendUp;
@@ -12,6 +14,7 @@ import cn.opda.service.WebBlackSqliteService;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.database.Cursor;
 import android.media.AudioManager;
 import android.net.ConnectivityManager;
@@ -31,6 +34,15 @@ public class BlackListService extends Service {
 		return null;
 	}
 	@Override
+    public void onConfigurationChanged(Configuration newConfig) {
+            super.onConfigurationChanged(newConfig);
+            if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
+                    // land do nothing is ok
+            } else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
+                    // port do nothing is ok
+            }
+    }
+	@Override
 	public void onCreate() {
 		TelephonyManager telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 		PhoneStateListener listener = new PhoneStateListener(){	
@@ -38,7 +50,9 @@ public class BlackListService extends Service {
 			long ringingtime = 0;
 			public void onCallStateChanged(int state, String incomingNumber) {
 				final String num = incomingNumber;
+				
 			      switch (state){
+			      
 			        case TelephonyManager.CALL_STATE_IDLE:  //无任何状态时 
 			        	if(ringingtime != 0){
 			        		time = new Date().getTime() - ringingtime;
@@ -94,35 +108,53 @@ public class BlackListService extends Service {
 		                ringingtime = 0;
 			        	break;	
 			        case TelephonyManager.CALL_STATE_RINGING:  //电话进来时 
+			        	
 			        	ringingtime =  new Date().getTime();
 			        	Log.i(TAG, "2222222222222222()"+ringingtime);
-			        	if (blackService.findByNumber(incomingNumber)!= null){
-			        		Blacklist blacklist = blackService.findByNumber(incomingNumber);
-			        		WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
-			        		//WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
-			        		if(blacklist.getType() == Blacklist.TYPE_OTHER||blacklist.getType() == Blacklist.TYPE_PROMOTION
-			        				||webBlack.getType() == WebBlack.TYPE_OTHER||webBlack.getType() == WebBlack.TYPE_PROMOTION){
-			        			 try
-					              {
-					                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-					                if (audioManager != null)
-					                {
-					                  /* 设置为静音 */
-					                	Log.i(TAG, "+++++++++++");
-					                  /*Intent intent = new Intent(BlackListService.this, CloseActivity.class);
-					                  startActivity(intent);*/
-					                	audioManager.unloadSoundEffects();
-					                  audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-					                  audioManager.getStreamVolume(AudioManager.STREAM_RING);
-					                  Toast.makeText(BlackListService.this,
-					                      getString(R.string.str_msg), Toast.LENGTH_SHORT).show();
-					                }
-					              } catch (Exception e)
-					              {
-					                e.printStackTrace();
-					                break;
-					              }
-			        		}
+			        	if (blackService.findByNumber(incomingNumber)!= null||webBlackService.findByNumber(incomingNumber)!=null){
+			        			Blacklist blacklist = blackService.findByNumber(incomingNumber);
+			        			if(blacklist!=null){
+			        				 try
+						              {
+						                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+						                if (audioManager != null)
+						                {
+						                  /* 设置为静音 */
+						                  /*Intent intent = new Intent(BlackListService.this, CloseActivity.class);
+						                  startActivity(intent);*/
+						                	audioManager.unloadSoundEffects();
+						                  audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+						                  audioManager.getStreamVolume(AudioManager.STREAM_RING);
+						                  Toast.makeText(BlackListService.this,
+						                      getString(R.string.str_msg), Toast.LENGTH_SHORT).show();
+						                }
+						              } catch (Exception e)
+						              {
+						                e.printStackTrace();
+						                break;
+						              }
+			        			}
+			            		WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
+			            		if(webBlack!=null){
+			            			 try
+						              {
+						                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+						                if (audioManager != null)
+						                {
+						                  /* 设置为静音 */
+						                	Log.i(TAG, "+++++++++++");
+						                  /*Intent intent = new Intent(BlackListService.this, CloseActivity.class);
+						                  startActivity(intent);*/
+						                	audioManager.unloadSoundEffects();
+						                  audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+						                  audioManager.getStreamVolume(AudioManager.STREAM_RING);
+						                }
+						              } catch (Exception e)
+						              {
+						                e.printStackTrace();
+						                break;
+						              }
+			        			}
 			             
 			            }
 			      }

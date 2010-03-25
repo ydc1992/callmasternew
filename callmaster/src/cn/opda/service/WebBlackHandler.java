@@ -59,6 +59,8 @@ public class WebBlackHandler extends DefaultHandler {
 				webBlack.setType(WebBlack.TYPE_OTHER);
 			}else if(TagUtils.CheackTags(type, TagUtils.message)){
 				webBlack.setType(WebBlack.TYPE_MESSAGE);
+			}else{
+				webBlack.setType(WebBlack.TYPE_ONESOUND);
 			}
 			webBlack.setRemark(attributes.getValue(2));
 		}

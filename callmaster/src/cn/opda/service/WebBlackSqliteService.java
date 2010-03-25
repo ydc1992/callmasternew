@@ -36,7 +36,7 @@ public class WebBlackSqliteService {
 	}
 	public void deleteAll (){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
-		db.execSQL("delete from webblack " , null);
+		db.execSQL("delete from webblack " , new Object[]{});
 		db.close();
 	}
 	public void deleteByNumber (String number){

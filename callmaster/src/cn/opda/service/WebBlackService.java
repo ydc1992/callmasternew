@@ -23,7 +23,7 @@ public class WebBlackService {
 		this.context = context;
 	}
 	public int getVersion() throws Exception{
-		String urlPath = "file:////sdcard/test.xml";
+		String urlPath = "http://guanjia.koufeikexing.com/koufeikexing/defener/phonedown.php?version=1&platform=2";
 		URL url = new URL(urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.connect();
@@ -44,29 +44,8 @@ public class WebBlackService {
 			throw new Exception("url connection fail:"+ urlPath);
 		}
 	}
-	public int getTestVersion() throws Exception{
-		AssetManager am = context.getAssets();  
-		InputStream inStream = am.open("test.xml");
-		SAXParserFactory spf = SAXParserFactory.newInstance();
-		SAXParser saxParser = spf.newSAXParser(); // 创建解析器
-		WebBlackHandler handler = new WebBlackHandler();
-		saxParser.parse(inStream, handler);
-		inStream.close();
-		return handler.getVersion();
-	}
-	public List<WebBlack> testquery() throws Exception{
-		AssetManager am = context.getAssets();  
-		InputStream inStream = am.open("test.xml");
-		SAXParserFactory spf = SAXParserFactory.newInstance();
-		SAXParser saxParser = spf.newSAXParser(); // 创建解析器
-		WebBlackHandler handler = new WebBlackHandler();
-		saxParser.parse(inStream, handler);
-		inStream.close();
-		return handler.getBlacks();
-	}
-	
 	public List<WebBlack> query() throws Exception{
-		String urlPath = "???????????????";
+		String urlPath = "http://guanjia.koufeikexing.com/koufeikexing/defener/phonedown.php?version=1&platform=2";
 		URL url = new URL(urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.connect();

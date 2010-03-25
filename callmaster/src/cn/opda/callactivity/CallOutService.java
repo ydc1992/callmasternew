@@ -34,13 +34,20 @@ public class CallOutService extends Service {
 		String number = intent.getStringExtra("num");        
 		int firstNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 0, 1));
 		int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));
-		if(blackService.findByNumber(number)!=null){
+		if(blackService.findByNumber(number)!=null||webBlackService.findByNumber(number)!=null){
 			Blacklist blacklist = blackService.findByNumber(number);
-    		WebBlack webBlack = webBlackService.findByNumber(number);
-			if(blacklist.getType() == WebBlack.TYPE_ONESOUND||blacklist.getType() == WebBlack.TYPE_OVERCHARGE
-					||webBlack.getType() == Blacklist.TYPE_ONESOUND||webBlack.getType() == Blacklist.TYPE_OVERCHARGE){
-				Toast.makeText(CallOutService.this, R.string.tip, Toast.LENGTH_LONG).show();
+			if(blacklist!=null){
+				if(blacklist.getType() == WebBlack.TYPE_ONESOUND||blacklist.getType() == WebBlack.TYPE_OVERCHARGE){
+					Toast.makeText(CallOutService.this, R.string.tip, Toast.LENGTH_LONG).show();
+				}
 			}
+    		WebBlack webBlack = webBlackService.findByNumber(number);
+    		if(webBlack!=null){
+    			if(webBlack.getType() == Blacklist.TYPE_ONESOUND||webBlack.getType() == Blacklist.TYPE_OVERCHARGE){
+    				Toast.makeText(CallOutService.this, R.string.tip, Toast.LENGTH_LONG).show();
+    			}
+			}
+			
 		}
 		if(number.length()==11||number.length()==12){
 			if(firstNum==0){
