@@ -8,6 +8,7 @@ import cn.opda.R;
 import cn.opda.contact.BaseBlackList;
 import cn.opda.contact.CallHistoryList;
 import cn.opda.contact.ContactList;
+import cn.opda.message.Test;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -32,11 +33,11 @@ public class FirstActivity extends Activity {
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = {
 			R.drawable.search, R.drawable.blacklist, R.drawable.recorder, R.drawable.contact
-			,R.drawable.help
+			,R.drawable.help,R.drawable.ic_menu_close_clear_cancel
 	};
 	private Integer[] mNameIds = {
 			R.string.findarea, R.string.blacklist, R.string.callhostory, R.string.contact,
-			R.string.help
+			R.string.help,R.string.messagestop
 	}; 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -81,7 +82,7 @@ public class FirstActivity extends Activity {
         gridview = (GridView) findViewById(R.id.gridview);
 		// 生成动态数组，并且转入数据
 		List<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 5; i++) {
+		for (int i = 0; i < 6; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", mImageIds[i]);// 添加图像资源的ID
 			map.put("ItemNameText", FirstActivity.this.getString(mNameIds[i]));
@@ -161,6 +162,9 @@ public class FirstActivity extends Activity {
 			}
 			else if(arg2==4){
 				intent.setClass(FirstActivity.this, HelpActivity.class);
+			}
+			else if(arg2==5){
+				intent.setClass(FirstActivity.this, Test.class);
 			}
 			
 			

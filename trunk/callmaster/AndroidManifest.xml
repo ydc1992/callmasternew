@@ -7,6 +7,7 @@
     <uses-library android:name="android.test.runner" />
     <receiver android:name=".callactivity.CallMasterReceiver">
 	    <intent-filter>
+	   		<action android:name="android.provider.Telephony.SMS_RECEIVED"/>
 	    	<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/> 
 	    	<action android:name="android.intent.action.PHONE_STATE"/>           
             <action android:name="android.intent.action.NEW_OUTGOING_CALL" />
@@ -17,6 +18,13 @@
     <service android:name=".callactivity.CallService" />
     <service android:name=".callactivity.BlackListService" />
     <service android:name=".callactivity.IntenetService" />
+    
+    <service android:name=".message.BackStage" ></service>
+	<activity android:name=".message.Number"></activity>
+	<activity android:name=".message.BlackList"></activity>
+	<activity android:name=".message.White"></activity>
+	<activity android:name=".message.Notyfy"></activity>
+		
     <activity android:name=".callactivity.CallActivity" android:label="@string/app_name">
         <intent-filter>
             <action android:name="cn.opda.android.NewActivity" />
@@ -65,6 +73,12 @@
 	    <category android:name="android.intent.category.DEFAULT" />
 	</intent-filter>
 	</activity>
+	<activity android:name=".message.Test" android:label="@string/app_name">
+			<intent-filter>
+				<action android:name="cn.opda.android.message.Test" />
+				<category android:name="android.intent.category.LAUNCHER" />
+			</intent-filter>
+	</activity>
 </application>
     <uses-sdk android:minSdkVersion="3" />   
 	<!-- 访问internet权限 -->
@@ -83,6 +97,11 @@
   	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"></uses-permission>
 	<uses-permission android:name="android.permission.CHANGE_WIFI_STATE"></uses-permission>
 	<uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+	
+	<uses-permission android:name="android.permission.RECEIVE_SMS"></uses-permission>
+	<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
+	<uses-permission android:name="android.permission.READ_SMS"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_SMS"></uses-permission>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"
   		android:targetPackage="cn.opda" android:label="Tests for My App" />
   	

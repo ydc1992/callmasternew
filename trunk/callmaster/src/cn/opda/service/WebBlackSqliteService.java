@@ -143,7 +143,6 @@ public class WebBlackSqliteService {
 		int firstNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 0, 1));
 		int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));;
 		if(firstNum==0){
-			Log.i(TAG, "2222222222222");
 			if(secondNum == 1||secondNum == 2){
 				Phone phonetemp = phoneSqliteService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 3));
 				if(phonetemp!=null){
@@ -156,12 +155,8 @@ public class WebBlackSqliteService {
 				}
 			}
 		}else if(firstNum==1){
-			Log.i(TAG, "33333333333333333");
-				Log.i(TAG, "111111111111111"+number);
 				String pre = "0"+belongingService.read(number);
-				Log.i(TAG, pre);
 				Phone phonetemp = phoneSqliteService.findByAreaNum(pre);
-				Log.i(TAG, phonetemp+"+");
 				if(phonetemp!=null){
 					area = phonetemp.getProvince()+" "+phonetemp.getCity();
 				}

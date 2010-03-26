@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.opda.message.ToDoDB;
+import cn.opda.message.WhiteList;
 import cn.opda.phone.Phone;
 import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
@@ -14,6 +16,7 @@ import cn.opda.service.MessageService;
 import cn.opda.service.PhoneSqliteService;
 import cn.opda.service.WebBlackService;
 import cn.opda.service.WebBlackSqliteService;
+import android.database.Cursor;
 import android.test.AndroidTestCase;
 import android.util.Log;
 
@@ -26,6 +29,14 @@ public class CallTest extends AndroidTestCase {
         for(Phone phone : phones){
         	phoneSqliteService.save(phone);
         }
+	}
+	public void testYYY(){
+		ToDoDB doDB = new ToDoDB(getContext());
+		Cursor cursor = doDB.select();
+		while(cursor.moveToNext()){
+			Log.i(TAG, cursor.getString(1)+"+++++");
+		}
+		
 	}
 	public void testFile() throws Exception{
 		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(getContext());
