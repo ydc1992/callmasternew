@@ -31,7 +31,7 @@ public class FirstActivity extends Activity {
 	ProgressDialog pbarDialog;
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = {
-			R.drawable.search, R.drawable.blacklist, R.drawable.history, R.drawable.contact
+			R.drawable.search, R.drawable.blacklist, R.drawable.recorder, R.drawable.contact
 			,R.drawable.help
 	};
 	private Integer[] mNameIds = {
