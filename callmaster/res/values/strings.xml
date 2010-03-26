@@ -70,4 +70,13 @@
 <string name="updateBlack">同步黑名单</string>
 <string name="blackcome">黑名单来电，请小心！</string>
 <string name="webblackcome">云端黑名单来电，请小心！</string>
+<string name="edit">输入黑名单的号码</string>
+<string name="deleteall">删除全部</string>
+<string name="shift">转移到白名单</string>
+<string name="yes">确定</string>
+<string name="no">否定</string>
+<string name="whiteedit">输入白名单的号码</string>
+<string name="shiftblack">转移到黑名单</string>
+<string name="shift_tab">转到主页面</string>
+<string name="messagestop">短信拦截</string>
 </resources>
