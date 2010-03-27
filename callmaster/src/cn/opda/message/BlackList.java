@@ -10,33 +10,21 @@ import cn.opda.service.MessageService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteCursor;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemSelectedListener;
 
 public class BlackList extends Activity {
 	private LinearLayout lt;
@@ -83,6 +71,7 @@ public class BlackList extends Activity {
 			//上传到云端
 			messageService.saveByNumber(c.getString(c.getColumnIndex(tb.FIELD_TEXT)));
 		}
+		
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(BlackList.this,
 				R.layout.list, c, new String[] { ToDoDB.FIELD_TEXT },
 				new int[] { R.id.listTextView1 });
@@ -92,9 +81,6 @@ public class BlackList extends Activity {
 
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// TODO Auto-generated method stub
-
-				// text = sc.getString(1);
 				text = (String) ls.get(position);
 
 				new AlertDialog.Builder(BlackList.this).setTitle("操作此号码")
@@ -189,7 +175,7 @@ public class BlackList extends Activity {
 		switch (item.getItemId()) {
 		case 0:
 			LayoutInflater factory = LayoutInflater.from(this);
-			View editview = factory.inflate(R.layout.edit, null);
+			View editview = factory.inflate(R.layout.editmessage, null);
 			Builder my = new AlertDialog.Builder(this);
 			my.setView(editview);
 			et = (EditText) editview.findViewById(R.id.EditText01);
