@@ -174,7 +174,7 @@ public class White extends Activity {
 
 		case 0:
 			LayoutInflater factory = LayoutInflater.from(this);
-			View editview = factory.inflate(R.layout.edit, null);
+			View editview = factory.inflate(R.layout.editmessage, null);
 			Builder my = new AlertDialog.Builder(this);
 			my.setView(editview);
 			et = (EditText) editview.findViewById(R.id.EditText01);

@@ -8,10 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.opda.message.ToDoDB;
-import cn.opda.message.WhiteList;
 import cn.opda.phone.Phone;
 import cn.opda.phone.WebBlack;
-import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.MessageService;
 import cn.opda.service.PhoneSqliteService;
 import cn.opda.service.WebBlackService;

@@ -109,8 +109,7 @@ public class BackStage extends Service {
 		if(c_b.getCount()>0){
 			try {
 				Log.i(TAG, webBlackSqliteService.findArea(phone)+"555555555555");
-				b_ku.insert(phone + "\t" + "\t" + "\t" + "\t" + "\t"
-						+ webBlackSqliteService.findArea(phone), body, gsd);
+				b_ku.insert(phone, body, gsd);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, e.getMessage());
@@ -134,8 +133,7 @@ public class BackStage extends Service {
 				& c.getCount()==0 & c_b.getCount()==0) {
 
 			try {
-				y_ku.insert(phone + "\t" + "\t" + "\t" + "\t" + "\t"
-						+ webBlackSqliteService.findArea(phone), body);
+				y_ku.insert(phone, body);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				Log.e(TAG, e.getMessage());
