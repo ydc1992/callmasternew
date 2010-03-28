@@ -137,26 +137,22 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		db.execSQL("CREATE TABLE phone (phoneid integer primary key autoincrement," +
+		/*db.execSQL("CREATE TABLE phone (phoneid integer primary key autoincrement," +
 		" province varchar(8), city varchar(8), areaCode varchar(4))");
 		db.execSQL("CREATE TABLE blacklist (blackid integer primary key autoincrement, " +
 				"number varchar(11), type integer, remark varchar(16), timelength integer, timehappen varchar(14), uptype integer)");
 		db.execSQL("CREATE TABLE webblack (blackid integer primary key autoincrement, " +
-				"number varchar(11), type integer, remark varchar(16), timelength integer, timehappen varchar(14), version integer)");
+				"number varchar(11), type integer, remark varchar(16), timelength integer, timehappen varchar(14), version integer)");*/
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-		db.execSQL("DROP TABLE IF EXISTS phone");
+		/*db.execSQL("DROP TABLE IF EXISTS phone");
 		onCreate(db);
 		db.execSQL("DROP TABLE IF EXISTS blacklist");
 		onCreate(db);
 		db.execSQL("DROP TABLE IF EXISTS webblack");
 		onCreate(db);
-		
+		*/
 	}
- 
-	
- 
- 
 }

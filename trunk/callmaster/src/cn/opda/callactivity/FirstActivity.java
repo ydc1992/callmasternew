@@ -1,5 +1,7 @@
 package cn.opda.callactivity;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +10,8 @@ import cn.opda.R;
 import cn.opda.contact.BaseBlackList;
 import cn.opda.contact.CallHistoryList;
 import cn.opda.contact.ContactList;
+import cn.opda.dao.DataBaseHelper;
+import cn.opda.message.BackStage;
 import cn.opda.message.Test;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -33,7 +37,7 @@ public class FirstActivity extends Activity {
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = {
 			R.drawable.search, R.drawable.blacklist, R.drawable.recorder, R.drawable.contact
-			,R.drawable.help,R.drawable.ic_menu_close_clear_cancel
+			,R.drawable.help,R.drawable.msg
 	};
 	private Integer[] mNameIds = {
 			R.string.findarea, R.string.blacklist, R.string.callhostory, R.string.contact,
@@ -46,7 +50,7 @@ public class FirstActivity extends Activity {
         /*
          * 从工程中直接读取数据库
          */
-        /*DataBaseHelper myDbHelper = new DataBaseHelper(this);
+       /* DataBaseHelper myDbHelper = new DataBaseHelper(this);
         myDbHelper = new DataBaseHelper(this);
  
         try {
@@ -65,7 +69,7 @@ public class FirstActivity extends Activity {
 	 
 	 	}catch(SQLException sqle){
 	 
-	 		throw sqle;
+	 		Log.e(TAG, sqle.getMessage());
 	 
 	 	} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -75,7 +79,6 @@ public class FirstActivity extends Activity {
         Intent serviceIntent = new Intent(this, CallService.class);
 		Intent serIntent = new Intent(this, BlackListService.class);
 		Intent intenetIntent = new Intent(this, IntenetService.class);
-		
 		startService(intenetIntent);
 		startService(serIntent);
 		startService(serviceIntent);

