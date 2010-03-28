@@ -40,7 +40,7 @@
 <string name="othernumber">其他</string>
 <string name="editcontact">编辑联系人 </string>
 <string name="deletefromblack">从黑名单中删除</string>
-<string name="tip">您拨打的电话是黑名单电话,请慎重！</string>
+<string name="tip">此电话可能有高额扣费危险！</string>
 <string name="phone">电话</string>
 <string name="help">帮助</string>
 <string name="helptext">
@@ -79,4 +79,6 @@
 <string name="shiftblack">转移到黑名单</string>
 <string name="shift_tab">转到主页面</string>
 <string name="messagestop">短信拦截</string>
+<string name="tuixiaoAlert">推销电话，请小心</string>
+<string name="saoraoAlert">骚扰电话，请小心</string>
 </resources>

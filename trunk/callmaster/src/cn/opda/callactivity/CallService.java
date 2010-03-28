@@ -53,7 +53,7 @@ public class CallService extends Service {
 			        	if (blackService.findByNumber(incomingNumber)== null&&webBlackService.findByNumber(incomingNumber)==null){
 			        		
 			        		
-			        		Timer timer = new Timer();
+                        Timer timer = new Timer();
 			        		int firstNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 0, 1));
 			        		int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));
 			        		if(firstNum==0){
@@ -82,17 +82,6 @@ public class CallService extends Service {
 			        		}
 			        		timer.schedule(new TimerTask(){  
 			        			Toast mToast = Toast.makeText(getApplicationContext(), phone.getProvince()+phone.getCity(), Toast.LENGTH_LONG);  
-			        			public void run() {  
-			        				while(isRunning){  
-			        					mToast.show();  
-			        				}  
-			        			}  
-			        			
-			        		}, 10);
-			        	}else{
-			        		Timer timer = new Timer();
-			        		timer.schedule(new TimerTask(){  
-			        			Toast mToast = Toast.makeText(getApplicationContext(), R.string.blackcome, Toast.LENGTH_LONG);  
 			        			public void run() {  
 			        				while(isRunning){  
 			        					mToast.show();  

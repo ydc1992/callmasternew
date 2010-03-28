@@ -20,6 +20,7 @@ import android.media.AudioManager;
 import android.net.ConnectivityManager;
 import android.os.IBinder;
 import android.provider.Contacts;
+import android.provider.Contacts.Phones;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
@@ -108,55 +109,69 @@ public class BlackListService extends Service {
 		                ringingtime = 0;
 			        	break;	
 			        case TelephonyManager.CALL_STATE_RINGING:  //电话进来时 
-			        	
 			        	ringingtime =  new Date().getTime();
 			        	Log.i(TAG, "2222222222222222()"+ringingtime);
-			        	if (blackService.findByNumber(incomingNumber)!= null||webBlackService.findByNumber(incomingNumber)!=null){
-			        			Blacklist blacklist = blackService.findByNumber(incomingNumber);
-			        			if(blacklist!=null){
+			        	Blacklist blacklist = blackService.findByNumber(incomingNumber);
+			        	WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
+			        	AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+			        	if (blacklist!= null){
+			        			if(blacklist.getType()==Blacklist.TYPE_PROMOTION){
 			        				 try
 						              {
-						                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-						                if (audioManager != null)
-						                {
 						                  /* 设置为静音 */
-						                  /*Intent intent = new Intent(BlackListService.this, CloseActivity.class);
-						                  startActivity(intent);*/
-						                	audioManager.unloadSoundEffects();
+						                  audioManager.unloadSoundEffects();
 						                  audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-						                  audioManager.getStreamVolume(AudioManager.STREAM_RING);
 						                  Toast.makeText(BlackListService.this,
-						                      getString(R.string.str_msg), Toast.LENGTH_SHORT).show();
-						                }
+						                      getString(R.string.tuixiaoAlert), Toast.LENGTH_LONG).show();
 						              } catch (Exception e)
 						              {
 						                e.printStackTrace();
 						                break;
 						              }
+			        			}else if(blacklist.getType()==Blacklist.TYPE_OTHER){
+    			        			    try
+                                        {
+                                            /* 设置为静音 */
+                                            audioManager.unloadSoundEffects();
+                                            audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                            Toast.makeText(BlackListService.this,
+                                                getString(R.string.saoraoAlert), Toast.LENGTH_LONG).show();
+                                        } catch (Exception e)
+                                        {
+                                          e.printStackTrace();
+                                          break;
+                                        }
 			        			}
-			            		WebBlack webBlack = webBlackService.findByNumber(incomingNumber);
-			            		if(webBlack!=null){
-			            			 try
-						              {
-						                AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-						                if (audioManager != null)
-						                {
-						                  /* 设置为静音 */
-						                	Log.i(TAG, "+++++++++++");
-						                  /*Intent intent = new Intent(BlackListService.this, CloseActivity.class);
-						                  startActivity(intent);*/
-						                	audioManager.unloadSoundEffects();
-						                  audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
-						                  audioManager.getStreamVolume(AudioManager.STREAM_RING);
-						                }
-						              } catch (Exception e)
-						              {
-						                e.printStackTrace();
-						                break;
-						              }
-			        			}
-			             
 			            }
+			        	if(webBlack!=null){
+			        	    if(webBlack.getType()==WebBlack.TYPE_PROMOTION){
+                                try
+                                 {
+                                     /* 设置为静音 */
+                                     audioManager.unloadSoundEffects();
+                                     audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                     Toast.makeText(BlackListService.this,
+                                         getString(R.string.tuixiaoAlert), Toast.LENGTH_SHORT).show();
+                                 } catch (Exception e)
+                                 {
+                                   e.printStackTrace();
+                                   break;
+                                 }
+                           }else if(webBlack.getType()==WebBlack.TYPE_OTHER){
+                                   try
+                                   {
+                                       /* 设置为静音 */
+                                       audioManager.unloadSoundEffects();
+                                       audioManager.setRingerMode(AudioManager.RINGER_MODE_SILENT);
+                                       Toast.makeText(BlackListService.this,
+                                           getString(R.string.saoraoAlert), Toast.LENGTH_SHORT).show();
+                                   } catch (Exception e)
+                                   {
+                                     e.printStackTrace();
+                                     break;
+                                   }
+                           }
+                       }
 			      }
 			      super.onCallStateChanged(state, incomingNumber);
 			}        	
