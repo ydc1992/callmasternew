@@ -3,6 +3,7 @@ package cn.opda.message;
 import cn.opda.service.WebBlackSqliteService;
 import android.app.Service;
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.database.Cursor;
@@ -186,13 +187,22 @@ public class BackStage extends Service {
 					" address=? and read=?", new String[] { phone, "0" },
 					"date desc");
 
-			if (cursor != null) {
+			ContentValues values = new ContentValues();
+            values.put("read", "1"); // 修改短信为已读模式
+            cursor.moveToFirst();
+            while (cursor.isLast()) {
+                // 更新当前未读短信状态为已读
+                getContentResolver().update(Uri.parse("content://sms/inbox"),
+                        values, " _id=?",
+                        new String[] { "" + cursor.getInt(0) });
+                cursor.moveToNext();
+            }
 
-				getContentResolver().delete(Uri.parse("content://sms"),
-						"address=" + phone, null);
-				cursor.moveToNext();
+            getContentResolver().delete(Uri.parse("content://sms"),
+                    "address=?", new String[] { phone });
+            // cursor.moveToNext();
 
-			}
+            Log.i("test", phone);
 		}
 	}
 }
