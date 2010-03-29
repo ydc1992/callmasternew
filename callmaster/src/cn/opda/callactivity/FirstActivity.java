@@ -13,6 +13,7 @@ import cn.opda.contact.CallHistoryList;
 import cn.opda.contact.ContactList;
 import cn.opda.dao.DataBaseHelper;
 import cn.opda.message.Test;
+import cn.opda.service.ShareService;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
@@ -52,9 +53,7 @@ public class FirstActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first);
 		File dir = new File("/data/data/cn.opda/shared_prefs/opda.xml");
-		SharedPreferences sharedPreferences = getSharedPreferences(
-				"opda", Context.MODE_WORLD_READABLE
-						+ Context.MODE_WORLD_WRITEABLE);
+		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
 		int startService = sharedPreferences.getInt("startService", 1);
 		//int beginAuto = sharedPreferences.getInt("beginAuto", 1);
 		final Editor editor = sharedPreferences.edit();
@@ -89,12 +88,10 @@ public class FirstActivity extends Activity {
 					});
 			my.show();
 			}
-		if(startService==1){
 			Intent serviceIntent = new Intent(this, CallService.class);
 			Intent serIntent = new Intent(this, BlackListService.class);
 			this.startService(serIntent);
 			this.startService(serviceIntent);
-		}
 		/*
 		 * 从工程中直接读取数据库
 		 */

@@ -3,11 +3,11 @@ package cn.opda.callactivity;
 
 import java.util.List;
 
-import cn.opda.message.BackStage;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
 import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
+import cn.opda.service.ShareService;
 import cn.opda.service.WebBlackService;
 import cn.opda.service.WebBlackSqliteService;
 import android.content.BroadcastReceiver;
@@ -16,8 +16,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
-import android.telephony.gsm.SmsMessage;
 import android.util.Log;
 
 public class CallMasterReceiver extends BroadcastReceiver {
@@ -29,7 +27,7 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		WebBlackService webBlackService = new WebBlackService(context);
 		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(context);
 		
-		SharedPreferences sharedPreferences = context.getSharedPreferences("opda", Context.MODE_WORLD_READABLE+Context.MODE_WORLD_WRITEABLE);
+		SharedPreferences sharedPreferences = ShareService.getShare(context, "opda");
 		int startService = sharedPreferences.getInt("startService", 1);
 		int beginAuto = sharedPreferences.getInt("beginAuto", 1);
 		Log.i(TAG, startService+"++++++++++"+beginAuto);
@@ -68,7 +66,6 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		}
 		
 			if(intent.getAction().equals("android.intent.action.BOOT_COMPLETED")){//开机启动服务
-				if(beginAuto == 1){
 					
 					Intent serviceIntent = new Intent(context, CallService.class);
 					serviceIntent.putExtra("startService", startService);
@@ -76,7 +73,6 @@ public class CallMasterReceiver extends BroadcastReceiver {
 					serIntent.putExtra("startService", startService);
 					context.startService(serIntent);
 					context.startService(serviceIntent);
-				}
 			}
 		
 		/*if (intent.getAction().equals(mACTION)) {
