@@ -8,6 +8,7 @@ import cn.opda.phone.Phone;
 import cn.opda.service.BelongingService;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.PhoneSqliteService;
+import cn.opda.service.ShareService;
 import cn.opda.service.WebBlackSqliteService;
 
 import android.app.Service;
@@ -26,16 +27,12 @@ public class CallService extends Service {
 	private static final String TAG = "TelService";
 	private BelongingService belongservice = new BelongingService(this);
 	private PhoneSqliteService phoneService = new PhoneSqliteService(this);
-	SharedPreferences sharedPreferences = this.getSharedPreferences("opda", Context.MODE_WORLD_READABLE+Context.MODE_WORLD_WRITEABLE);
-	int startService = sharedPreferences.getInt("startService", 1);
-	int beginAuto = sharedPreferences.getInt("beginAuto", 1);
 	@Override
 	public IBinder onBind(Intent intent) {
 		
 		return null;
 	}
 	public void onCreate() {
-		if(startService==1){
 			Log.i(TAG, "++++++++++");
 			/* 取得电话服务 */
 			final TelephonyManager telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
@@ -54,45 +51,48 @@ public class CallService extends Service {
 						break;	
 					case TelephonyManager.CALL_STATE_RINGING:  //电话进来时 
 						isRunning = true;
-						if (blackService.findByNumber(incomingNumber)== null&&webBlackService.findByNumber(incomingNumber)==null){
-							
-							
-							Timer timer = new Timer();
-							int firstNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 0, 1));
-							int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));
-							if(firstNum==0){
-								if(secondNum==1||secondNum==2){
-									Phone phonetemp = phoneService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 3));
-									if(phonetemp!=null){
-										phone = phonetemp;
-									}
-								}else {
-									Phone phonetemp = phoneService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 4));
-									if(phonetemp!=null){
-										phone = phonetemp;
-									}
-								}
-							}else if(firstNum==1){
-								try {
-									String pre = "0"+belongservice.read(number);
-									Phone phonetemp = phoneService.findByAreaNum(pre);
-									if(phonetemp!=null){
-										phone = phonetemp;
-									}
-								} catch (Exception e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
-							}
-							timer.schedule(new TimerTask(){  
-								Toast mToast = Toast.makeText(getApplicationContext(), phone.getProvince()+phone.getCity(), Toast.LENGTH_LONG);  
-								public void run() {  
-									while(isRunning){  
-										mToast.show();  
-									}  
-								}  
-								
-							}, 10);
+						SharedPreferences preferences = ShareService.getShare(CallService.this, "opda");
+						if(preferences.getInt("startService", 1)==1){
+						    if (blackService.findByNumber(incomingNumber)== null&&webBlackService.findByNumber(incomingNumber)==null){
+						        
+						        
+						        Timer timer = new Timer();
+						        int firstNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 0, 1));
+						        int secondNum = Integer.parseInt(String.copyValueOf(number.toCharArray(), 1, 1));
+						        if(firstNum==0){
+						            if(secondNum==1||secondNum==2){
+						                Phone phonetemp = phoneService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 3));
+						                if(phonetemp!=null){
+						                    phone = phonetemp;
+						                }
+						            }else {
+						                Phone phonetemp = phoneService.findByAreaNum(String.copyValueOf(number.toCharArray(), 0, 4));
+						                if(phonetemp!=null){
+						                    phone = phonetemp;
+						                }
+						            }
+						        }else if(firstNum==1){
+						            try {
+						                String pre = "0"+belongservice.read(number);
+						                Phone phonetemp = phoneService.findByAreaNum(pre);
+						                if(phonetemp!=null){
+						                    phone = phonetemp;
+						                }
+						            } catch (Exception e) {
+						                // TODO Auto-generated catch block
+						                e.printStackTrace();
+						            }
+						        }
+						        timer.schedule(new TimerTask(){  
+						            Toast mToast = Toast.makeText(getApplicationContext(), phone.getProvince()+phone.getCity(), Toast.LENGTH_LONG);  
+						            public void run() {  
+						                while(isRunning){  
+						                    mToast.show();  
+						                }  
+						            }  
+						            
+						        }, 10);
+						    }
 						}
 						
 						break;
@@ -102,7 +102,6 @@ public class CallService extends Service {
 			};
 			//监听电话的状态
 			telManager.listen(listener, PhoneStateListener.LISTEN_CALL_STATE);
-		}
 	}
 	
 }
