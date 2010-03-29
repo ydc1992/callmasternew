@@ -3,5 +3,6 @@
   xmlns:android="http://schemas.android.com/apk/res/android">
 <item android:id="@+id/about"
 		android:icon="@drawable/indicator_input_error"
+		android:title="@string/about"
 ></item>
 </menu>
