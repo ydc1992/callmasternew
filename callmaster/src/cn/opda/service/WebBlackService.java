@@ -32,9 +32,6 @@ public class WebBlackService {
 		{
 			SAXParserFactory spf = SAXParserFactory.newInstance();
 			SAXParser saxParser = spf.newSAXParser(); // 创建解析器
-			// 设置解析器的相关特性，http://xml.org/sax/features/namespaces = true
-			// 表示开启命名空间特性
-		//	saxParser.setProperty("http://xml.org/sax/features/namespaces", true);
 			WebBlackHandler handler = new WebBlackHandler();
 			saxParser.parse(inStream, handler);
 			inStream.close();
