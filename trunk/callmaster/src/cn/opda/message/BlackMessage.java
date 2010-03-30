@@ -50,9 +50,16 @@ public class BlackMessage extends SQLiteOpenHelper {
 
 	public void delete(String text) {
 		SQLiteDatabase db = this.getWritableDatabase();
+//		String where = FIELD_NUMBER + " = ?";
+//		String[] whereValue = { text };
+//		db.delete(TABLE_NAME, where, whereValue);
 		String where = FIELD_TEXT + " = ?";
 		String[] whereValue = { text };
 		db.delete(TABLE_NAME, where, whereValue);
+		
+//		db.execSQL("delete from todo_blacktabl where _id = ?",
+//				new Object[] { text });
+		db.close();
 	}
 
 	public void deleteall() {

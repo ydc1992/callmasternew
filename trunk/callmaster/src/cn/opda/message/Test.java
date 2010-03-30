@@ -5,9 +5,8 @@ import java.util.List;
 
 import cn.opda.R;
 
-
-
 import android.app.AlertDialog;
+import android.app.NotificationManager;
 import android.app.TabActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -32,9 +31,12 @@ public class Test extends TabActivity {
 	private BlackMessage bage;
 	private YiSiMessage yage;
 	private List listt;
+	private List list_text;
 	private ToDoDB tb;
 	private String yisi_number = "";
+	private String black_number = "";
 	private boolean flag = true;
+	private List list;
 
 	/** Called when the activity is first created. */
 	@Override
@@ -43,6 +45,11 @@ public class Test extends TabActivity {
 		setContentView(R.layout.tab);
 		listt = new ArrayList();
 		tb = new ToDoDB(this);
+		list = new ArrayList();
+		list_text = new ArrayList();
+
+		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		manager.cancel(CooperationNotification.SIMPLE_NOTIFICATION_ID);
 
 		list1 = (ListView) this.findViewById(R.id.ListView01);
 		list2 = (ListView) this.findViewById(R.id.ListView02);
@@ -56,21 +63,37 @@ public class Test extends TabActivity {
 		// 设置内容(setContent)
 
 		mTabHost.addTab(mTabHost.newTabSpec("tab_test2").setIndicator("可疑信息",
-				this.getResources().getDrawable(R.drawable.doubtful)).setContent(R.id.ListView02));
+				this.getResources().getDrawable(R.drawable.doubtful))
+				.setContent(R.id.ListView02));
 		mTabHost.addTab(mTabHost.newTabSpec("tab_test1").setIndicator(
-				"黑名单收件箱 ", this.getResources().getDrawable(R.drawable.black)).setContent(R.id.ListView01));
+				"黑名单收件箱 ", this.getResources().getDrawable(R.drawable.black))
+				.setContent(R.id.ListView01));
 		mTabHost.setCurrentTab(0);
 
 		bage = new BlackMessage(this);
 		yage = new YiSiMessage(this);
 
 		final Cursor cursor_bage = bage.select();
+		while (cursor_bage.moveToNext()) {
+			String text = cursor_bage.getString(cursor_bage
+					.getColumnIndex(bage.FIELD_TEXT));
+			list.add(text);
+			// String
+			// number=cursor_bage.getString(cursor_bage.getColumnIndex(bage.FIELD_NUMBER));
+			// list.add(number);
+
+		}
 		Cursor cursor_yage = yage.select();
 		final Cursor cursor_tb = tb.select();
-		while (cursor_yage.moveToNext()) {
-			String number = cursor_yage.getString(cursor_yage
-					.getColumnIndex(yage.FIELD_NUMBER));
-			listt.add(number);
+		if (cursor_yage != null) {
+			while (cursor_yage.moveToNext()) {
+				String number = cursor_yage.getString(cursor_yage
+						.getColumnIndex(yage.FIELD_NUMBER));
+				String text = cursor_yage.getString(cursor_yage
+						.getColumnIndex(yage.FIELD_TEXT));
+				listt.add(number);
+				list_text.add(text);
+			}
 		}
 
 		SimpleCursorAdapter adapter_bage = new SimpleCursorAdapter(Test.this,
@@ -78,6 +101,47 @@ public class Test extends TabActivity {
 						BlackMessage.FIELD_NUMBER, BlackMessage.FIELD_TEXT },
 				new int[] { android.R.id.text1, android.R.id.text2 });
 		list1.setAdapter(adapter_bage);
+		list1.setOnItemClickListener(new OnItemClickListener() {
+
+			public void onItemClick(AdapterView<?> parent, View view,
+					final int position, long id) {
+				// TODO Auto-generated method stub
+
+				new AlertDialog.Builder(Test.this).setTitle("操作").setMessage(
+						"确认要删除此消息吗?").setPositiveButton("确认",
+						new DialogInterface.OnClickListener() {
+
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+
+								// bage.delete(Integer.toString(index));
+								bage.delete(list.get(position).toString());
+								Cursor cursor_bage = bage.select();
+								SimpleCursorAdapter adapter_bage = new SimpleCursorAdapter(
+										Test.this,
+										android.R.layout.simple_list_item_2,
+										cursor_bage, new String[] {
+												BlackMessage.FIELD_NUMBER,
+												BlackMessage.FIELD_TEXT },
+										new int[] { android.R.id.text1,
+												android.R.id.text2 });
+								list1.setAdapter(adapter_bage);
+
+							}
+						}).setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+
+							public void onClick(DialogInterface dialog,
+									int which) {
+								// TODO Auto-generated method stub
+
+							}
+						}).show();
+			}
+
+		});
+
 		SimpleCursorAdapter adapter_yage = new SimpleCursorAdapter(Test.this,
 				R.layout.message, cursor_yage, new String[] {
 						YiSiMessage.FIELD_NUMBER, YiSiMessage.FIELD_TEXT },
@@ -86,19 +150,19 @@ public class Test extends TabActivity {
 		list2.setOnItemClickListener(new OnItemClickListener() {
 
 			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
+					final int position, long id) {
 				// TODO Auto-generated method stub
 
-				new AlertDialog.Builder(Test.this)
-				.setTitle("转移号码")
-				.setMessage("确认要将此号码放入黑名单吗？").setPositiveButton("确认",
+				new AlertDialog.Builder(Test.this).setTitle("转移号码").setMessage(
+						"确认要将此号码放入黑名单吗？").setPositiveButton("确认",
 						new DialogInterface.OnClickListener() {
 							public void onClick(
 									DialogInterface dialoginterface, int i) {
 								yisi_number = listt.get(i + 1).toString();
 								while (cursor_tb.moveToNext()) {
 									String bage_number = cursor_tb.getString(1);
-									if (yisi_number.endsWith(bage_number)) {
+									// if (yisi_number.endsWith(bage_number)) {
+									if (yisi_number.indexOf(bage_number) != -1) {
 										flag = false;
 										Toast.makeText(Test.this, "黑名单中已有",
 												Toast.LENGTH_LONG).show();
@@ -115,27 +179,43 @@ public class Test extends TabActivity {
 									// }
 								}
 								if (flag) {
-									tb.insert(listt.get(i + 1).toString());
+
+									String number = listt.get(i + 1).toString();
+									if (number.startsWith("+86")) {
+										number = number.substring(3);
+									} else if (number.startsWith("106")) {
+										// number.replace("106", "");
+									} else if (number.startsWith("12520")) {
+										number = number.substring(5);
+									}
+									tb.insert(number);
 								}
 
 							}
 						})
-				/* 砞﹚铬跌怠ㄆン */
-				.setNeutralButton(R.string.delete, new DialogInterface.OnClickListener(){
-					public void onClick(DialogInterface dialog, int which) {
-						yage.delete(listt.get(which+3).toString());
-						Cursor cursor_yage = yage.select();
-						SimpleCursorAdapter adapter_yage = new SimpleCursorAdapter(Test.this,
-								R.layout.message, cursor_yage, new String[] {
-										YiSiMessage.FIELD_NUMBER, YiSiMessage.FIELD_TEXT },
-								new int[] { R.id.listTextView1, R.id.listTextView2 });
-						list2.setAdapter(adapter_yage);
-					}
-				})		
-				.setNegativeButton("不要", new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialoginterface, int i) {
-					}
-				}).show();
+				/* 砞﹚铬跌怠ㄆン */
+				.setNeutralButton(R.string.delete,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog,
+									int which) {
+
+								yage.delete(list_text.get(position).toString());
+								Cursor cursor_yage = yage.select();
+								SimpleCursorAdapter adapter_yage = new SimpleCursorAdapter(
+										Test.this, R.layout.message,
+										cursor_yage, new String[] {
+												YiSiMessage.FIELD_NUMBER,
+												YiSiMessage.FIELD_TEXT },
+										new int[] { R.id.listTextView1,
+												R.id.listTextView2 });
+								list2.setAdapter(adapter_yage);
+							}
+						}).setNegativeButton("取消",
+						new DialogInterface.OnClickListener() {
+							public void onClick(
+									DialogInterface dialoginterface, int i) {
+							}
+						}).show();
 
 			}
 
@@ -154,7 +234,7 @@ public class Test extends TabActivity {
 
 		MenuItem mm = menu.add(0, 1, 1, "转到白名单");
 		{
-           mm.setIcon(R.drawable.ic_menu_invite);
+			mm.setIcon(R.drawable.ic_menu_invite);
 		}
 
 		return super.onCreateOptionsMenu(menu);

@@ -52,6 +52,34 @@ public class FirstActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first);
+		/*
+		 * 从工程中直接读取数据库
+		 */
+		DataBaseHelper myDbHelper = new DataBaseHelper(this);
+		myDbHelper = new DataBaseHelper(this);
+
+		try {
+
+			myDbHelper.createDataBase();
+
+		} catch (IOException ioe) {
+
+			throw new Error("Unable to create database");
+
+		}
+
+		try {
+
+			myDbHelper.openDataBase();
+
+		} catch (SQLException sqle) {
+
+			Log.e(TAG, sqle.getMessage());
+
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		File dir = new File("/data/data/cn.opda/shared_prefs/opda.xml");
 		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
 		int startService = sharedPreferences.getInt("startService", 1);
@@ -92,34 +120,7 @@ public class FirstActivity extends Activity {
 			Intent serIntent = new Intent(this, BlackListService.class);
 			this.startService(serIntent);
 			this.startService(serviceIntent);
-		/*
-		 * 从工程中直接读取数据库
-		 */
-		DataBaseHelper myDbHelper = new DataBaseHelper(this);
-		myDbHelper = new DataBaseHelper(this);
-
-		try {
-
-			myDbHelper.createDataBase();
-
-		} catch (IOException ioe) {
-
-			throw new Error("Unable to create database");
-
-		}
-
-		try {
-
-			myDbHelper.openDataBase();
-
-		} catch (SQLException sqle) {
-
-			Log.e(TAG, sqle.getMessage());
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		// ------------------------------------
 		gridview = (GridView) findViewById(R.id.gridview);
 		// 生成动态数组，并且转入数据

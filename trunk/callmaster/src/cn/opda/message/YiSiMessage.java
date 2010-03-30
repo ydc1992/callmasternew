@@ -45,7 +45,7 @@ public class YiSiMessage extends SQLiteOpenHelper {
 
 	public void delete(String text) {
 		SQLiteDatabase db = this.getWritableDatabase();
-		String where = FIELD_NUMBER + " = ?";
+		String where = FIELD_TEXT + " = ?";
 		String[] whereValue = { text };
 		db.delete(TABLE_NAME, where, whereValue);
 	}

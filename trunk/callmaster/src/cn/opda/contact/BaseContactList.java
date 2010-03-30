@@ -55,7 +55,8 @@ public class BaseContactList extends ListActivity {
 		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+numberText.getText().toString()));
 		startActivity(callIntent);*/
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			
+			alertDialogBuilder.setTitle(R.string.contactTitle);
+			alertDialogBuilder.setMessage(R.string.contactdo);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));
