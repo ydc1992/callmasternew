@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:key="location_category"
+            android:title="@string/setlable">
+        <CheckBoxPreference
+                android:key="setStart"
+                android:title="@string/startService"
+                android:persistent="false"
+                android:summary="@string/summarystartService"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:key="settings_category"
+            android:title="@string/beginAuto">
+        <CheckBoxPreference
+                android:key="setbeginAuto"
+                android:title="@string/beginAuto"
+                android:persistent="false" 
+                android:summary="@string/summarybeginAuto"/>/>
+    </PreferenceCategory>
+</PreferenceScreen>
