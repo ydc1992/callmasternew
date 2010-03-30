@@ -1,61 +1,72 @@
 package cn.opda.callactivity;
 
+
 import cn.opda.R;
 import cn.opda.service.ShareService;
-import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.preference.CheckBoxPreference;
+import android.preference.Preference;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 
-public class SetActivity extends Activity {
+public class SetActivity extends PreferenceActivity {
+	private static final String TAG = "SetActivity";
+	private CheckBoxPreference startBox;
+	private CheckBoxPreference beginBox;
+	private Editor editor;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.set);
+        addPreferencesFromResource(R.layout.set);
         SharedPreferences preferences = ShareService.getShare(this, "opda");
         int startService = preferences.getInt("startService", 1);
         int beginAuto = preferences.getInt("beginAuto", 1);
-        CheckBox startBox = (CheckBox) findViewById(R.id.setStart);
-        CheckBox beginBox = (CheckBox) findViewById(R.id.setbeginAuto);
+        startBox = (CheckBoxPreference) getPreferenceScreen().findPreference("setStart");
+        CheckBoxPreference startBoxPreference = (CheckBoxPreference) startBox;
+        beginBox = (CheckBoxPreference) getPreferenceScreen().findPreference("setbeginAuto");
+        CheckBoxPreference autoBoxPreference = (CheckBoxPreference) beginBox;
         if(startService==1){
-            startBox.setChecked(true); 
+        	startBoxPreference.setChecked(true); 
         }
         if(beginAuto==1){
-            beginBox.setChecked(true); 
+        	autoBoxPreference.setChecked(true); 
         }
-        final Editor editor = preferences.edit();
-        startBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                    public void onCheckedChanged(CompoundButton buttonView,
-                            boolean isChecked) {
-                        if(isChecked==true){
-                            editor.remove("startService");
-                            editor.putInt("startService", 1);
-                            editor.commit();
-                        }else{
-                            editor.remove("startService");
-                            editor.putInt("startService", 0);
-                            editor.commit();
-                        }
-                    }
-                });
-        beginBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            public void onCheckedChanged(CompoundButton buttonView,
-                    boolean isChecked) {
-                if(isChecked==true){
-                    editor.remove("beginAuto");
-                    editor.putInt("beginAuto", 1);
-                    editor.commit();
-                }else{
-                    editor.remove("beginAuto");
-                    editor.putInt("beginAuto", 0);
-                    editor.commit();
-                }
-            }
-        });
+        editor = preferences.edit();
+        
        
     }
+	@Override
+	public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen,
+			Preference preference) {
+		// TODO Auto-generated method stub
+		if (preference == startBox) {
+            //normally called on the toggle click
+            if (startBox.isChecked()) {
+            	editor.remove("startService");
+            	editor.putInt("startService", 1);
+            	editor.commit();
+            } else {
+            	editor.remove("startService");
+            	editor.putInt("startService", 0);
+            	editor.commit();
+            }
+        } else if (preference == beginBox) {
+            if (beginBox.isChecked()) {
+            	editor.remove("beginAuto");
+            	editor.putInt("beginAuto", 1);
+            	editor.commit();
+            } else {
+            	editor.remove("beginAuto");
+            	editor.putInt("beginAuto", 0);
+            	editor.commit();
+            }
+        }
+
+		return true;
+	}
+    
+    
 }

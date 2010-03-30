@@ -44,7 +44,7 @@
 <string name="phone">电话</string>
 <string name="help">帮助</string>
 <string name="helptext">
-扣费克星来电助手帮助说明：\n\n
+扣费克星电话助手帮助说明：\n\n
 1，查找指定电话的归属地\n\n
 2，黑名单功能：黑名单类别分为一声响电话，高额收费，推销，和其他。一声响和高额收费电话打出时会提示你小心，推销和其他
 电话打进来时会静音并拦截提示。当不是联系人拨打电话过短系统就自动就把这个号码加进黑名单，其他的用户可以自己操作。
@@ -87,6 +87,13 @@
 <string name="saoraoAlert">骚扰电话，请小心</string>
 <string name="confirm">确认</string>
 <string name="startService">开启服务</string>
+<string name="summarystartService">开启扣费克星所有服务</string>
 <string name="beginAuto">开机自动启动</string>
+<string name="summarybeginAuto">开机后自动启动服务</string>
 <string name="firstSetText">以后更改可在设置里面操作</string>
+<string name="setlable">扣费克星实时服务</string>
+<string name="contactTitle">联系人列表</string>
+<string name="contactdo">联系人操作</string>
+<string name="hostoryTitle">联系人列表</string>
+<string name="hostorydo">联系人操作</string>
 </resources>

@@ -47,7 +47,7 @@ public class BelongingService {
 			is = readFromCdcard("m138.idx");
 			break;
 		case 139:
-			is = readFromCdcard("m131.idx");
+			is = readFromCdcard("m139.idx");
 			break;
 		case 150:
 			is = readFromCdcard("m150.idx");

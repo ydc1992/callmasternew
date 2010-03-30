@@ -77,7 +77,8 @@ public class BaseCallHistoryList extends ListActivity {
 		        null, null);
 		if(cursor.getCount()>0){
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			
+			alertDialogBuilder.setTitle(R.string.hostoryTitle);
+			alertDialogBuilder.setMessage(R.string.hostorydo);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));
@@ -107,7 +108,8 @@ public class BaseCallHistoryList extends ListActivity {
 		}
 		else if(blackService.findByNumber(num)!=null){
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			
+			alertDialogBuilder.setTitle(R.string.hostoryTitle);
+			alertDialogBuilder.setMessage(R.string.hostorydo);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));
@@ -134,7 +136,8 @@ public class BaseCallHistoryList extends ListActivity {
 
 		}else{
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-			
+			alertDialogBuilder.setTitle(R.string.hostoryTitle);
+			alertDialogBuilder.setMessage(R.string.hostorydo);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));

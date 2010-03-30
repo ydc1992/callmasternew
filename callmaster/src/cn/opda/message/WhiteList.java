@@ -44,10 +44,19 @@ public class WhiteList extends SQLiteOpenHelper {
 				.query(TABLE_NAME, null, null, null, null, null, null);
 		return cursor;
 	}
-	public Cursor findByNumber(String number){
+	public boolean findByNumber(String number){
+		
+		boolean rt = false;
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("select * from todo_whitetabl where todo_text = ?", new String[]{number});
-		return cursor;
+		
+		if(cursor.getCount() > 0){
+			
+			rt = true;
+		}
+			
+		cursor.close();
+		return rt;
 	}
 	public void insert(String text) {
 		SQLiteDatabase db = this.getWritableDatabase();
