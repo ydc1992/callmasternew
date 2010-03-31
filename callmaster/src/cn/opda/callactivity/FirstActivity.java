@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +14,7 @@ import cn.opda.contact.CallHistoryList;
 import cn.opda.contact.ContactList;
 import cn.opda.dao.DataBaseHelper;
 import cn.opda.message.Test;
+import cn.opda.phone.OpdaState;
 import cn.opda.service.ShareService;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -23,7 +25,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,6 +40,7 @@ import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class FirstActivity extends Activity {
@@ -41,17 +48,28 @@ public class FirstActivity extends Activity {
 	static final int DATE_DIALOG_ID = 0;
 	GridView gridview;
 	ProgressDialog pbarDialog;
+	private long time ;
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = { R.drawable.search, R.drawable.blacklist,
-			R.drawable.recorder, R.drawable.contact, R.drawable.help,
-			R.drawable.msg ,android.R.drawable.alert_dark_frame};
+			R.drawable.recorder, R.drawable.contact, android.R.drawable.alert_dark_frame,
+			R.drawable.msg ,R.drawable.help,android.R.drawable.btn_star_big_on,android.R.drawable.alert_dark_frame};
 	private Integer[] mNameIds = { R.string.findarea, R.string.blacklist,
-			R.string.callhostory, R.string.contact, R.string.help,
-			R.string.messagestop ,R.string.set};
+			R.string.callhostory, R.string.contact, R.string.set,
+			R.string.messagestop ,R.string.help,R.string.about,R.string.change};
+	private Handler handler = new Handler(){
+		@Override
+	public void handleMessage(Message msg) {
+			switch (msg.what) {
+			case 1:
+				Toast.makeText(FirstActivity.this, R.string.versionSame, Toast.LENGTH_SHORT).show();
+			}
+		super.handleMessage(msg);
+	}};
 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first);
+		time = new Date().getTime();
 		/*
 		 * 从工程中直接读取数据库
 		 */
@@ -82,12 +100,13 @@ public class FirstActivity extends Activity {
 		}
 		File dir = new File("/data/data/cn.opda/shared_prefs/opda.xml");
 		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
-		int startService = sharedPreferences.getInt("startService", 1);
-		//int beginAuto = sharedPreferences.getInt("beginAuto", 1);
+		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
 		final Editor editor = sharedPreferences.edit();
 		if (!dir.exists()) {
-			editor.putInt("startService", 1);
-			editor.putInt("beginAuto", 1);
+			editor.putInt(OpdaState.STATESERVICE, 1);
+			editor.putInt(OpdaState.BEGINAUTO, 1);
+			editor.putInt(OpdaState.MESSAGESERVICE, 1);
+			editor.putInt(OpdaState.BLACKSERVICE, 1);
 			editor.commit();
 			LayoutInflater factory = LayoutInflater.from(this);
 			final View editview = factory.inflate(R.layout.firstset, null);
@@ -95,37 +114,52 @@ public class FirstActivity extends Activity {
 			my.setView(editview);
 			final CheckBox startServiceButton = (CheckBox) editview.findViewById(R.id.firststartService);
 			final CheckBox beginAutoButton = (CheckBox) editview.findViewById(R.id.firstbeginAuto);
+			final CheckBox firstMessageBox = (CheckBox) editview.findViewById(R.id.firstMessageService);
+			final CheckBox firstBlackBox= (CheckBox) editview.findViewById(R.id.firstBlackService);
 			startServiceButton.setChecked(true);
 			beginAutoButton.setChecked(true);
+			firstMessageBox.setChecked(true);
+			firstBlackBox.setChecked(true);
 			
 			my.setPositiveButton(R.string.add,
 					new DialogInterface.OnClickListener(){
 						public void onClick(DialogInterface dialog, int which) {
 							if(startServiceButton.isChecked()==false){
-								editor.remove("startService");
-								editor.putInt("startService", 0);
+								editor.remove(OpdaState.STATESERVICE);
+								editor.putInt(OpdaState.STATESERVICE, 0);
 								editor.commit();
 							}
 							if(beginAutoButton.isChecked()==false){
-								editor.remove("beginAuto");
-								editor.putInt("beginAuto", 0);
+								editor.remove(OpdaState.BEGINAUTO);
+								editor.putInt(OpdaState.BEGINAUTO, 0);
 								editor.commit();
 							}
-							
+							if(firstMessageBox.isChecked()==false){
+								editor.remove(OpdaState.MESSAGESERVICE);
+								editor.putInt(OpdaState.MESSAGESERVICE, 0);
+								editor.commit();
+							}
+							if(firstBlackBox.isChecked()==false){
+								editor.remove(OpdaState.BLACKSERVICE);
+								editor.putInt(OpdaState.BLACKSERVICE, 0);
+								editor.commit();
+							}
 						}
 					});
 			my.show();
 			}
-			Intent serviceIntent = new Intent(this, CallService.class);
-			Intent serIntent = new Intent(this, BlackListService.class);
-			this.startService(serIntent);
-			this.startService(serviceIntent);
+		    if(startService==1){
+		    	Intent serviceIntent = new Intent(this, CallService.class);
+		    	Intent serIntent = new Intent(this, BlackListService.class);
+		    	this.startService(serIntent);
+		    	this.startService(serviceIntent);
+			}
 		
 		// ------------------------------------
 		gridview = (GridView) findViewById(R.id.gridview);
 		// 生成动态数组，并且转入数据
 		List<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 7; i++) {
+		for (int i = 0; i < 9; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", mImageIds[i]);// 添加图像资源的ID
 			map.put("ItemNameText", FirstActivity.this.getString(mNameIds[i]));
@@ -196,31 +230,85 @@ public class FirstActivity extends Activity {
 			Intent intent = new Intent();
 			if (arg2 == 0) {
 				intent.setClass(FirstActivity.this, CallActivity.class);
+				beginActivity(intent, arg2);
 			} else if (arg2 == 1) {
 				intent.setClass(FirstActivity.this, BaseBlackList.class);
+				beginActivity(intent, arg2);
 			} else if (arg2 == 2) {
 				intent.setClass(FirstActivity.this, CallHistoryList.class);
+				beginActivity(intent, arg2);
 			} else if (arg2 == 3) {
 				intent.setClass(FirstActivity.this, ContactList.class);
+				beginActivity(intent, arg2);
 			} else if (arg2 == 4) {
-				intent.setClass(FirstActivity.this, HelpActivity.class);
+				intent.setClass(FirstActivity.this, SetActivity.class);
+				beginActivity(intent, arg2);
 			} else if (arg2 == 5) {
 				intent.setClass(FirstActivity.this, Test.class);
+				beginActivity(intent, arg2);
 			} else if (arg2 == 6) {
-				intent.setClass(FirstActivity.this, SetActivity.class);
+				intent.setClass(FirstActivity.this, HelpActivity.class);
+				beginActivity(intent, arg2);
+			} else if (arg2 == 7) {
+				View view = View.inflate(FirstActivity.this, R.layout.about, null);
+				AlertDialog.Builder myBuilder = new AlertDialog.Builder(FirstActivity.this);
+				myBuilder.setIcon(android.R.drawable.ic_dialog_info);
+				myBuilder.setTitle(R.string.aboutversion);
+				myBuilder.setView(view);
+				// myBuilder.setMessage(R.string.aboutinfo);
+				myBuilder.setPositiveButton(R.string.aboutversion,
+						new DialogInterface.OnClickListener() {
+							public void onClick(DialogInterface dialog, int which) {
+								try {
+								} catch (Exception e) {
+									Log.e(TAG, e.getMessage());
+								}
+							}
+						}).show();
+			}else if (arg2 == 8) {
+				
+	    		
+				ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+				NetworkInfo info = connectivity.getActiveNetworkInfo();
+				boolean flag = false;
+				if (info != null) {
+					final ProgressDialog progressDialog = new ProgressDialog(FirstActivity.this);
+		    		progressDialog.setTitle(R.string.change);
+		    		progressDialog.setMessage("查找新版本");
+		    		progressDialog.setCancelable(true);
+					progressDialog.show();
+					new Thread(new Runnable() {
+						public void run() {
+						    try {
+								Thread.sleep(1500);
+								Message msg = new Message();
+								msg.what = 1;
+								handler.sendMessage(msg);//发送消息
+							} catch (Exception e) {
+								Log.e(TAG, e.getMessage());
+							} 
+							progressDialog.cancel();
+							
+						}
+					}).start();
+					while(flag){
+						Toast.makeText(FirstActivity.this, R.string.versionSame, Toast.LENGTH_SHORT).show();
+					}
+				}else{
+					Toast.makeText(FirstActivity.this, R.string.nonetwork, Toast.LENGTH_SHORT).show();
+				}
 			}
-
-			/* new 一个 Bundle 对象，并将要传递的数据传入 */
-			Bundle bundle = new Bundle();
-			bundle.putInt("constellation_id", arg2);
-			/* 将 Bundle 对象 assign 给 Intent */
-			intent.putExtras(bundle);
-			/* 调用 Activity Result */
-			startActivity(intent);
-			// startActivityForResult(intent, my_requestCode);
+			
+			
 		}
 	}
-
+	private void beginActivity(Intent intent, int i){
+		Bundle bundle = new Bundle();
+		bundle.putInt("constellation_id", i);
+		intent.putExtras(bundle);
+		/* 调用 Activity Result */
+		startActivity(intent);
+	}
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		// TODO Auto-generated method stub

@@ -27,5 +27,23 @@
 	        android:id="@+id/firstbeginAuto"
 	        android:text="@string/beginAuto" />
 	</RelativeLayout>
+	<RelativeLayout 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent">
+	     <CheckBox 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/firstMessageService"
+	        android:text="@string/beginMessageService" />
+	</RelativeLayout>
+	<RelativeLayout 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent">
+	     <CheckBox 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/firstBlackService"
+	        android:text="@string/beginBlackService" />
+	</RelativeLayout>
   </LinearLayout>
 </RelativeLayout>

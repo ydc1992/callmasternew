@@ -55,7 +55,8 @@
 4，通讯录，可以对通讯录中的联系人进行打电话，发短信和编辑联系人的操作。\n\n
 5，后台自动功能：当有电话打进打出时，显示电话的归属地。当有网络时，黑名单数据库版本有改变时自动更新云端的数据库,这个不会产生较大的流量用会不用担心\n\n
 6，此软件设有黑名单和白名单，凡是在黑名单里面的号码都会自动屏蔽，并且会把它的信息发到此程序中。如果发信息的号码从没
-有在通话记录中出现，此号码的信息也会被屏蔽，并放到此程序中。
+有在通话记录中出现，此号码的信息也会被屏蔽，并放到此程序中。\n\n
+7，设置：在设置中你可以关闭、开启扣费克星的所有服务，以及开机是否自动的运行服务。在今后不断完善的版本中会加入更多的设置功能。\n\n
 </string>
 <string name="nullever">从不更新</string>
 <string name="onece">一次</string>
@@ -88,12 +89,24 @@
 <string name="confirm">确认</string>
 <string name="startService">开启服务</string>
 <string name="summarystartService">开启扣费克星所有服务</string>
+<string name="endService">关闭扣费克星所有服务</string>
 <string name="beginAuto">开机自动启动</string>
 <string name="summarybeginAuto">开机后自动启动服务</string>
+<string name="notBeginAuto">开机不自动运行服务</string>
 <string name="firstSetText">以后更改可在设置里面操作</string>
 <string name="setlable">扣费克星实时服务</string>
 <string name="contactTitle">联系人列表</string>
 <string name="contactdo">联系人操作</string>
 <string name="hostoryTitle">联系人列表</string>
 <string name="hostorydo">联系人操作</string>
+<string name="messageService">短信服务</string>
+<string name="beginMessageService">开启短信拦截服务</string>
+<string name="offMessageService">关闭短信拦截服务</string>
+<string name="beginMessageContent">开启短信拦截实时监控</string>
+<string name="blackService">黑名单服务</string>
+<string name="beginBlackService">开启电话黑名单服务</string>
+<string name="offBlackService">关闭电话黑名单服务</string>
+<string name="blackServiceContent">开启电话黑名单实时监控</string>
+<string name="change">更新版本</string>
+<string name="inChange">更新中</string>
 </resources>

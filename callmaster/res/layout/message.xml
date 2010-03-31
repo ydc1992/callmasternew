@@ -6,16 +6,16 @@
   >
   <CheckedTextView android:id="@+id/listTextView1"
   xmlns:android="http://schemas.android.com/apk/res/android"
+  android:textSize="18px" 
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:textColor="@drawable/red"
   >
   </CheckedTextView>
     <CheckedTextView android:id="@+id/listTextView2"
   xmlns:android="http://schemas.android.com/apk/res/android"
+  android:textSize="18px" 
   android:layout_width="wrap_content"
   android:layout_height="wrap_content"
-  android:textColor="@drawable/red"
   >
   </CheckedTextView>
 </LinearLayout>

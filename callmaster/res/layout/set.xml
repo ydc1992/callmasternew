@@ -19,4 +19,20 @@
                 android:persistent="false" 
                 android:summary="@string/summarybeginAuto"/>/>
     </PreferenceCategory>
+    <PreferenceCategory android:key="settings_category"
+            android:title="@string/messageService">
+        <CheckBoxPreference
+                android:key="messageService"
+                android:title="@string/beginMessageService"
+                android:persistent="false" 
+                android:summary="@string/beginMessageContent"/>/>
+    </PreferenceCategory>
+    <PreferenceCategory android:key="settings_category"
+            android:title="@string/blackService">
+        <CheckBoxPreference
+                android:key="blackService"
+                android:title="@string/beginBlackService"
+                android:persistent="false" 
+                android:summary="@string/blackServiceContent"/>/>
+    </PreferenceCategory>
 </PreferenceScreen>
