@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -48,11 +47,10 @@ public class FirstActivity extends Activity {
 	static final int DATE_DIALOG_ID = 0;
 	GridView gridview;
 	ProgressDialog pbarDialog;
-	private long time ;
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = { R.drawable.search, R.drawable.blacklist,
-			R.drawable.recorder, R.drawable.contact, android.R.drawable.alert_dark_frame,
-			R.drawable.msg ,R.drawable.help,android.R.drawable.btn_star_big_on,android.R.drawable.alert_dark_frame};
+			R.drawable.recorder, R.drawable.contact, R.drawable.setting,
+			R.drawable.msg ,R.drawable.help,R.drawable.about,R.drawable.update};
 	private Integer[] mNameIds = { R.string.findarea, R.string.blacklist,
 			R.string.callhostory, R.string.contact, R.string.set,
 			R.string.messagestop ,R.string.help,R.string.about,R.string.change};
@@ -69,7 +67,6 @@ public class FirstActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.first);
-		time = new Date().getTime();
 		/*
 		 * 从工程中直接读取数据库
 		 */

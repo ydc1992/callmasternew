@@ -13,7 +13,6 @@
                android:layout_width="wrap_content"   
                android:layout_below="@+id/ItemImage"   
                android:layout_height="wrap_content"   
-               android:text=""   
                android:layout_centerHorizontal="true"   
                android:id="@+id/ItemNameText">  
          </TextView>  
