@@ -6,6 +6,7 @@ import java.util.List;
 import cn.opda.message.BackStage;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
+import cn.opda.phone.OpdaState;
 import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.ShareService;
@@ -28,8 +29,9 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(context);
 		
 		SharedPreferences sharedPreferences = ShareService.getShare(context, "opda");
-		int startService = sharedPreferences.getInt("startService", 1);
-		int beginAuto = sharedPreferences.getInt("beginAuto", 1);
+		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
+		int beginAuto = sharedPreferences.getInt(OpdaState.BEGINAUTO, 1);
+		int messageService = sharedPreferences.getInt(OpdaState.MESSAGESERVICE, 1);
 		Log.i(TAG, startService+"++++++++++"+beginAuto);
 		
 		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(context);
@@ -66,22 +68,20 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		}
 	
 		if(intent.getAction().equals("android.intent.action.BOOT_COMPLETED")){//开机启动服务
-			if(beginAuto==1){
+			if((beginAuto == 1)&&(startService == 1)){
 				Intent serviceIntent = new Intent(context, CallService.class);
-				serviceIntent.putExtra("startService", startService);
 				Intent serIntent = new Intent(context, BlackListService.class);
-				serIntent.putExtra("startService", startService);
 				context.startService(serIntent);
 				context.startService(serviceIntent);
 			}
 		}
 		
 		if (intent.getAction().equals(mACTION)) {
-			if(startService == 1){
-			Intent tn = new Intent(context, BackStage.class);
-            tn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			context.startService(tn);
-			}
+
+				Log.i(TAG, "##########################################################");
+				Intent tn = new Intent(context, BackStage.class);
+	            tn.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startService(tn);
 		}
 	}
 }

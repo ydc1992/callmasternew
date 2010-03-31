@@ -1,12 +1,15 @@
 package cn.opda.message;
 
 
-import android.app.NotificationManager;
+import cn.opda.phone.OpdaState;
+import cn.opda.service.ShareService;
 import android.app.Service;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Handler;
 import android.os.IBinder;
+import android.util.Log;
 
 public class BackStage extends Service {
 	private static final String TAG = "BackStage";
@@ -17,17 +20,22 @@ public class BackStage extends Service {
 	public void onStart(Intent intent, int startId) {
 		// TODO Auto-generated method stub
 		super.onStart(intent, startId);
-		
-//		NotificationManager manager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-//		manager.cancelAll();
-        
-//		SmsContent content = new SmsContent(new Handler());
-//		// ×¢²á¶ÌÐÅ±ä»¯¼àÌý
-//		this.getContentResolver().registerContentObserver(
-//				Uri.parse("content://sms/"), true, content);
-//        smsObserver = new SMSObserver(new Handler(), this);
-//        getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsObserver);
-
+		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
+		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
+		int messageService = sharedPreferences.getInt(OpdaState.MESSAGESERVICE, 1);
+		Log.i(TAG, startService+"@@@@@@@@@@@@"+messageService);
+		if(smsObserver!=null){
+			if((startService != 1)||(messageService != 1)){
+				getContentResolver().unregisterContentObserver(smsObserver);
+				Log.i(TAG, "|||||||||||||||||||||");
+				onDestroy();
+			}
+		}
+		if((startService == 1)&&(messageService == 1)){
+			smsObserver = new SMSObserver(new Handler(), this);
+	        getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsObserver);
+	        Log.i(TAG, "----------------------");
+		}
 	}
 	
 
@@ -49,8 +57,14 @@ public class BackStage extends Service {
 	public void onCreate() {
 		// TODO Auto-generated method stub
 		super.onCreate();
-		
-        smsObserver = new SMSObserver(new Handler(), this);
-        getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsObserver);
+
+		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
+		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
+		int messageService = sharedPreferences.getInt(OpdaState.MESSAGESERVICE, 1);
+		Log.i(TAG, startService+"++++++++"+messageService);
+		if((startService == 1)&&(messageService == 1)){
+			smsObserver = new SMSObserver(new Handler(), this);
+	        getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsObserver);
+		}
 	}
 }

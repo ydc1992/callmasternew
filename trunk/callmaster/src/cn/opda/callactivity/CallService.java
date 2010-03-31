@@ -4,6 +4,7 @@ package cn.opda.callactivity;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import cn.opda.phone.OpdaState;
 import cn.opda.phone.Phone;
 import cn.opda.service.BelongingService;
 import cn.opda.service.BlackListSqliteService;
@@ -52,7 +53,7 @@ public class CallService extends Service {
 					case TelephonyManager.CALL_STATE_RINGING:  //电话进来时 
 						isRunning = true;
 						SharedPreferences preferences = ShareService.getShare(CallService.this, "opda");
-						if(preferences.getInt("startService", 1)==1){
+						if(preferences.getInt(OpdaState.STATESERVICE, 1)==1){
 						    if (blackService.findByNumber(incomingNumber)== null&&webBlackService.findByNumber(incomingNumber)==null){
 						        
 						        

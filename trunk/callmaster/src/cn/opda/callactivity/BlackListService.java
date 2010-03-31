@@ -8,6 +8,7 @@ import java.util.TimerTask;
 import cn.opda.R;
 import cn.opda.net.upload.SendUp;
 import cn.opda.phone.Blacklist;
+import cn.opda.phone.OpdaState;
 import cn.opda.phone.WebBlack;
 import cn.opda.service.BlackListSqliteService;
 import cn.opda.service.ShareService;
@@ -116,8 +117,9 @@ public class BlackListService extends Service {
                     case TelephonyManager.CALL_STATE_RINGING:  //电话进来时
                         isRunning = true;
                         SharedPreferences preferences = ShareService.getShare(BlackListService.this, "opda");
-                        Log.i(TAG, "@@@@@@@@@@@@@@@@@@@@@"+preferences.getInt("startService", 1));
-                        if(preferences.getInt("startService", 1)==1){
+                        int blackstate = preferences.getInt(OpdaState.BLACKSERVICE, 1);
+                        int startstate = preferences.getInt(OpdaState.STATESERVICE, 1);
+                        if((startstate == 1)&&(blackstate == 1)){
                             ringingtime =  new Date().getTime();
                             Log.i(TAG, "2222222222222222()"+ringingtime);
                             Blacklist blacklist = blackService.findByNumber(incomingNumber);
