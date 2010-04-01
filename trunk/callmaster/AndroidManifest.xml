@@ -109,6 +109,6 @@
 	<!-- 振动 -->
 	<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"
-  		android:targetPackage="cn.opda" android:label="Tests for My App" />
+  		android:targetPackage="net.kfkx" android:label="Tests for My App" />
   	
 </manifest> 

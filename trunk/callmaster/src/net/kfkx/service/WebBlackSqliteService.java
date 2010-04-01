@@ -27,7 +27,8 @@ public class WebBlackSqliteService {
 	public void save (WebBlack webBlack ){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		db.execSQL("insert into webblack (number,type,remark,timehappen,timelength,version) values (?,?,?,?,?,?)" , 
-				new Object[]{webBlack.getNumber(),webBlack.getType(),webBlack.getRemark(),webBlack.getTimehappen(),webBlack.getTimelength(),webBlack.getVersion()});
+				new Object[]{webBlack.getNumber(),webBlack.getType(),webBlack.getRemark(),
+		        webBlack.getTimehappen(),webBlack.getTimelength(),webBlack.getVersion()});
 		db.close();
 	}
 	public void delete (int webBlackid){
@@ -37,7 +38,7 @@ public class WebBlackSqliteService {
 	}
 	public void deleteAll (){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
-		db.execSQL("delete from webblack " , new Object[]{});
+		db.execSQL("delete from webblack");
 		db.close();
 	}
 	public void deleteByNumber (String number){
@@ -108,23 +109,23 @@ public class WebBlackSqliteService {
 		db.close();
 		return blacks;
 	}
-	public boolean updateWebBlack(List<WebBlack> weblist) {
+	public void updateWebBlack(List<WebBlack> weblist) {
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		db.beginTransaction();
 		try{
-			deleteAll();
+		    db.execSQL("delete from webblack");
 			for(WebBlack webBlack : weblist){
-				save(webBlack);
+			    db.execSQL("insert into webblack (number,type,remark,timehappen,timelength,version) values (?,?,?,?,?,?)" , 
+		                new Object[]{webBlack.getNumber(),webBlack.getType(),webBlack.getRemark(),
+		                webBlack.getTimehappen(),webBlack.getTimelength(),webBlack.getVersion()});
 			}
 			db.setTransactionSuccessful();
-			return true;
 		}catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 		}finally{
 			db.endTransaction();
 		}
 		db.close();
-		return false;
 	}
 	public boolean checkNumber(String number){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();

@@ -67,7 +67,7 @@ public class PhoneSqliteService {
 		db.close();
 		return phone;
 	}
-	public int getCount (){
+	public int getCount(){
 		SQLiteDatabase db = dbOpenHelper.getWritableDatabase();
 		Cursor cursor = db.rawQuery("select count(*) from phone",null);
 		int count = 0;
