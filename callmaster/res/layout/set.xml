@@ -12,27 +12,36 @@
     </PreferenceCategory>
 
     <PreferenceCategory android:key="settings_category"
-            android:title="@string/beginAuto">
+            android:title="@string/singalService">
         <CheckBoxPreference
-                android:key="setbeginAuto"
-                android:title="@string/beginAuto"
-                android:persistent="false" 
-                android:summary="@string/summarybeginAuto"/>/>
-    </PreferenceCategory>
-    <PreferenceCategory android:key="settings_category"
-            android:title="@string/messageService">
+        android:key="setbeginAuto"
+        android:title="@string/beginAuto"
+        android:persistent="false" 
+        android:summary="@string/summarybeginAuto"/>
         <CheckBoxPreference
-                android:key="messageService"
-                android:title="@string/beginMessageService"
-                android:persistent="false" 
-                android:summary="@string/beginMessageContent"/>/>
-    </PreferenceCategory>
-    <PreferenceCategory android:key="settings_category"
-            android:title="@string/blackService">
+        android:key="netChangeService"
+        android:title="@string/showBeginNetService"
+        android:persistent="false" 
+        android:summary="@string/summaryNetChangeService"/>
         <CheckBoxPreference
-                android:key="blackService"
-                android:title="@string/beginBlackService"
-                android:persistent="false" 
-                android:summary="@string/blackServiceContent"/>/>
+        android:key="blackService"
+        android:title="@string/beginBlackService"
+        android:persistent="false" 
+        android:summary="@string/blackServiceContent"/>
+        <CheckBoxPreference
+        android:key="areaService"
+        android:title="@string/showAreaService"
+        android:persistent="false" 
+        android:summary="@string/summaryShowAreaService"/>
+        <CheckBoxPreference
+        android:key="messageService"
+        android:title="@string/beginMessageService"
+        android:persistent="false" 
+        android:summary="@string/summarybeginMessageService"/>
+        <CheckBoxPreference
+        android:key="sendUpService"
+        android:title="@string/beginSendUpService"
+        android:persistent="false" 
+        android:summary="@string/summaryBeginSendUpService"/>
     </PreferenceCategory>
 </PreferenceScreen>

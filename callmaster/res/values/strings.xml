@@ -88,8 +88,9 @@
 <string name="saoraoAlert">骚扰电话，请小心</string>
 <string name="confirm">确认</string>
 <string name="startService">开启服务</string>
-<string name="summarystartService">开启扣费克星所有服务</string>
-<string name="endService">关闭扣费克星所有服务</string>
+<string name="summarystartService">开启时其他服务可以应用/关闭时所有服务都不能应用</string>
+<string name="toastStartService">开启时其他服务可以应用</string>
+<string name="endService">关闭时所有服务都不能应用</string>
 <string name="beginAuto">开机自动启动</string>
 <string name="summarybeginAuto">开机后自动启动服务</string>
 <string name="notBeginAuto">开机不自动运行服务</string>
@@ -101,6 +102,7 @@
 <string name="hostorydo">联系人操作</string>
 <string name="messageService">短信服务</string>
 <string name="beginMessageService">开启短信拦截服务</string>
+<string name="summarybeginMessageService">开启短信拦截功能</string>
 <string name="offMessageService">关闭短信拦截服务</string>
 <string name="beginMessageContent">开启短信拦截实时监控</string>
 <string name="blackService">黑名单服务</string>
@@ -108,5 +110,26 @@
 <string name="offBlackService">关闭电话黑名单服务</string>
 <string name="blackServiceContent">开启电话黑名单实时监控</string>
 <string name="change">更新版本</string>
+<string name="beginSendUpService">同步自己的黑名单到云端</string>
+<string name="offbeginSendUpService">不同步自己的黑名单到云端</string>
+<string name="summaryBeginSendUpService">将自己黑名单中的数据自动同步到云端（不会产生较大的流量）</string>
 <string name="inChange">更新中</string>
+<string name="beginNetService">自动同步云端黑名单(同步的数据量很小)</string>
+<string name="showBeginNetService">自动更新云端黑名单</string>
+<string name="netChangeService">网络更新服务</string>
+<string name="summaryNetChangeService">同步的数据量很小，
+不会产生大量的流量,同步后就可以查找云端的黑名单</string>
+<string name="beginNetChange">开启网络自动更新</string>
+<string name="changedata">更新数据</string>
+<string name="notNew">没有新数据</string>
+<string name="offNetChange">关闭网络自动更新</string>
+<string name="haveSave">已经添加了此号码</string>
+<string name="showCallArea">显示电话归属地</string>
+<string name="offCallArea">不显示电话归属地</string>
+<string name="showAreaService">显示电话归属地服务</string>
+<string name="summaryShowAreaService">开启时显示电话的省市情况</string>
+<string name="singalService">单项服务</string>
+<string name="startMessageStop">开启短信拦截</string>
+<string name="blacklistShuoMing">现无黑名单，从菜单中和通话记录中可以添加</string>
+
 </resources>
