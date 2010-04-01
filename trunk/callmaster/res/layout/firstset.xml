@@ -33,8 +33,8 @@
 	     <CheckBox 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:id="@+id/firstMessageService"
-	        android:text="@string/beginMessageService" />
+	        android:id="@+id/firstNetService"
+	        android:text="@string/beginNetService" />
 	</RelativeLayout>
 	<RelativeLayout 
 		android:layout_height="wrap_content" 
@@ -44,6 +44,15 @@
 	        android:layout_height="wrap_content"
 	        android:id="@+id/firstBlackService"
 	        android:text="@string/beginBlackService" />
+	</RelativeLayout>
+	<RelativeLayout 
+		android:layout_height="wrap_content" 
+		android:layout_width="fill_parent">
+	     <CheckBox 
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:id="@+id/firstSetArea"
+	        android:text="@string/showCallArea" />
 	</RelativeLayout>
   </LinearLayout>
 </RelativeLayout>
