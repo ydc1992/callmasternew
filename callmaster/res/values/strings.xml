@@ -131,5 +131,7 @@
 <string name="singalService">单项服务</string>
 <string name="startMessageStop">开启短信拦截</string>
 <string name="blacklistShuoMing">现无黑名单，从菜单中和通话记录中可以添加</string>
+<string name="updatesuccess">更新成功</string>
+<string name="netWrong">网络出错</string>
 
 </resources>

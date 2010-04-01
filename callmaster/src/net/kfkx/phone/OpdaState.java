@@ -8,4 +8,5 @@ public class OpdaState {
 	public static final String NETSERVICE = "netService";
 	public static final String AREASERVICE = "showAreaService";
 	public static final String SENDUP = "sendUpService";
+	public static final String BLACKVERSION = "blackVersion";
 }

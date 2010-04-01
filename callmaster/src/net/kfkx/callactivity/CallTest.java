@@ -41,12 +41,26 @@ public class CallTest extends AndroidTestCase {
 		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(getContext());
 		int i = 0xF0;
 		WebBlackService webBlackService = new WebBlackService(getContext());
+		WebBlackSqliteService webSqliteService = new WebBlackSqliteService(getContext());
 		int version = webBlackService.getVersion();
-		List<WebBlack> list = webBlackService.query();
-		for(WebBlack webBlack : list){
-			blackSqliteService.save(webBlack);
-			Log.i(TAG, webBlack.getNumber()+"+++++++++++"+webBlack.getType());
+		List<WebBlack> lists = webSqliteService.findAll();
+		//List<WebBlack> list = webBlackService.query();
+		//boolean boo = webSqliteService.updateWebBlack(list);
+		webSqliteService.deleteAll();
+		/*for(WebBlack webBlack : list){
+		    webSqliteService.save(webBlack);
+        }*/
+		//Log.i(TAG, boo+"+++++");
+		for(WebBlack webBlack : lists){
+			//blackSqliteService.save(webBlack);
+			Log.i(TAG, webBlack.getNumber()+"+++++"+version+"++++++"+webBlack.getType());
 		}
+	}
+	public void testold(){
+	    WebBlackService webBlackService = new WebBlackService(getContext());
+	    WebBlackSqliteService webSqliteService = new WebBlackSqliteService(getContext());
+	    int oldVersion = webSqliteService.findVersion();
+	    Log.i(TAG, oldVersion+"+++++++++++++");
 	}
 	public void testGaoXinBao() throws Exception{
 		WebBlackSqliteService webBlackService = new WebBlackSqliteService(getContext());

@@ -56,11 +56,11 @@ public class FirstActivity extends Activity {
 			R.string.messagestop ,R.string.help,R.string.about,R.string.change};
 	private Handler handler = new Handler(){
 		@Override
-	public void handleMessage(Message msg) {
-			switch (msg.what) {
-			case 1:
-				Toast.makeText(FirstActivity.this, R.string.versionSame, Toast.LENGTH_SHORT).show();
-			}
+    	public void handleMessage(Message msg) {
+    			switch (msg.what) {
+    			case 1:
+    				Toast.makeText(FirstActivity.this, R.string.versionSame, Toast.LENGTH_SHORT).show();
+    			}
 		super.handleMessage(msg);
 	}};
 
@@ -100,6 +100,7 @@ public class FirstActivity extends Activity {
 		final Editor editor = sharedPreferences.edit();
 		if (!dir.exists()) {
 			editor.putInt(OpdaState.STATESERVICE, 1);
+			editor.putInt(OpdaState.BLACKVERSION, 0);
 			editor.putInt(OpdaState.BEGINAUTO, 1);
 			editor.putInt(OpdaState.NETSERVICE, 1);
 			editor.putInt(OpdaState.BLACKSERVICE, 1);

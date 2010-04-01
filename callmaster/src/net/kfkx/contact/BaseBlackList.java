@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.kfkx.callactivity.FirstActivity;
 import net.kfkx.net.upload.SendUp;
 import net.kfkx.phone.Blacklist;
 import net.kfkx.phone.OpdaState;
@@ -24,6 +23,7 @@ import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.content.res.Configuration;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -47,7 +47,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class BaseBlackList extends Activity {
 	private static final String TAG = "BaseBlackList";
 	private WebBlackService webBlackService = new WebBlackService(this);
-	private WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(this);
+	private WebBlackSqliteService webSqliteService = new WebBlackSqliteService(this);
 	private BlackListSqliteService blackService = new BlackListSqliteService(this);
 	private static final int AddContact = 1;
 	private static final int EXITContact = 2;
@@ -56,7 +56,17 @@ public class BaseBlackList extends Activity {
 	public void handleMessage(Message msg) {
 			switch (msg.what) {
 			case 1:
-				Toast.makeText(BaseBlackList.this, R.string.versionSame, Toast.LENGTH_SHORT).show();
+			    Toast.makeText(BaseBlackList.this, R.string.updatesuccess, Toast.LENGTH_LONG).show();
+				break;
+			case 2:
+			    Toast.makeText(BaseBlackList.this, R.string.updatefalse, Toast.LENGTH_LONG).show();
+			    break;
+			case 3:
+			    Toast.makeText(BaseBlackList.this, R.string.versionSame, Toast.LENGTH_LONG).show();
+			    break;
+			case 4:
+                Toast.makeText(BaseBlackList.this, R.string.netWrong, Toast.LENGTH_LONG).show();
+                break;
 			}
 		super.handleMessage(msg);
 	}};
@@ -168,36 +178,53 @@ public class BaseBlackList extends Activity {
 			my.show();
 			break;
         case UPDATEBLACK:
-        	ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
-			NetworkInfo info = connectivity.getActiveNetworkInfo();
-			boolean flag = false;
-			if (info != null) {
-				final ProgressDialog progressDialog = new ProgressDialog(BaseBlackList.this);
-	    		progressDialog.setTitle(R.string.changedata);
-	    		progressDialog.setMessage("同步云端数据库");
-	    		progressDialog.setCancelable(true);
-				progressDialog.show();
-				new Thread(new Runnable() {
-					public void run() {
-					    try {
-							Thread.sleep(1500);
-							Message msg = new Message();
-							msg.what = 1;
-							handler.sendMessage(msg);//发送消息
-						} catch (Exception e) {
-							Log.e(TAG, e.getMessage());
-						} 
-						progressDialog.cancel();
-						
-					}
-				}).start();
-				while(flag){
-					Toast.makeText(BaseBlackList.this, R.string.notNew, Toast.LENGTH_SHORT).show();
-				}
-			}else{
-				Toast.makeText(BaseBlackList.this, R.string.nonetwork, Toast.LENGTH_SHORT).show();
-			}
-        	break;
+            final ProgressDialog progressDialog = new ProgressDialog(this);
+            progressDialog.setTitle("同步云端数据");
+            progressDialog.setMessage("同步中");
+            progressDialog.setCancelable(true);
+            ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            progressDialog.show();
+            if (info != null) {
+                new Thread(new Runnable() {
+                    public void run() {
+                        try {
+                            
+                            SharedPreferences sharedPreferences = ShareService.getShare(BaseBlackList.this, "opda");
+                            Editor editor = sharedPreferences.edit();
+                            int blackversion = sharedPreferences.getInt(OpdaState.BLACKVERSION, 0);
+                            int serviceVersion = webBlackService.getVersion();
+                            if(blackversion != serviceVersion){
+                                List<WebBlack> weblist = webBlackService.query();
+                                webSqliteService.updateWebBlack(weblist);
+                                editor.remove(OpdaState.BLACKVERSION);
+                                editor.putInt(OpdaState.BLACKVERSION, serviceVersion);
+                                editor.commit();
+                                Message msg = new Message();
+                                msg.what = 1;
+                                progressDialog.cancel();
+                                handler.sendMessage(msg);
+                            }else{
+                                Message msg = new Message();
+                                msg.what = 3;
+                                handler.sendMessage(msg);
+                                progressDialog.cancel();
+                            }
+                        } catch (Exception e) {
+                            Message msg = new Message();
+                            msg.what = 4;
+                            handler.sendMessage(msg);
+                            progressDialog.cancel();
+                            Log.e(TAG, e.getMessage());
+                        } 
+                    }
+                }).start();
+                
+            }else{
+                progressDialog.cancel();
+                Toast.makeText(BaseBlackList.this, R.string.nonetwork, Toast.LENGTH_SHORT).show();
+            }
+            break;
         case EXITContact:
         	this.finish();
             //return true;
