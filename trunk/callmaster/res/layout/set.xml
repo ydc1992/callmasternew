@@ -20,9 +20,9 @@
         android:summary="@string/summarybeginAuto"/>
         <CheckBoxPreference
         android:key="netChangeService"
-        android:title="@string/showBeginNetService"
+        android:title="@string/beginNetService"
         android:persistent="false" 
-        android:summary="@string/summaryNetChangeService"/>
+        android:summary="@string/showBeginNetService"/>
         <CheckBoxPreference
         android:key="blackService"
         android:title="@string/beginBlackService"
@@ -33,11 +33,6 @@
         android:title="@string/showAreaService"
         android:persistent="false" 
         android:summary="@string/summaryShowAreaService"/>
-        <CheckBoxPreference
-        android:key="messageService"
-        android:title="@string/beginMessageService"
-        android:persistent="false" 
-        android:summary="@string/summarybeginMessageService"/>
         <CheckBoxPreference
         android:key="sendUpService"
         android:title="@string/beginSendUpService"

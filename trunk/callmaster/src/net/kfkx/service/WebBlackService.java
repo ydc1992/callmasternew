@@ -1,8 +1,10 @@
 package net.kfkx.service;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.List;
@@ -14,6 +16,7 @@ import net.kfkx.phone.WebBlack;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.util.Log;
 
 
 public class WebBlackService {
@@ -24,7 +27,7 @@ public class WebBlackService {
 		this.context = context;
 	}
 	public int getVersion() throws Exception{
-		String urlPath = "http://guanjia.koufeikexing.com/koufeikexing/defener/phonedown.php?version=1&platform=2";
+		String urlPath = "http://guanjia.koufeikexing.com/koufeikexing/defener/phonedown.php?version=1&platform=2&onlyver=1";
 		URL url = new URL(urlPath);
 		HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 		conn.connect();
@@ -75,5 +78,19 @@ public class WebBlackService {
 		outStream.close();
 		inStream.close();
 		return out;
+	}
+	private String inputStream2String(InputStream is){
+	   BufferedReader in = new BufferedReader(new InputStreamReader(is));
+	   StringBuffer buffer = new StringBuffer();
+	   String line = "";
+	   try {
+		while ((line = in.readLine()) != null){
+		     buffer.append(line);
+		   }
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	   return buffer.toString();
 	}
 }

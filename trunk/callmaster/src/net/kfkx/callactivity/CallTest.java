@@ -6,8 +6,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import net.kfkx.message.ToDoDB;
 import net.kfkx.phone.Phone;
 import net.kfkx.phone.WebBlack;
 import net.kfkx.service.MessageService;
@@ -29,31 +27,23 @@ public class CallTest extends AndroidTestCase {
         	phoneSqliteService.save(phone);
         }
 	}
-	public void testYYY(){
-		ToDoDB doDB = new ToDoDB(getContext());
-		Cursor cursor = doDB.select();
-		while(cursor.moveToNext()){
-			Log.i(TAG, cursor.getString(1)+"+++++");
-		}
-		
-	}
 	public void testFile() throws Exception{
 		WebBlackSqliteService blackSqliteService = new WebBlackSqliteService(getContext());
 		int i = 0xF0;
 		WebBlackService webBlackService = new WebBlackService(getContext());
 		WebBlackSqliteService webSqliteService = new WebBlackSqliteService(getContext());
-		int version = webBlackService.getVersion();
+		//int version = webBlackService.getVersion();
 		List<WebBlack> lists = webSqliteService.findAll();
 		//List<WebBlack> list = webBlackService.query();
 		//boolean boo = webSqliteService.updateWebBlack(list);
-		webSqliteService.deleteAll();
+		//webSqliteService.deleteAll();
 		/*for(WebBlack webBlack : list){
 		    webSqliteService.save(webBlack);
         }*/
-		//Log.i(TAG, boo+"+++++");
+		//Log.i(TAG, version+"+++++");
 		for(WebBlack webBlack : lists){
 			//blackSqliteService.save(webBlack);
-			Log.i(TAG, webBlack.getNumber()+"+++++"+version+"++++++"+webBlack.getType());
+			Log.i(TAG, webBlack.getNumber()+"+++++++++++"+webBlack.getType());
 		}
 	}
 	public void testold(){
@@ -101,5 +91,18 @@ public class CallTest extends AndroidTestCase {
 			System.out.println(e);
 		}
 		return phones;
+	}
+	private boolean checkSize(String path){
+    	boolean boo = false;
+    	File file = new File(path);
+		Log.i(TAG, file.length()+"+++++++++++++");
+    	if(file.length()>5000){
+    		boo = true;
+    	}
+    	return boo;
+    }
+	public void tesY(){
+		boolean boo = checkSize("/data/data/net.kfkx/databases/kfkx");
+		Log.i(TAG, boo+"+++++++++++++");
 	}
 }

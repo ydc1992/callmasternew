@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import net.kfkx.contact.BaseCallHistoryList;
 import net.kfkx.net.upload.SendUp;
 import net.kfkx.phone.Blacklist;
 import net.kfkx.phone.OpdaState;
@@ -79,7 +78,7 @@ public class BlackListService extends Service {
                                         Integer i = Integer.parseInt(time/1000+1+"");
                                         Blacklist blacklist = new Blacklist(num,Blacklist.TYPE_ONESOUND,"",tt,i,Blacklist.HAVE_NO);
                                         blackService.saveall(blacklist);
-    									SharedPreferences sharedPreferences = ShareService.getShare(BlackListService.this, "opda");
+    									SharedPreferences sharedPreferences = ShareService.getShare(BlackListService.this, "kfkx");
     									int sendUpService = sharedPreferences.getInt(OpdaState.SENDUP, 1);
                                         ConnectivityManager connectivity = (ConnectivityManager)BlackListService.this.getSystemService(Context.CONNECTIVITY_SERVICE);
                                         if (connectivity != null && sendUpService == 1) {
@@ -120,7 +119,7 @@ public class BlackListService extends Service {
                         break;	
                     case TelephonyManager.CALL_STATE_RINGING:  //电话进来时
                         isRunning = true;
-                        SharedPreferences preferences = ShareService.getShare(BlackListService.this, "opda");
+                        SharedPreferences preferences = ShareService.getShare(BlackListService.this, "kfkx");
                         int blackstate = preferences.getInt(OpdaState.BLACKSERVICE, 1);
                         int startstate = preferences.getInt(OpdaState.STATESERVICE, 1);
                         if((startstate == 1)&&(blackstate == 1)){

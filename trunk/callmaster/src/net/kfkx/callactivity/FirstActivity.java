@@ -11,8 +11,6 @@ import net.kfkx.contact.BaseBlackList;
 import net.kfkx.contact.CallHistoryList;
 import net.kfkx.contact.ContactList;
 import net.kfkx.dao.DataBaseHelper;
-import net.kfkx.message.SMSObserver;
-import net.kfkx.message.Test;
 import net.kfkx.phone.OpdaState;
 import net.kfkx.service.ShareService;
 
@@ -44,16 +42,15 @@ import android.widget.AdapterView.OnItemClickListener;
 public class FirstActivity extends Activity {
 	protected int my_requestCode = 2550;
 	static final int DATE_DIALOG_ID = 0;
-	private SMSObserver smsObserver; 
 	GridView gridview;
 	ProgressDialog pbarDialog;
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = { R.drawable.search, R.drawable.blacklist,
 			R.drawable.recorder, R.drawable.contact, R.drawable.setting,
-			R.drawable.msg ,R.drawable.help,R.drawable.about,R.drawable.update};
-	private Integer[] mNameIds = { R.string.findarea, R.string.blacklist,
+			R.drawable.help,R.drawable.about,R.drawable.update};
+	private Integer[] mNameIds = { R.string.findarea, R.string.phonestop,
 			R.string.callhostory, R.string.contact, R.string.set,
-			R.string.messagestop ,R.string.help,R.string.about,R.string.change};
+			R.string.help,R.string.about,R.string.change};
 	private Handler handler = new Handler(){
 		@Override
     	public void handleMessage(Message msg) {
@@ -75,6 +72,7 @@ public class FirstActivity extends Activity {
 		try {
 
 			myDbHelper.createDataBase();
+			myDbHelper.close();
 
 		} catch (IOException ioe) {
 
@@ -82,20 +80,20 @@ public class FirstActivity extends Activity {
 
 		}
 
-		try {
-
-			myDbHelper.openDataBase();
-
-		} catch (SQLException sqle) {
-
-			Log.e(TAG, sqle.getMessage());
-
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		File dir = new File("/data/data/net.kfkx/shared_prefs/opda.xml");
-		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
+//		try {
+//
+//			myDbHelper.openDataBase();
+//
+//		} catch (SQLException sqle) {
+//
+//			Log.e(TAG, sqle.getMessage());
+//
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+		File dir = new File("/data/data/net.kfkx/shared_prefs/kfkx.xml");
+		SharedPreferences sharedPreferences = ShareService.getShare(this, "kfkx");
 		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
 		final Editor editor = sharedPreferences.edit();
 		if (!dir.exists()) {
@@ -114,14 +112,12 @@ public class FirstActivity extends Activity {
 			final CheckBox startServiceButton = (CheckBox) editview.findViewById(R.id.firststartService);
 			final CheckBox beginAutoButton = (CheckBox) editview.findViewById(R.id.firstbeginAuto);
 			final CheckBox firstNetBox = (CheckBox) editview.findViewById(R.id.firstNetService);
-			final CheckBox firstBlackBox= (CheckBox) editview.findViewById(R.id.firstBlackService);
-			final CheckBox firstShowArea= (CheckBox) editview.findViewById(R.id.firstSetArea);
+			final CheckBox sendUpBox= (CheckBox) editview.findViewById(R.id.firstSendUp);
 			//final CheckBox messageBox= (CheckBox) editview.findViewById(R.id.firstSetMessage);
 			startServiceButton.setChecked(true);
 			beginAutoButton.setChecked(true);
 			firstNetBox.setChecked(true);
-			firstBlackBox.setChecked(true);
-			firstShowArea.setChecked(true);
+			sendUpBox.setChecked(true);
 			//messageBox.setChecked(true);
 			my.setPositiveButton(R.string.add,
 					new DialogInterface.OnClickListener(){
@@ -156,24 +152,14 @@ public class FirstActivity extends Activity {
 								editor.putInt(OpdaState.NETSERVICE, 1);
 								editor.commit();
 							}
-							if(firstBlackBox.isChecked()==false){
-								editor.remove(OpdaState.BLACKSERVICE);
-								editor.putInt(OpdaState.BLACKSERVICE, 0);
+							if(sendUpBox.isChecked()==false){
+								editor.remove(OpdaState.SENDUP);
+								editor.putInt(OpdaState.SENDUP, 0);
 								editor.commit();
 							}
-							if(firstBlackBox.isChecked()==true){
-								editor.remove(OpdaState.BLACKSERVICE);
-								editor.putInt(OpdaState.BLACKSERVICE, 1);
-								editor.commit();
-							}
-							if(firstShowArea.isChecked()==false){
-								editor.remove(OpdaState.AREASERVICE);
-								editor.putInt(OpdaState.AREASERVICE, 0);
-								editor.commit();
-							}
-							if(firstShowArea.isChecked()==true){
-								editor.remove(OpdaState.AREASERVICE);
-								editor.putInt(OpdaState.AREASERVICE, 1);
+							if(sendUpBox.isChecked()==true){
+								editor.remove(OpdaState.SENDUP);
+								editor.putInt(OpdaState.SENDUP, 1);
 								editor.commit();
 							}
 							/*if(messageBox.isChecked()==false){
@@ -206,7 +192,7 @@ public class FirstActivity extends Activity {
 		gridview = (GridView) findViewById(R.id.gridview);
 		// 生成动态数组，并且转入数据
 		List<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 8; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", mImageIds[i]);// 添加图像资源的ID
 			map.put("ItemNameText", FirstActivity.this.getString(mNameIds[i]));
@@ -257,13 +243,10 @@ public class FirstActivity extends Activity {
 			} else if (arg2 == 4) {
 				intent.setClass(FirstActivity.this, SetActivity.class);
 				beginActivity(intent, arg2);
-			} else if (arg2 == 5) {
-				intent.setClass(FirstActivity.this, Test.class);
-				beginActivity(intent, arg2);
-			} else if (arg2 == 6) {
+			}  else if (arg2 == 5) {
 				intent.setClass(FirstActivity.this, HelpActivity.class);
 				beginActivity(intent, arg2);
-			} else if (arg2 == 7) {
+			} else if (arg2 == 6) {
 				View view = View.inflate(FirstActivity.this, R.layout.about, null);
 				AlertDialog.Builder myBuilder = new AlertDialog.Builder(FirstActivity.this);
 				myBuilder.setIcon(android.R.drawable.ic_dialog_info);
@@ -279,7 +262,7 @@ public class FirstActivity extends Activity {
 								}
 							}
 						}).show();
-			}else if (arg2 == 8) {
+			}else if (arg2 == 7) {
 				
 	    		
 				ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);

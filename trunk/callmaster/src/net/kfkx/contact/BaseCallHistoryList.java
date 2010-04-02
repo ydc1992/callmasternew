@@ -70,6 +70,7 @@ public class BaseCallHistoryList extends ListActivity {
 		final View vv = v;
 		LinearLayout layout = (LinearLayout)vv;
 		final String num = ((TextView) layout.findViewById(R.id.TextNumber)).getText().toString();
+		final String name = ((TextView) layout.findViewById(R.id.TextName)).getText().toString();
 		/*LinearLayout layout = (LinearLayout)v;
 		TextView numberText = (TextView)layout.findViewById(R.id.TextNumber);
 		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+numberText.getText().toString()));
@@ -81,7 +82,7 @@ public class BaseCallHistoryList extends ListActivity {
 		if(cursor.getCount()>0){
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(R.string.hostoryTitle);
-			alertDialogBuilder.setMessage(R.string.hostorydo);
+			alertDialogBuilder.setMessage(name);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));
@@ -112,7 +113,7 @@ public class BaseCallHistoryList extends ListActivity {
 		else if(blackService.findByNumber(num)!=null){
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(R.string.hostoryTitle);
-			alertDialogBuilder.setMessage(R.string.hostorydo);
+			alertDialogBuilder.setMessage(num);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));
@@ -140,7 +141,7 @@ public class BaseCallHistoryList extends ListActivity {
 		}else{
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(R.string.hostoryTitle);
-			alertDialogBuilder.setMessage(R.string.hostorydo);
+			alertDialogBuilder.setMessage(num);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));
@@ -187,7 +188,7 @@ public class BaseCallHistoryList extends ListActivity {
 	    							String remark = editRemarkText.getText().toString();
 	    							Blacklist blacklist = new Blacklist(num,type1,remark,Blacklist.HAVE_NO);
 	    							blackService.savepart(blacklist);
-									SharedPreferences sharedPreferences = ShareService.getShare(BaseCallHistoryList.this, "opda");
+									SharedPreferences sharedPreferences = ShareService.getShare(BaseCallHistoryList.this, "kfkx");
 									int sendUpService = sharedPreferences.getInt(OpdaState.SENDUP, 1);
 	    							ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
 	    							NetworkInfo info = connectivity.getActiveNetworkInfo();

@@ -1,5 +1,6 @@
 package net.kfkx.dao;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,7 +16,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/net.kfkx/databases/";
  
-    private static String DB_NAME = "opda";
+    private static String DB_NAME = "kfkx";
  
     private SQLiteDatabase myDataBase; 
  
@@ -36,8 +37,10 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     public void createDataBase() throws IOException{
  
     	boolean dbExist = checkDataBase();
+    	String outFileName = DB_PATH + DB_NAME;
+    	boolean bool = checkSize(outFileName);
  
-    	if(dbExist){
+    	if(dbExist && bool){
     		//do nothing - database already exist
     	}else{
  
@@ -63,26 +66,27 @@ public class DataBaseHelper extends SQLiteOpenHelper{
      * @return true if it exists, false if it doesn't
      */
     private boolean checkDataBase(){
- 
     	SQLiteDatabase checkDB = null;
- 
     	try{
     		String myPath = DB_PATH + DB_NAME;
     		checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
- 
     	}catch(SQLiteException e){
- 
     		//database does't exist yet.
- 
     	}
- 
     	if(checkDB != null){
- 
     		checkDB.close();
- 
     	}
- 
     	return checkDB != null ? true : false;
+    }
+    private boolean checkSize(String path){
+    	boolean boo = false;
+    	File file = new File(path);
+    	if(file.exists()){
+    		if(file.length()>5000){
+    			boo = true;
+    		}
+    	}
+    	return boo;
     }
  
     /**
@@ -149,7 +153,7 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 		db.execSQL("DROP TABLE IF EXISTS blacklist");
 		onCreate(db);
 		db.execSQL("DROP TABLE IF EXISTS webblack");
-		onCreate(db);
-		*/
+		onCreate(db);*/
+		
 	}
 }

@@ -1,5 +1,8 @@
 package net.kfkx.callactivity;
 
+import java.io.IOException;
+
+import net.kfkx.dao.DataBaseHelper;
 import net.kfkx.phone.Blacklist;
 import net.kfkx.phone.OpdaState;
 import net.kfkx.phone.Phone;
@@ -22,7 +25,7 @@ public class CallOutService extends Service {
     private BlackListSqliteService blackService = new BlackListSqliteService(this);
     private WebBlackSqliteService webBlackService = new WebBlackSqliteService(this);
     private static final String TAG = "CallOutService";
-    private Phone phone = new Phone("未知", "未知", "");
+    private Phone phone = new Phone("未知地区地区", "", "");
     // private Intent intent;
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,11 +35,24 @@ public class CallOutService extends Service {
 
     @Override
     public void onCreate() {
+    	
+		DataBaseHelper myDbHelper = new DataBaseHelper(this);
+
+		try {
+
+			myDbHelper.createDataBase();
+			myDbHelper.close();
+
+		} catch (IOException ioe) {
+
+			throw new Error("Unable to create database");
+
+		}
     }
 
     @Override
     public void onStart(Intent intent, int startId) {
-    		SharedPreferences sharedPreferences = ShareService.getShare(this, "opda");
+    		SharedPreferences sharedPreferences = ShareService.getShare(this, "kfkx");
     		int blackstate = sharedPreferences.getInt(OpdaState.BLACKSERVICE, 1);
 			int areaState = sharedPreferences.getInt(OpdaState.AREASERVICE, 1);
     		String number = intent.getStringExtra("num");

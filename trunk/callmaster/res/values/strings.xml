@@ -12,7 +12,7 @@
 <string name="black">黑名单</string>
 <string name="white">白名单</string>
 <string name="addresslist">通讯录</string>
-<string name="notfind">未知未知 </string>
+<string name="notfind">未知地区 </string>
 <string name="addsuspicious">添加为一声响电话</string>
 <string name="handle">操作</string>
 <string name="call">打电话</string>
@@ -28,7 +28,7 @@
 <string name="abouthomepage">\n俺拽网  http://a.opda.cn\n</string>
 <string name="aboutcopyright">版权所有© 2007-2010 OPDA Team,\n All rights reserved.</string>
 <string name="aboutbutton">确定</string>
-<string name="aboutversion">版本 1.0.0</string>
+<string name="aboutversion">版本 1.0.0 Beta</string>
 <string name="backtomain">返回</string> 
 <string name="loading">载入中,请稍后...</string> 
 <string name="number">号码:</string>
@@ -44,19 +44,18 @@
 <string name="phone">电话</string>
 <string name="help">帮助</string>
 <string name="helptext">
-扣费克星电话助手帮助说明：\n\n
-1，查找指定电话的归属地\n\n
-2，黑名单功能：黑名单类别分为一声响电话，高额收费，推销，和其他。一声响和高额收费电话打出时会提示你小心，推销和其他
-电话打进来时会静音并拦截提示。当不是联系人拨打电话过短系统就自动就把这个号码加进黑名单，其他的用户可以自己操作。
-黑名单又分本地黑名单以及云端的黑名单。用户可以手动的操作把某某人存进黑名单，也能从网络中获取到大量用户反映的黑名单，
-而且能把本地的黑名单上传到云端分享。云端黑名单也是本软件的重点，当使用户量增加后，云端黑名单将产生他的惊人的作用\n\n
-3，通话记录：如果是联系中的号码就可以有打电话，发短信，编辑联系人的操作。如果是陌生的号码除了可以打电话发短信外还可
-以加入黑名单中，加入是有分类，备注，以及是否同步到云端。\n\n
-4，通讯录，可以对通讯录中的联系人进行打电话，发短信和编辑联系人的操作。\n\n
-5，后台自动功能：当有电话打进打出时，显示电话的归属地。当有网络时，黑名单数据库版本有改变时自动更新云端的数据库,这个不会产生较大的流量用会不用担心\n\n
-6，此软件设有黑名单和白名单，凡是在黑名单里面的号码都会自动屏蔽，并且会把它的信息发到此程序中。如果发信息的号码从没
-有在通话记录中出现，此号码的信息也会被屏蔽，并放到此程序中。\n\n
-7，设置：在设置中你可以关闭、开启扣费克星的所有服务，以及开机是否自动的运行服务。在今后不断完善的版本中会加入更多的设置功能。\n\n
+扣费克星电话助手 v1.0 Beta\n
+扣费克星独家采用云端技术，打破传统防骚扰理念，软件智能处理垃圾电话，这样就会大幅度的减少骚扰。
+简介：\n
+1，领先的云计算技术，几十万的垃圾短信和骚扰电话清单，让手机远离一声响和骚扰电话，防止手机诈骗\n
+2，电话归属地功让您对来电去电的号码了如指掌，防止产生长途费或漫游费\n
+3，短信拦截同样采用领先的云计算技术，对频繁被举报的垃圾短信直接进入黑名单处理，同时在黑名单中保留记录\n\n
+帮助：\n
+1，您可以打开通讯录或通话记录中把某一号码设为骚扰电话。\n
+2，打开黑名单来管理电话黑名单。\n
+3，打开短信来查看已拦截的短信。\n
+4，打开设置可以关闭或打开某个功能。\n
+5，本软件不定期更新，请保持每周检查更新。\n
 </string>
 <string name="nullever">从不更新</string>
 <string name="onece">一次</string>
@@ -96,17 +95,17 @@
 <string name="notBeginAuto">开机不自动运行服务</string>
 <string name="firstSetText">以后更改可在设置里面操作</string>
 <string name="setlable">扣费克星实时服务</string>
-<string name="contactTitle">联系人列表</string>
+<string name="contactTitle">联系人操作</string>
 <string name="contactdo">联系人操作</string>
-<string name="hostoryTitle">联系人列表</string>
+<string name="hostoryTitle">通话记录操作</string>
 <string name="hostorydo">联系人操作</string>
 <string name="messageService">短信服务</string>
-<string name="beginMessageService">开启短信拦截服务</string>
+<string name="beginMessageService">开启短信防骚扰功能</string>
 <string name="summarybeginMessageService">开启短信拦截功能</string>
 <string name="offMessageService">关闭短信拦截服务</string>
 <string name="beginMessageContent">开启短信拦截实时监控</string>
 <string name="blackService">黑名单服务</string>
-<string name="beginBlackService">开启电话黑名单服务</string>
+<string name="beginBlackService">开启防骚扰电话功能</string>
 <string name="offBlackService">关闭电话黑名单服务</string>
 <string name="blackServiceContent">开启电话黑名单实时监控</string>
 <string name="change">更新版本</string>
@@ -114,8 +113,8 @@
 <string name="offbeginSendUpService">不同步自己的黑名单到云端</string>
 <string name="summaryBeginSendUpService">将自己黑名单中的数据自动同步到云端（不会产生较大的流量）</string>
 <string name="inChange">更新中</string>
-<string name="beginNetService">自动同步云端黑名单(同步的数据量很小)</string>
-<string name="showBeginNetService">自动更新云端黑名单</string>
+<string name="beginNetService">开启云防骚扰功能</string>
+<string name="showBeginNetService">开启云防骚扰功能会产生少量流量，每月约有200kb左右.</string>
 <string name="netChangeService">网络更新服务</string>
 <string name="summaryNetChangeService">同步的数据量很小，
 不会产生大量的流量,同步后就可以查找云端的黑名单</string>
@@ -124,7 +123,7 @@
 <string name="notNew">没有新数据</string>
 <string name="offNetChange">关闭网络自动更新</string>
 <string name="haveSave">已经添加了此号码</string>
-<string name="showCallArea">显示电话归属地</string>
+<string name="showCallArea">来电去电显示归属地</string>
 <string name="offCallArea">不显示电话归属地</string>
 <string name="showAreaService">显示电话归属地服务</string>
 <string name="summaryShowAreaService">开启时显示电话的省市情况</string>
@@ -133,5 +132,12 @@
 <string name="blacklistShuoMing">现无黑名单，从菜单中和通话记录中可以添加</string>
 <string name="updatesuccess">更新成功</string>
 <string name="netWrong">网络出错</string>
-
+<string name="downLoadBlack">更新云端的黑名单数据</string>
+<string name="upToService">本地黑名单传到云端</string>
+<string name="haveNoUnSend">没有未上传的黑名单</string>
+<string name="upSuccess">上传成功</string>
+<string name="firstHelp">如果需要设置，在设置功能里面有更多的服务控制</string>
+<string name="blacklistdown">下载黑名单</string>
+<string name="blacklistup">上传黑名单</string>
+<string name="phonestop">电话过滤</string>
 </resources>
