@@ -111,7 +111,7 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 								String pre = String.copyValueOf(String.valueOf(fullnum).toCharArray(), 0, 3);
 								Phone phone = phoneService.findByAreaNum(pre);
 								if(phone == null){
-									phone = new Phone("未知", "未知", "");
+									phone = new Phone("未知地区", "未知地区", "");
 								}
 								TextView areaView = (TextView)view.findViewById(R.id.area);
 								areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
@@ -119,7 +119,7 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 								String pre = String.copyValueOf(String.valueOf(fullnum).toCharArray(), 0, 4);
 								Phone phone = phoneService.findByAreaNum(pre);
 								if(phone == null){
-									phone = new Phone("未知", "未知", "");
+									phone = new Phone("未知地区", "未知地区", "");
 								}
 								TextView areaView = (TextView)view.findViewById(R.id.area);
 								areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
@@ -128,12 +128,12 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 							String nn = "0"+num;
 							Phone phone = phoneService.findByAreaNum(nn);
 							if(phone == null){
-								phone = new Phone("未知", "未知", "");
+								phone = new Phone("未知地区", "未知地区", "");
 							}
 							TextView areaView = (TextView)view.findViewById(R.id.area);
 							areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
 						}else{
-							Phone phone = new Phone("未知", "未知", "");
+							Phone phone = new Phone("未知地区", "未知地区", "");
 							TextView areaView = (TextView)view.findViewById(R.id.area);
 							areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
 						}

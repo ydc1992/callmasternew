@@ -50,13 +50,14 @@ public class BaseContactList extends ListActivity {
 		final View vv = v;
 		LinearLayout layout = (LinearLayout)vv;
 		final String num = ((TextView) layout.findViewById(R.id.TextNumber)).getText().toString();
+		final String name = ((TextView) layout.findViewById(R.id.TextName)).getText().toString();
 		/*LinearLayout layout = (LinearLayout)v;
 		TextView numberText = (TextView)layout.findViewById(R.id.TextNumber);
 		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+numberText.getText().toString()));
 		startActivity(callIntent);*/
 			final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 			alertDialogBuilder.setTitle(R.string.contactTitle);
-			alertDialogBuilder.setMessage(R.string.contactdo);
+			alertDialogBuilder.setMessage(name);
 	        alertDialogBuilder.setPositiveButton(R.string.call, new DialogInterface.OnClickListener() {
 	            public void onClick(DialogInterface dialog, int which) {
 	        		Intent callIntent = new Intent(Intent.ACTION_CALL, Uri.parse("tel://"+num));

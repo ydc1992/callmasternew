@@ -17,12 +17,6 @@
     <service android:name=".callactivity.CallOutService"/>
     <service android:name=".callactivity.CallService" />
     <service android:name=".callactivity.BlackListService" />
-    
-    <service android:name=".message.BackStage" ></service>
-	<activity android:name=".message.Number"></activity>
-	<activity android:name=".message.BlackList"></activity>
-	<activity android:name=".message.White"></activity>
-		
     <activity android:name=".callactivity.CallActivity" android:label="@string/app_name">
         <intent-filter>
             <action android:name="cn.opda.android.NewActivity" />
@@ -76,12 +70,6 @@
 		<action android:name="cn.opda.android.SetActivity" />
 	    <category android:name="android.intent.category.DEFAULT" />
 	</intent-filter>
-	</activity>
-	<activity android:name=".message.Test" android:label="@string/app_name">
-			<intent-filter>
-				<action android:name="cn.opda.android.message.Test" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
 	</activity>
 </application>
     <uses-sdk android:minSdkVersion="3" />   

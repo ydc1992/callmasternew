@@ -52,6 +52,7 @@ public class BaseBlackList extends Activity {
 	private static final int AddContact = 1;
 	private static final int EXITContact = 2;
 	private static final int UPDATEBLACK = 3;
+	private static final int SENDUP = 4;
 	private Handler handler = new Handler(){
 	public void handleMessage(Message msg) {
 			switch (msg.what) {
@@ -67,6 +68,9 @@ public class BaseBlackList extends Activity {
 			case 4:
                 Toast.makeText(BaseBlackList.this, R.string.netWrong, Toast.LENGTH_LONG).show();
                 break;
+			case 5:
+				Toast.makeText(BaseBlackList.this, R.string.upSuccess, Toast.LENGTH_LONG).show();
+				break;
 			}
 		super.handleMessage(msg);
 	}};
@@ -95,11 +99,14 @@ public class BaseBlackList extends Activity {
         menu.add(0, AddContact, 0, R.string.add)
         	.setIcon(android.R.drawable.ic_menu_zoom);
         
-        menu.add(0, UPDATEBLACK, 0, R.string.updateBlack)
-		.setIcon(android.R.drawable.ic_menu_upload);
+        menu.add(0, UPDATEBLACK, 0, R.string.blacklistdown)
+		.setIcon(android.R.drawable.ic_menu_rotate);
         
         menu.add(0, EXITContact, 0, R.string.back)
         .setIcon(android.R.drawable.ic_menu_revert);
+        
+        menu.add(0, SENDUP, 0, R.string.blacklistup)
+        .setIcon(android.R.drawable.ic_menu_upload);
         
         return true;
         
@@ -157,7 +164,7 @@ public class BaseBlackList extends Activity {
 							}else{
 								Blacklist blacklist = new Blacklist(number,type,remark,Blacklist.HAVE_NO);
 								blackService.savepart(blacklist);
-								SharedPreferences sharedPreferences = ShareService.getShare(BaseBlackList.this, "opda");
+								SharedPreferences sharedPreferences = ShareService.getShare(BaseBlackList.this, "kfkx");
 								int sendUpService = sharedPreferences.getInt(OpdaState.SENDUP, 1);
 								ConnectivityManager connectivity = (ConnectivityManager)BaseBlackList.this.getSystemService(Context.CONNECTIVITY_SERVICE);
 								NetworkInfo info = connectivity.getActiveNetworkInfo();
@@ -190,7 +197,7 @@ public class BaseBlackList extends Activity {
                     public void run() {
                         try {
                             
-                            SharedPreferences sharedPreferences = ShareService.getShare(BaseBlackList.this, "opda");
+                            SharedPreferences sharedPreferences = ShareService.getShare(BaseBlackList.this, "kfkx");
                             Editor editor = sharedPreferences.edit();
                             int blackversion = sharedPreferences.getInt(OpdaState.BLACKVERSION, 0);
                             int serviceVersion = webBlackService.getVersion();
@@ -225,6 +232,33 @@ public class BaseBlackList extends Activity {
                 Toast.makeText(BaseBlackList.this, R.string.nonetwork, Toast.LENGTH_SHORT).show();
             }
             break;
+        case SENDUP:
+        	ConnectivityManager conn = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
+    		NetworkInfo netInfo = conn.getActiveNetworkInfo();
+    		final List<Blacklist> bblist = blackService.findUnSend();
+    		if (netInfo != null){
+    			if(bblist.size()==0){
+        			Toast.makeText(BaseBlackList.this, R.string.haveNoUnSend, Toast.LENGTH_SHORT).show();
+        		}else{
+        			new Thread(new Runnable() {
+        				public void run() {
+        					// TODO Auto-generated method stub
+        					for(Blacklist blacklist : bblist){
+        						blacklist.setUptype(Blacklist.HAVED);
+        						SendUp.addToWeb(blacklist, BaseBlackList.this);
+        						blackService.update(blacklist);
+        					}
+        					Message msg = new Message();
+        					msg.what = 5;
+        					handler.sendMessage(msg);
+        				}
+        			}).start();
+        		}
+    				
+    		}else{
+    			Toast.makeText(BaseBlackList.this, R.string.nonetwork, Toast.LENGTH_SHORT).show();
+    		}
+        	break;
         case EXITContact:
         	this.finish();
             //return true;

@@ -1,9 +1,11 @@
 package net.kfkx.callactivity;
 
 
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import net.kfkx.dao.DataBaseHelper;
 import net.kfkx.phone.OpdaState;
 import net.kfkx.phone.Phone;
 import net.kfkx.service.BelongingService;
@@ -35,12 +37,25 @@ public class CallService extends Service {
 		return null;
 	}
 	public void onCreate() {
+		
+		DataBaseHelper myDbHelper = new DataBaseHelper(this);
+
+		try {
+
+			myDbHelper.createDataBase();
+			myDbHelper.close();
+
+		} catch (IOException ioe) {
+
+			throw new Error("Unable to create database");
+
+		}
 			Log.i(TAG, "++++++++++");
 			/* 取得电话服务 */
 			final TelephonyManager telManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
 			PhoneStateListener listener = new PhoneStateListener(){	
 				boolean isRunning = false;  
-				Phone phone = new Phone("未知", "未知", "");
+				Phone phone = new Phone("未知地区", "", "");
 				@Override
 				public void onCallStateChanged(int state, String incomingNumber) {
 					final String number = incomingNumber;
@@ -53,9 +68,9 @@ public class CallService extends Service {
 						break;	
 					case TelephonyManager.CALL_STATE_RINGING:  //电话进来时 
 						isRunning = true;
-						SharedPreferences preferences = ShareService.getShare(CallService.this, "opda");
+						SharedPreferences preferences = ShareService.getShare(CallService.this, "kfkx");
 						if(preferences.getInt(OpdaState.STATESERVICE, 1)==1){
-							SharedPreferences sharedPreferences = ShareService.getShare(CallService.this, "opda");
+							SharedPreferences sharedPreferences = ShareService.getShare(CallService.this, "kfkx");
 							int areaState = sharedPreferences.getInt(OpdaState.AREASERVICE, 1);
 						    if (blackService.findByNumber(incomingNumber)== null&&webBlackService.findByNumber(incomingNumber)==null&&areaState==1){
 						        Timer timer = new Timer();

@@ -61,11 +61,17 @@ public class CallActivity extends Activity {
 					if(Integer.parseInt(secondcode)<=2){
 						String temp = String.copyValueOf(code.toCharArray(), 0, 3);
 						Phone phone = phoneService.findByAreaNum(temp);
+						if(phone==null){
+							phone = new Phone("未知地区", "", "");
+						}
 						areacodeView.setText(phone.getAreaCode());
 						locationView.setText(phone.getProvince()+phone.getCity());
 					}else {
 						String temp = String.copyValueOf(code.toCharArray(), 0, 4);
 						Phone phone = phoneService.findByAreaNum(temp);
+						if(phone==null){
+							phone = new Phone("未知地区", "", "");
+						}
 						areacodeView.setText(phone.getAreaCode());
 						locationView.setText(phone.getProvince()+phone.getCity());
 					}
@@ -74,6 +80,9 @@ public class CallActivity extends Activity {
 					try {
 						String temp = "0"+belongingService.read(code);
 						Phone phone = phoneService.findByAreaNum(temp);
+						if(phone==null){
+							phone = new Phone("未知地区", "", "");
+						}
 						areacodeView.setText(phone.getAreaCode());
 						locationView.setText(phone.getProvince()+phone.getCity());
 					} catch (Exception e) {
@@ -81,7 +90,7 @@ public class CallActivity extends Activity {
 						e.printStackTrace();
 					}
 				}else{
-					Phone phone = new Phone("未知", "未知", "");
+					Phone phone = new Phone("未知地区", "", "");
 					areacodeView.setText(phone.getAreaCode());
 					locationView.setText(phone.getProvince()+phone.getCity());
 				}

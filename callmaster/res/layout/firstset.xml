@@ -42,17 +42,17 @@
 	     <CheckBox 
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:id="@+id/firstBlackService"
-	        android:text="@string/beginBlackService" />
+	        android:id="@+id/firstSendUp"
+	        android:text="@string/beginSendUpService" />
 	</RelativeLayout>
 	<RelativeLayout 
 		android:layout_height="wrap_content" 
 		android:layout_width="fill_parent">
-	     <CheckBox 
+	     <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:id="@+id/firstSetArea"
-	        android:text="@string/showCallArea" />
+	        android:textSize="16px"
+	        android:text="@string/firstHelp" />
 	</RelativeLayout>
   </LinearLayout>
 </RelativeLayout>
