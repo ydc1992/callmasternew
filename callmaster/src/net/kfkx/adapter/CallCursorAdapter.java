@@ -98,6 +98,9 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 					String fullnum = "";
 					try {
 						fullnum = cursor.getString(cursor.getColumnIndex("number"));
+						if(fullnum.startsWith("+86")){
+							fullnum = String.copyValueOf(fullnum.toCharArray(), 3, fullnum.length()-3);
+						}
 						num = belongservice.read(fullnum);
 					} catch (Exception e1) {
 						// TODO Auto-generated catch block
@@ -111,7 +114,7 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 								String pre = String.copyValueOf(String.valueOf(fullnum).toCharArray(), 0, 3);
 								Phone phone = phoneService.findByAreaNum(pre);
 								if(phone == null){
-									phone = new Phone("未知地区", "未知地区", "");
+									phone = new Phone("未知地区", "", "");
 								}
 								TextView areaView = (TextView)view.findViewById(R.id.area);
 								areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
@@ -119,7 +122,7 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 								String pre = String.copyValueOf(String.valueOf(fullnum).toCharArray(), 0, 4);
 								Phone phone = phoneService.findByAreaNum(pre);
 								if(phone == null){
-									phone = new Phone("未知地区", "未知地区", "");
+									phone = new Phone("未知地区", "", "");
 								}
 								TextView areaView = (TextView)view.findViewById(R.id.area);
 								areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
@@ -128,12 +131,21 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 							String nn = "0"+num;
 							Phone phone = phoneService.findByAreaNum(nn);
 							if(phone == null){
-								phone = new Phone("未知地区", "未知地区", "");
+								phone = new Phone("未知地区", "", "");
 							}
 							TextView areaView = (TextView)view.findViewById(R.id.area);
 							areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
-						}else{
-							Phone phone = new Phone("未知地区", "未知地区", "");
+						}else if(String.copyValueOf(fullnum.toCharArray(), 0, 1).equals("+")){
+							String nn = "0"+num;
+							Phone phone = phoneService.findByAreaNum(nn);
+							if(phone == null){
+								phone = new Phone("未知地区", "", "");
+							}
+							TextView areaView = (TextView)view.findViewById(R.id.area);
+							areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
+						}
+						else{
+							Phone phone = new Phone("未知地区", "", "");
 							TextView areaView = (TextView)view.findViewById(R.id.area);
 							areaView.setText(phone.getProvince()+" "+phone.getCity()+" "+phone.getAreaCode());
 						}
@@ -145,19 +157,6 @@ public class CallCursorAdapter extends ResourceCursorAdapter {
 			}
 		}
 		
-		//final Context mContext = context;
-		//final TextView mNumber = (TextView)view.findViewById(R.id.TextNumber);
-		/*ImageView mailButton = (ImageView)view.findViewById(R.id.MailButton);
-		if (mailButton != null){
-			//为点击短信图标添加触发事件，使其进入发送短信界面
-			mailButton.setOnClickListener(new OnClickListener(){
-				public void onClick(View v) {
-					Uri smsToUri = Uri.parse("smsto://"+mNumber.getText());
-					Intent smsIntent = new Intent(Intent.ACTION_SENDTO, smsToUri);
-					mContext.startActivity(smsIntent);
-				}
-			});
-		}*/
 	}
 	
 	public void setText(TextView v, String text){

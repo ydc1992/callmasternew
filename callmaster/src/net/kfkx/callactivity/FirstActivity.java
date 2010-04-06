@@ -2,8 +2,8 @@ package net.kfkx.callactivity;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -80,18 +80,6 @@ public class FirstActivity extends Activity {
 
 		}
 
-//		try {
-//
-//			myDbHelper.openDataBase();
-//
-//		} catch (SQLException sqle) {
-//
-//			Log.e(TAG, sqle.getMessage());
-//
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
 		File dir = new File("/data/data/net.kfkx/shared_prefs/kfkx.xml");
 		SharedPreferences sharedPreferences = ShareService.getShare(this, "kfkx");
 		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
@@ -100,10 +88,12 @@ public class FirstActivity extends Activity {
 			editor.putInt(OpdaState.STATESERVICE, 1);
 			editor.putInt(OpdaState.BLACKVERSION, 0);
 			editor.putInt(OpdaState.BEGINAUTO, 1);
-			editor.putInt(OpdaState.NETSERVICE, 1);
+			editor.putInt(OpdaState.DWONAUTO, 1);
 			editor.putInt(OpdaState.BLACKSERVICE, 1);
 			editor.putInt(OpdaState.MESSAGESERVICE, 0);
 			editor.putInt(OpdaState.AREASERVICE, 1);
+			editor.putLong(OpdaState.DOWNTIME, new Date().getTime());
+			editor.putLong(OpdaState.UPTIME, new Date().getTime());
 			editor.commit();
 			LayoutInflater factory = LayoutInflater.from(this);
 			final View editview = factory.inflate(R.layout.firstset, null);
@@ -143,40 +133,33 @@ public class FirstActivity extends Activity {
 								editor.commit();
 							}
 							if(firstNetBox.isChecked()==false){
-								editor.remove(OpdaState.NETSERVICE);
-								editor.putInt(OpdaState.NETSERVICE, 0);
+								editor.remove(OpdaState.DOWNTIME);
+								editor.remove(OpdaState.DWONAUTO);
+								editor.putInt(OpdaState.DWONAUTO, 0);
 								editor.commit();
 							}
 							if(firstNetBox.isChecked()==true){
-								editor.remove(OpdaState.NETSERVICE);
-								editor.putInt(OpdaState.NETSERVICE, 1);
+				            	long time = new Date().getTime();
+				            	editor.remove(OpdaState.DOWNTIME);
+				            	editor.putLong(OpdaState.DOWNTIME, time);
+								editor.remove(OpdaState.DWONAUTO);
+								editor.putInt(OpdaState.DWONAUTO, 1);
 								editor.commit();
 							}
 							if(sendUpBox.isChecked()==false){
+								editor.remove(OpdaState.UPTIME);
 								editor.remove(OpdaState.SENDUP);
 								editor.putInt(OpdaState.SENDUP, 0);
 								editor.commit();
 							}
 							if(sendUpBox.isChecked()==true){
+								long uptime = new Date().getTime();
+								editor.remove(OpdaState.UPTIME);
+								editor.putLong(OpdaState.UPTIME, uptime);
 								editor.remove(OpdaState.SENDUP);
 								editor.putInt(OpdaState.SENDUP, 1);
 								editor.commit();
 							}
-							/*if(messageBox.isChecked()==false){
-								editor.remove(OpdaState.MESSAGESERVICE);
-								editor.putInt(OpdaState.MESSAGESERVICE, 0);
-								editor.commit();
-								if(smsObserver!=null){
-									getContentResolver().unregisterContentObserver(smsObserver);
-								}
-							}
-							if(messageBox.isChecked()==true){
-								editor.remove(OpdaState.MESSAGESERVICE);
-								editor.putInt(OpdaState.MESSAGESERVICE, 1);
-								editor.commit();
-				            	smsObserver = new SMSObserver(new Handler(), FirstActivity.this);
-								getContentResolver().registerContentObserver(Uri.parse("content://sms/"), true, smsObserver);
-							}*/
 						}
 					});
 			my.show();
