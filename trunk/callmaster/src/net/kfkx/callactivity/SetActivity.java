@@ -1,6 +1,8 @@
 package net.kfkx.callactivity;
 
 
+import java.util.Date;
+
 import net.kfkx.phone.OpdaState;
 import net.kfkx.service.ShareService;
 import net.kfkx.R;
@@ -34,7 +36,7 @@ public class SetActivity extends PreferenceActivity {
         int startService = preferences.getInt(OpdaState.STATESERVICE, 1);
         int beginAuto = preferences.getInt(OpdaState.BEGINAUTO, 1);
         int areaService = preferences.getInt(OpdaState.AREASERVICE, 1);
-        int net = preferences.getInt(OpdaState.NETSERVICE, 1);
+        int net = preferences.getInt(OpdaState.DWONAUTO, 1);
         int blackservice = preferences.getInt(OpdaState.BLACKSERVICE, 1);
         int sendUpSrvice = preferences.getInt(OpdaState.SENDUP, 1);
         startBox = (CheckBoxPreference) getPreferenceScreen().findPreference("setStart");
@@ -96,13 +98,16 @@ public class SetActivity extends PreferenceActivity {
             }
         }else if (preference == netChangeBox) {
             if (netChangeBox.isChecked()) {
-            	editor.remove(OpdaState.NETSERVICE);
-            	editor.putInt(OpdaState.NETSERVICE, 1);
+            	editor.remove(OpdaState.DWONAUTO);
+            	editor.putInt(OpdaState.DWONAUTO, 1);
+            	long time = new Date().getTime();
+            	editor.remove(OpdaState.DOWNTIME);
+            	editor.putLong(OpdaState.DOWNTIME, time);
             	editor.commit();
             	Toast.makeText(this, R.string.beginNetChange, Toast.LENGTH_SHORT).show();
             } else {
-            	editor.remove(OpdaState.NETSERVICE);
-            	editor.putInt(OpdaState.NETSERVICE, 0);
+            	editor.remove(OpdaState.DWONAUTO);
+            	editor.putInt(OpdaState.DWONAUTO, 0);
             	editor.commit();
             	Toast.makeText(this, R.string.offNetChange, Toast.LENGTH_SHORT).show();
             }
@@ -132,6 +137,9 @@ public class SetActivity extends PreferenceActivity {
             }
         }else if (preference == sendUpBox) {
             if (sendUpBox.isChecked()) {
+				long uptime = new Date().getTime();
+				editor.remove(OpdaState.UPTIME);
+				editor.putLong(OpdaState.UPTIME, uptime);
             	editor.remove(OpdaState.SENDUP);
             	editor.putInt(OpdaState.SENDUP, 1);
             	editor.commit();

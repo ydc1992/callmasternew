@@ -25,7 +25,7 @@ public class CallOutService extends Service {
     private BlackListSqliteService blackService = new BlackListSqliteService(this);
     private WebBlackSqliteService webBlackService = new WebBlackSqliteService(this);
     private static final String TAG = "CallOutService";
-    private Phone phone = new Phone("未知地区地区", "", "");
+    private Phone phone = new Phone("未知地区", "", "");
     // private Intent intent;
     @Override
     public IBinder onBind(Intent intent) {
