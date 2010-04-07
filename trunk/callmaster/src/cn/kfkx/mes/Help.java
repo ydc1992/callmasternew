@@ -1,5 +1,6 @@
 package cn.kfkx.mes;
 
+import cn.kfkx.R;
 import android.app.Activity;
 import android.os.Bundle;
 

@@ -3,6 +3,8 @@ package cn.kfkx.mes;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.kfkx.R;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -45,7 +47,7 @@ public class White extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.white);
+		this.setContentView(R.layout.whitemessage);
         t_wt=new ToDoDB(this);
 		tb = new WhiteList(this);
 		ls = new ArrayList();
@@ -64,7 +66,7 @@ public class White extends Activity {
 				tb.insert(shit);
 				Cursor c = tb.select();
 				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-						White.this, R.layout.list, c,
+						White.this, R.layout.listmessage, c,
 						new String[] { WhiteList.FIELD_TEXT },
 						new int[] { R.id.listTextView1 });
 				list.setAdapter(adapter);
@@ -77,7 +79,7 @@ public class White extends Activity {
 			ls.add(w_number);
 		}
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(White.this,
-				R.layout.list, c, new String[] { WhiteList.FIELD_TEXT },
+				R.layout.listmessage, c, new String[] { WhiteList.FIELD_TEXT },
 				new int[] { R.id.listTextView1 });
 		list.setAdapter(adapter);
 		c.moveToFirst();
@@ -99,7 +101,7 @@ public class White extends Activity {
 										Cursor c = tb.select();
 										SimpleCursorAdapter adapter = new SimpleCursorAdapter(
 												White.this,
-												R.layout.list,
+												R.layout.listmessage,
 												c,
 												new String[] { WhiteList.FIELD_TEXT },
 												new int[] { R.id.listTextView1 });
@@ -116,7 +118,7 @@ public class White extends Activity {
 										Cursor c2 = tb.select();
 										SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(
 												White.this,
-												R.layout.list,
+												R.layout.listmessage,
 												c2,
 												new String[] { WhiteList.FIELD_TEXT },
 												new int[] { R.id.listTextView1 });
@@ -192,7 +194,7 @@ public class White extends Activity {
 
 		case 0:
 			LayoutInflater factory = LayoutInflater.from(this);
-			View editview = factory.inflate(R.layout.editmessage, null);
+			View editview = factory.inflate(R.layout.editmess, null);
 			Builder my = new AlertDialog.Builder(this);
 			my.setTitle(" ‰»Î∫≈¬Î");
 			my.setView(editview);
@@ -245,7 +247,7 @@ public class White extends Activity {
 							Cursor c = tb.select();
 							ls.add(text_t);
 							SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-									White.this, R.layout.list, c,
+									White.this, R.layout.listmessage, c,
 									new String[] { WhiteList.FIELD_TEXT },
 									new int[] { R.id.listTextView1 });
 							list.setAdapter(adapter);
@@ -260,7 +262,7 @@ public class White extends Activity {
 			tb.delete(text);
 			Cursor c = tb.select();
 			SimpleCursorAdapter adapter = new SimpleCursorAdapter(White.this,
-					R.layout.list, c, new String[] { WhiteList.FIELD_TEXT },
+					R.layout.listmessage, c, new String[] { WhiteList.FIELD_TEXT },
 					new int[] { R.id.listTextView1 });
 			list.setAdapter(adapter);
 			break;
@@ -270,7 +272,7 @@ public class White extends Activity {
 
 			Cursor c1 = tb.select();
 			SimpleCursorAdapter adapter1 = new SimpleCursorAdapter(White.this,
-					R.layout.list, c1, new String[] { ToDoDB.FIELD_TEXT },
+					R.layout.listmessage, c1, new String[] { ToDoDB.FIELD_TEXT },
 					new int[] { R.id.listTextView1 });
 			list.setAdapter(adapter1);
 
