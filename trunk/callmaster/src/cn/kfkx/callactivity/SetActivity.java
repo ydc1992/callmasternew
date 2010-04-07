@@ -3,10 +3,12 @@ package cn.kfkx.callactivity;
 
 import java.util.Date;
 
+import cn.kfkx.mes.BackStage;
 import cn.kfkx.phone.OpdaState;
 import cn.kfkx.service.ShareService;
 
 import cn.kfkx.R;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.net.Uri;
@@ -28,11 +30,14 @@ public class SetActivity extends PreferenceActivity {
 	private CheckBoxPreference messageBox;
 	private CheckBoxPreference sendUpBox;
 	private Editor editor;
+	private Intent messageIntent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.layout.set);
+        messageIntent = new Intent(this, BackStage.class);
+        messageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         SharedPreferences preferences = ShareService.getShare(this, "kfkx");
         int startService = preferences.getInt(OpdaState.STATESERVICE, 1);
         int beginAuto = preferences.getInt(OpdaState.BEGINAUTO, 1);
@@ -40,12 +45,14 @@ public class SetActivity extends PreferenceActivity {
         int net = preferences.getInt(OpdaState.DWONAUTO, 1);
         int blackservice = preferences.getInt(OpdaState.BLACKSERVICE, 1);
         int sendUpSrvice = preferences.getInt(OpdaState.SENDUP, 1);
+        int messageService = preferences.getInt(OpdaState.MESSAGESERVICE, 1);
         startBox = (CheckBoxPreference) getPreferenceScreen().findPreference("setStart");
         beginBox = (CheckBoxPreference) getPreferenceScreen().findPreference("setbeginAuto");
         netChangeBox = (CheckBoxPreference) getPreferenceScreen().findPreference("netChangeService");
         blackBox = (CheckBoxPreference) getPreferenceScreen().findPreference("blackService");
         areaBox = (CheckBoxPreference) getPreferenceScreen().findPreference("areaService");
         sendUpBox = (CheckBoxPreference) getPreferenceScreen().findPreference("sendUpService");
+        messageBox = (CheckBoxPreference) getPreferenceScreen().findPreference("messageService");
         if(startService==1){
         	startBox.setChecked(true); 
         }
@@ -63,6 +70,9 @@ public class SetActivity extends PreferenceActivity {
         }
         if(sendUpSrvice==1){
         	sendUpBox.setChecked(true);
+        }
+        if(messageService==1){
+        	messageBox.setChecked(true);
         }
         editor = preferences.edit();
     }
@@ -150,6 +160,20 @@ public class SetActivity extends PreferenceActivity {
             	editor.putInt(OpdaState.SENDUP, 0);
             	editor.commit();
             	Toast.makeText(this, R.string.offbeginSendUpService, Toast.LENGTH_SHORT).show();
+            }
+        }else if (preference == messageBox) {
+            if (messageBox.isChecked()) {
+            	editor.remove(OpdaState.MESSAGESERVICE);
+            	editor.putInt(OpdaState.MESSAGESERVICE, 1);
+            	editor.commit();
+            	this.startService(messageIntent);
+            	Toast.makeText(this, R.string.beginMessageService, Toast.LENGTH_SHORT).show();
+            } else {
+            	editor.remove(OpdaState.MESSAGESERVICE);
+            	editor.putInt(OpdaState.MESSAGESERVICE, 0);
+            	editor.commit();
+            	this.stopService(messageIntent);
+            	Toast.makeText(this, R.string.offMessageService, Toast.LENGTH_SHORT).show();
             }
         }
 
