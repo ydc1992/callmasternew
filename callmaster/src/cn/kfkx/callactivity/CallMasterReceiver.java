@@ -4,6 +4,8 @@ package cn.kfkx.callactivity;
 import java.util.Date;
 import java.util.List;
 
+import cn.kfkx.mes.BackStage;
+
 import cn.kfkx.net.upload.SendUp;
 import cn.kfkx.phone.Blacklist;
 import cn.kfkx.phone.OpdaState;
@@ -36,6 +38,7 @@ public class CallMasterReceiver extends BroadcastReceiver {
 		int oldVersion = sharedPreferences.getInt(OpdaState.BLACKVERSION, 1);
 		long downTime = sharedPreferences.getLong(OpdaState.DOWNTIME, 1);
 		long upTime = sharedPreferences.getLong(OpdaState.UPTIME, 1);
+		int messageService = sharedPreferences.getInt(OpdaState.MESSAGESERVICE, 1);
 		
 		BlackListSqliteService blackListSqliteService = new BlackListSqliteService(context);
 		List<Blacklist> list = blackListSqliteService.findUnSend();
@@ -53,16 +56,6 @@ public class CallMasterReceiver extends BroadcastReceiver {
 				}
 			}
 		}
-		/*if (info != null && sendUpService == 1) {
-			Log.i(TAG, "11111111111111");
-			if(startService==1&&list.size()>0&&changeNet==1){
-				for(Blacklist blacklist : list){
-					blacklist.setUptype(Blacklist.HAVED);
-					SendUp.addToWeb(blacklist, context);
-					blackListSqliteService.update(blacklist);
-				}
-			}
-		}*/
 		if(netService == 1){
 			if((new Date().getTime()-downTime) > 1000*60*60*24){
 				if(info != null){
@@ -95,6 +88,12 @@ public class CallMasterReceiver extends BroadcastReceiver {
 				context.startService(serIntent);
 				context.startService(serviceIntent);
 			}
+			if (messageService == 1) {
+				Intent messageIntent = new Intent(context, BackStage.class);
+				messageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				context.startService(messageIntent);
+			}
+			
 		}
 		
 	}

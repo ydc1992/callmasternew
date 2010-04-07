@@ -11,6 +11,8 @@ import cn.kfkx.contact.BaseBlackList;
 import cn.kfkx.contact.CallHistoryList;
 import cn.kfkx.contact.ContactList;
 import cn.kfkx.dao.DataBaseHelper;
+import cn.kfkx.mes.BackStage;
+import cn.kfkx.mes.Test;
 import cn.kfkx.phone.OpdaState;
 import cn.kfkx.service.ShareService;
 
@@ -47,10 +49,10 @@ public class FirstActivity extends Activity {
 	ProgressDialog pbarDialog;
 	private static final String TAG = "FirstActivity";
 	private Integer[] mImageIds = { R.drawable.search, R.drawable.blacklist,
-			R.drawable.recorder, R.drawable.contact, R.drawable.setting,
+			R.drawable.recorder, R.drawable.contact,R.drawable.msg, R.drawable.setting,
 			R.drawable.help,R.drawable.about,R.drawable.update};
 	private Integer[] mNameIds = { R.string.findarea, R.string.phonestop,
-			R.string.callhostory, R.string.contact, R.string.set,
+			R.string.callhostory,R.string.messagestop, R.string.contact, R.string.set,
 			R.string.help,R.string.about,R.string.change};
 	private Handler handler = new Handler(){
 		@Override
@@ -81,9 +83,10 @@ public class FirstActivity extends Activity {
 
 		}
 
-		File dir = new File("/data/data/net.kfkx/shared_prefs/kfkx.xml");
+		File dir = new File("/data/data/cn.kfkx/shared_prefs/kfkx.xml");
 		SharedPreferences sharedPreferences = ShareService.getShare(this, "kfkx");
 		int startService = sharedPreferences.getInt(OpdaState.STATESERVICE, 1);
+		int messageService = 0;
 		final Editor editor = sharedPreferences.edit();
 		if (!dir.exists()) {
 			editor.putInt(OpdaState.STATESERVICE, 1);
@@ -165,18 +168,24 @@ public class FirstActivity extends Activity {
 					});
 			my.show();
 			}
+		messageService = sharedPreferences.getInt(OpdaState.MESSAGESERVICE, 1);
 		    if(startService==1){
 		    	Intent serviceIntent = new Intent(this, CallService.class);
 		    	Intent serIntent = new Intent(this, BlackListService.class);
 		    	this.startService(serIntent);
 		    	this.startService(serviceIntent);
+		    	if(messageService == 1){
+			    	Intent messageIntent = new Intent(this, BackStage.class);
+					messageIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					this.startService(messageIntent);
+		    	}
 			}
 		
 		// ------------------------------------
 		gridview = (GridView) findViewById(R.id.gridview);
 		// 生成动态数组，并且转入数据
 		List<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-		for (int i = 0; i < 8; i++) {
+		for (int i = 0; i < 9; i++) {
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("ItemImage", mImageIds[i]);// 添加图像资源的ID
 			map.put("ItemNameText", FirstActivity.this.getString(mNameIds[i]));
@@ -225,12 +234,15 @@ public class FirstActivity extends Activity {
 				intent.setClass(FirstActivity.this, ContactList.class);
 				beginActivity(intent, arg2);
 			} else if (arg2 == 4) {
+				intent.setClass(FirstActivity.this, Test.class);
+				beginActivity(intent, arg2);
+			}else if (arg2 == 5) {
 				intent.setClass(FirstActivity.this, SetActivity.class);
 				beginActivity(intent, arg2);
-			}  else if (arg2 == 5) {
+			}  else if (arg2 == 6) {
 				intent.setClass(FirstActivity.this, HelpActivity.class);
 				beginActivity(intent, arg2);
-			} else if (arg2 == 6) {
+			} else if (arg2 == 7) {
 				View view = View.inflate(FirstActivity.this, R.layout.about, null);
 				AlertDialog.Builder myBuilder = new AlertDialog.Builder(FirstActivity.this);
 				myBuilder.setIcon(android.R.drawable.ic_dialog_info);
@@ -246,7 +258,7 @@ public class FirstActivity extends Activity {
 								}
 							}
 						}).show();
-			}else if (arg2 == 7) {
+			}else if (arg2 == 8) {
 				
 	    		
 				ConnectivityManager connectivity = (ConnectivityManager)getSystemService(Context.CONNECTIVITY_SERVICE);
