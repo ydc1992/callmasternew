@@ -28,7 +28,7 @@
 <string name="abouthomepage">\n俺拽网  http://a.opda.cn\n</string>
 <string name="aboutcopyright">版权所有© 2007-2010 OPDA Team,\n All rights reserved.</string>
 <string name="aboutbutton">确定</string>
-<string name="aboutversion">版本 1.0.0 Beta</string>
+<string name="aboutversion">版本 1.1.0 Beta</string>
 <string name="backtomain">返回</string> 
 <string name="loading">载入中,请稍后...</string> 
 <string name="number">号码:</string>
@@ -44,7 +44,7 @@
 <string name="phone">电话</string>
 <string name="help">帮助</string>
 <string name="helptext">
-扣费克星电话助手 v1.0 Beta\n
+扣费克星电话助手 v1.1.0 Beta\n
 扣费克星独家采用云端技术，打破传统防骚扰理念，软件智能处理垃圾电话，这样就会大幅度的减少骚扰。
 简介：\n
 1，领先的云计算技术，几十万的垃圾短信和骚扰电话清单，让手机远离一声响和骚扰电话，防止手机诈骗\n
@@ -140,4 +140,5 @@
 <string name="blacklistdown">下载黑名单</string>
 <string name="blacklistup">上传黑名单</string>
 <string name="phonestop">电话过滤</string>
+<string name="startMessageService">开启短信拦截</string>
 </resources>
