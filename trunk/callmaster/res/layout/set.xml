@@ -38,5 +38,10 @@
         android:title="@string/beginSendUpService"
         android:persistent="false" 
         android:summary="@string/summaryBeginSendUpService"/>
+        <CheckBoxPreference
+        android:key="messageService"
+        android:title="@string/startMessageService"
+        android:persistent="false" 
+        android:summary="@string/startMessageService"/>
     </PreferenceCategory>
 </PreferenceScreen>
