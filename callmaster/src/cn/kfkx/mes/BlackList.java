@@ -3,6 +3,8 @@ package cn.kfkx.mes;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.kfkx.R;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
@@ -39,7 +41,7 @@ public class BlackList extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		// MessageService messageService = new MessageService(this);
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.black);
+		this.setContentView(R.layout.blackmessage);
 		tb = new ToDoDB(this);
 		ls = new ArrayList();
 		wt=new WhiteList(this);
@@ -58,7 +60,7 @@ public class BlackList extends Activity {
 				tb.insert(shit);
 				Cursor c = tb.select();
 				SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-						BlackList.this, R.layout.list, c,
+						BlackList.this, R.layout.listmessage, c,
 						new String[] { ToDoDB.FIELD_TEXT },
 						new int[] { R.id.listTextView1 });
 				list.setAdapter(adapter);
@@ -74,7 +76,7 @@ public class BlackList extends Activity {
 		}
 
 		SimpleCursorAdapter adapter = new SimpleCursorAdapter(BlackList.this,
-				R.layout.list, c, new String[] { ToDoDB.FIELD_TEXT },
+				R.layout.listmessage, c, new String[] { ToDoDB.FIELD_TEXT },
 				new int[] { R.id.listTextView1 });
 		list.setAdapter(adapter);
 
@@ -95,7 +97,7 @@ public class BlackList extends Activity {
 										Cursor c = tb.select();
 										SimpleCursorAdapter adapter = new SimpleCursorAdapter(
 												BlackList.this,
-												R.layout.list,
+												R.layout.listmessage,
 												c,
 												new String[] { ToDoDB.FIELD_TEXT },
 												new int[] { R.id.listTextView1 });
@@ -112,7 +114,7 @@ public class BlackList extends Activity {
 										Cursor c2 = tb.select();
 										SimpleCursorAdapter adapter2 = new SimpleCursorAdapter(
 												BlackList.this,
-												R.layout.list,
+												R.layout.listmessage,
 												c2,
 												new String[] { ToDoDB.FIELD_TEXT },
 												new int[] { R.id.listTextView1 });
@@ -191,7 +193,7 @@ public class BlackList extends Activity {
 		switch (item.getItemId()) {
 		case 0:
 			LayoutInflater factory = LayoutInflater.from(this);
-			View editview = factory.inflate(R.layout.editmessage, null);
+			View editview = factory.inflate(R.layout.editmess, null);
 			Builder my = new AlertDialog.Builder(this);
 			my.setView(editview);
 			my.setTitle(" ‰»Î∫≈¬Î");
@@ -243,7 +245,7 @@ public class BlackList extends Activity {
 							Cursor c = tb.select();
 							ls.add(text_t);
 							SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-									BlackList.this, R.layout.list, c,
+									BlackList.this, R.layout.listmessage, c,
 									new String[] { ToDoDB.FIELD_TEXT },
 									new int[] { R.id.listTextView1 });
 							list.setAdapter(adapter);
@@ -259,7 +261,7 @@ public class BlackList extends Activity {
 			tb.delete(text);
 			Cursor c = tb.select();
 			SimpleCursorAdapter adapter = new SimpleCursorAdapter(
-					BlackList.this, R.layout.list, c,
+					BlackList.this, R.layout.listmessage, c,
 					new String[] { ToDoDB.FIELD_TEXT },
 					new int[] { R.id.listTextView1 });
 			list.setAdapter(adapter);
@@ -270,7 +272,7 @@ public class BlackList extends Activity {
 
 			Cursor c1 = tb.select();
 			SimpleCursorAdapter adapter1 = new SimpleCursorAdapter(
-					BlackList.this, R.layout.list, c1,
+					BlackList.this, R.layout.listmessage, c1,
 					new String[] { ToDoDB.FIELD_TEXT },
 					new int[] { R.id.listTextView1 });
 			list.setAdapter(adapter1);

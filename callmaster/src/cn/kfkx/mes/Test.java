@@ -3,6 +3,8 @@ package cn.kfkx.mes;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.kfkx.R;
+
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.TabActivity;
@@ -41,7 +43,6 @@ public class Test extends TabActivity {
 	private String black_number = "";
 	private boolean flag = true;
 	private List list;
-	private Sms s;
 
 	private IntentFilter t;
 
@@ -50,7 +51,7 @@ public class Test extends TabActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.tab);
+		setContentView(R.layout.tabmessage);
 
 //		t = new IntentFilter("android.intent.action.BOOT_COMPLETED");
 //		s = new Sms();
@@ -167,7 +168,7 @@ public class Test extends TabActivity {
 		});
 
 		SimpleCursorAdapter adapter_yage = new SimpleCursorAdapter(Test.this,
-				R.layout.message, cursor_yisi, new String[] {
+				R.layout.messagemessage, cursor_yisi, new String[] {
 						YiSiMessage.FIELD_NUMBER, YiSiMessage.FIELD_TEXT },
 				new int[] { R.id.listTextView1, R.id.listTextView2 });
 		list2.setAdapter(adapter_yage);
@@ -243,7 +244,7 @@ public class Test extends TabActivity {
 
 								Cursor cursor_yageg = yage.select();
 								SimpleCursorAdapter adapter_yage = new SimpleCursorAdapter(
-										Test.this, R.layout.message,
+										Test.this, R.layout.messagemessage,
 										cursor_yageg, new String[] {
 												YiSiMessage.FIELD_NUMBER,
 												YiSiMessage.FIELD_TEXT },
@@ -305,7 +306,7 @@ public class Test extends TabActivity {
 		}
 		MenuItem me =menu.add(0, 2, 2, "…Ë÷√");{
 			
-			me.setIcon(R.drawable.set);
+			me.setIcon(R.drawable.setting);
 		} 
 		MenuItem mh=menu.add(0,3,3,"∞Ô÷˙");{
 			
@@ -330,11 +331,6 @@ public class Test extends TabActivity {
 			Intent it = new Intent(Test.this, White.class);
 			it.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			Test.this.startActivity(it);
-			break;
-		case 2:
-			Intent tt = new Intent(Test.this, Set.class);
-			tt.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			Test.this.startActivity(tt);
 			break;
 		case 3:
 			Intent he = new Intent(Test.this, Help.class);
