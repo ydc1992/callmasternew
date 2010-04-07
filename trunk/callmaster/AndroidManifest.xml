@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-      package="net.kfkx"
-      android:versionCode="1"
-      android:versionName="1.0">
+      package="cn.kfkx"
+      android:versionCode="3"
+      android:versionName="1.1.0">
     <application android:icon="@drawable/call" android:label="@string/app_name" android:manageSpaceActivity="s">
     <uses-library android:name="android.test.runner" />
     <receiver android:name=".callactivity.CallMasterReceiver">
@@ -17,6 +17,7 @@
     <service android:name=".callactivity.CallOutService"/>
     <service android:name=".callactivity.CallService" />
     <service android:name=".callactivity.BlackListService" />
+	<service android:name=".mes.BackStage"/>
     <activity android:name=".callactivity.CallActivity" android:label="@string/app_name">
         <intent-filter>
             <action android:name="cn.opda.android.NewActivity" />
@@ -71,6 +72,12 @@
 	    <category android:name="android.intent.category.DEFAULT" />
 	</intent-filter>
 	</activity>
+	<activity android:name=".mes.Test">
+	</activity>
+	<activity android:name=".mes.Number"></activity>
+	<activity android:name=".mes.BlackList"></activity>
+	<activity android:name=".mes.White"></activity>
+	<activity android:name=".mes.Help"></activity>
 </application>
     <uses-sdk android:minSdkVersion="3" />   
 	<!-- 访问internet权限 -->
@@ -94,9 +101,7 @@
 	<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>
 	<uses-permission android:name="android.permission.READ_SMS"></uses-permission>
 	<uses-permission android:name="android.permission.WRITE_SMS"></uses-permission>
-	<!-- 振动 -->
-	<uses-permission android:name="android.permission.VIBRATE"></uses-permission>
 	<instrumentation android:name="android.test.InstrumentationTestRunner"
-  		android:targetPackage="net.kfkx" android:label="Tests for My App" />
+  		android:targetPackage="cn.kfkx" android:label="Tests for My App" />
   	
 </manifest> 

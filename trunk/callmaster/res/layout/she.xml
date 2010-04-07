@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:key="location_category"
+            android:title="@string/setlable">
+        <CheckBoxPreference
+                android:key="setStart"
+                android:title="@string/startService"
+                android:persistent="true"
+                
+                android:summary="@string/summarystartService"/>
+    </PreferenceCategory>
+
+    
+</PreferenceScreen>
