@@ -1,5 +1,7 @@
 package cn.kfkx.mes;
 import java.util.List;
+
+import cn.kfkx.R;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
